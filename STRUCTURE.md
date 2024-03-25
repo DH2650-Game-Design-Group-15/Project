@@ -2,7 +2,7 @@
 This documents the structure of commits to the project and the overall structure of code.
 
 ## Issues and Branches
-For each feature to be added or bug to be solved a `issue` should be created. When working on a new issue, a new `branch` should be created and connected to the issue. When the issue is solved, create a pull request (PR) to main. After successful PR delete the branch locally and remotely.
+For each feature to be added or bug to be solved a `issue` should be created. When working on a new issue, a new `branch` should be created and connected to the issue. When the issue is solved, merge main into your branch and then create a pull request (PR) to main. After successful PR delete the branch locally and remotely.
 
 ## Commit Structure
 Commits should be atomic and have a commit that begins with defining the type of commit e.g. `feat:`.
