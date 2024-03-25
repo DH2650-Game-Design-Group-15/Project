@@ -22,4 +22,6 @@ Commits should be atomic and have a commit that begins with defining the type of
 
 ## Code Structure
 
-### Function and Variable Names
+### Naming Convetion
+* `Pascal case` (FuncName) - used when naming struct, class, method, property, or constant field
+* `Camel case` (varName) - used when naming method arguments, private fields, or local variables
