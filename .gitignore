@@ -1,3 +1,7 @@
 Library/
 Logs/
 UserSettings/
+.vsconfig
+Assembly-CSharp.csproj
+Assembly-CSharp.player.csproj
+project.sln
