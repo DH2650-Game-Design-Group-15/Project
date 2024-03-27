@@ -1,3 +1,11 @@
 Library/
 Logs/
 UserSettings/
+Temp/
+
+# Ignore genereated file Project.sln
+Project.sln
+
+# Ingore genereated files
+*Unity*
+Assembly-CSharp.csproj
