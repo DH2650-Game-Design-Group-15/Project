@@ -12,10 +12,11 @@ public class AIScouting : MonoBehaviour {
     public float maxDist;
     public float scoutRadius;
     public float idleRadius;
+    private float timerStart;
     private int areaCounter;
+    private bool wait;
     public Vector3 basePosition;
     private Vector3 initPosition;
-    private Vector3 prevDestination;
     private Vector3 currAreaCenter;
 
     private void Start () {
@@ -29,7 +30,9 @@ public class AIScouting : MonoBehaviour {
 
     private void Update () {
         if (human != null && human.remainingDistance <= human.stoppingDistance) {
-            human.SetDestination(RandomNavMeshLocation());
+            if (WaitTimer(UnityEngine.Random.Range(1.5f, 4.0f))) {
+                human.SetDestination(RandomNavMeshLocation());
+            }
         }
     }
 
@@ -53,13 +56,11 @@ public class AIScouting : MonoBehaviour {
                         finalPosition = hit.position;
                         break;
                     }
-                    
                 } else {
                     finalPosition = currentPosition;
                 }
             }
         }
-        SetPrevDest(finalPosition);
         return finalPosition;
     }
 
@@ -102,6 +103,34 @@ public class AIScouting : MonoBehaviour {
         SetAreaCounter(1);
         return false;
     }
+
+    /// <summary>
+    /// Timer that checks if the time that has passed is greater
+    /// than the wait time given as parameter
+    /// </summary>
+    /// <param name="timeToWait">The time it takes for the function to return true</param>
+    /// <returns>boolean</returns>
+    private bool WaitTimer (float timeToWait) {
+        if (GetWait()) {
+            if (Time.time - GetTimerStart() < timeToWait) {
+                return false;
+            } else {
+                SetWait(false);
+                return true;
+            }
+        }
+        SetWait(true);
+        SetTimerStart();
+        return false;
+    }
+
+    private void SetTimerStart () {
+        timerStart = Time.time;
+    }
+
+    private float GetTimerStart () {
+        return timerStart;
+    }
     
     private void SetAreaCounter (int count) {
         areaCounter = count;
@@ -111,20 +140,20 @@ public class AIScouting : MonoBehaviour {
         return areaCounter;
     }
 
+    private void SetWait (bool b) {
+        wait = b;
+    }
+
+    private bool GetWait () {
+        return wait;
+    }
+
     private void SetInitPosition (Vector3 pos) {
         initPosition = pos;
     }
 
     private Vector3 GetInitPosition () {
         return initPosition;
-    }
-
-    private void SetPrevDest (Vector3 dest) {
-        prevDestination = dest;
-    }
-
-    private Vector3 GetPrevDest () {
-        return prevDestination;
     }
 
     private void SetCurrAreaCenter (Vector3 areaCenter) {
