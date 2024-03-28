@@ -29,22 +29,6 @@ public class AIScouting : MonoBehaviour {
         }
     }
 
-    private void SetInitPosition (Vector3 pos) {
-        initPosition = pos;
-    }
-
-    private Vector3 GetInitPosition () {
-        return initPosition;
-    }
-
-    private void SetPrevDest (Vector3 dest) {
-        prevDestination = dest;
-    }
-
-    private Vector3 GetPrevDest () {
-        return prevDestination;
-    }
-
     public Vector3 RandomNavMeshLocation () {
         Vector3 finalPosition = GetInitPosition();
         Vector3 currentPosition = transform.position;
@@ -72,6 +56,22 @@ public class AIScouting : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    private void SetInitPosition (Vector3 pos) {
+        initPosition = pos;
+    }
+
+    private Vector3 GetInitPosition () {
+        return initPosition;
+    }
+
+    private void SetPrevDest (Vector3 dest) {
+        prevDestination = dest;
+    }
+
+    private Vector3 GetPrevDest () {
+        return prevDestination;
     }
 
 }
