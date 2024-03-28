@@ -7,12 +7,16 @@ using UnityEngine.AI;
 
 public class AIScouting : MonoBehaviour {
     public NavMeshAgent human;
+    public float probAmplifier;
     public float speed;
     public float maxDist;
     public float scoutRadius;
+    public float idleRadius;
+    private int areaCounter;
     public Vector3 basePosition;
     private Vector3 initPosition;
     private Vector3 prevDestination;
+    private Vector3 currAreaCenter;
 
     private void Start () {
         human = GetComponent<NavMeshAgent>();
@@ -44,9 +48,12 @@ public class AIScouting : MonoBehaviour {
             if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, maxDist, 1)) {
                 Vector3 pathVec = hit.position - currentPosition;
                 float angle = Vector3.Angle(human.transform.forward, pathVec);
-                if (InsideScoutRadius(hit.position) && angle <= 90) {
-                    finalPosition = hit.position;
-                    break;
+                if (InsideRadius(hit.position, scoutRadius) && angle <= 90) {
+                    if (!NextArea(hit.position)) {
+                        finalPosition = hit.position;
+                        break;
+                    }
+                    
                 } else {
                     finalPosition = currentPosition;
                 }
@@ -57,22 +64,53 @@ public class AIScouting : MonoBehaviour {
     }
 
     /// <summary>
-    /// Checks if a position is inside the scouting radius
+    /// Checks if a position is inside the given radius
     /// </summary>
     /// <param name="pos">The position to check</param>
     /// <returns>boolean</returns>
-    private bool InsideScoutRadius (Vector3 pos) {
+    private bool InsideRadius (Vector3 pos, float radius) {
         float dist = Vector3.Distance(pos, basePosition);
-        if (dist <= scoutRadius) {
+        if (dist <= radius) {
             return true;
         }
         return false;
     }
 
-    private bool NextArea () {
-
+    /// <summary>
+    /// Decides if npc should visit next area and increasing
+    /// the probability of visiting the next area each time
+    /// the function is called. If new area is visited, the
+    /// areaCenter is updated
+    /// </summary>
+    /// <param name="pos">Position of next destination</param>
+    /// <returns>boolean</returns>
+    private bool NextArea (Vector3 pos) {
+        if (GetCurrAreaCenter() != null) {
+            if (InsideRadius(pos, idleRadius)) {
+                float p = GetAreaCounter() * probAmplifier;
+                if (p > 1) {
+                    return true;
+                }
+                if (UnityEngine.Random.Range(0.0f, 1.0f) <= p) {
+                    return true;
+                }
+                SetAreaCounter(GetAreaCounter() + 1);
+                return false;
+            }
+        }
+        SetCurrAreaCenter(pos);
+        SetAreaCounter(1);
+        return false;
     }
     
+    private void SetAreaCounter (int count) {
+        areaCounter = count;
+    }
+
+    private int GetAreaCounter () {
+        return areaCounter;
+    }
+
     private void SetInitPosition (Vector3 pos) {
         initPosition = pos;
     }
@@ -87,6 +125,14 @@ public class AIScouting : MonoBehaviour {
 
     private Vector3 GetPrevDest () {
         return prevDestination;
+    }
+
+    private void SetCurrAreaCenter (Vector3 areaCenter) {
+        currAreaCenter = areaCenter;
+    }
+
+    private Vector3 GetCurrAreaCenter () {
+        return currAreaCenter;
     }
 
 }
