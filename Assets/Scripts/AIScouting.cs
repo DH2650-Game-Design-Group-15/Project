@@ -12,10 +12,11 @@ public class AIScouting : MonoBehaviour {
     public float scoutRadius;
     public Vector3 basePosition;
     private Vector3 initPosition;
+    private Vector3 prevDestination;
 
     private void Start () {
         human = GetComponent<NavMeshAgent>();
-        setInitPosition(human.transform.position);
+        SetInitPosition(human.transform.position);
         if (human != null) {
             human.speed = speed;
             human.SetDestination(RandomNavMeshLocation());
@@ -28,22 +29,32 @@ public class AIScouting : MonoBehaviour {
         }
     }
 
-    public void setInitPosition (Vector3 pos) {
+    private void SetInitPosition (Vector3 pos) {
         initPosition = pos;
     }
 
-    public Vector3 getInitPosition () {
+    private Vector3 GetInitPosition () {
         return initPosition;
     }
 
+    private void SetPrevDest (Vector3 dest) {
+        prevDestination = dest;
+    }
+
+    private Vector3 GetPrevDest () {
+        return prevDestination;
+    }
+
     public Vector3 RandomNavMeshLocation () {
-        Vector3 finalPosition = getInitPosition();
+        Vector3 finalPosition = GetInitPosition();
         Vector3 currentPosition = transform.position;
         for (int i = 0; i < 30; i++){
             Vector3 randomPosition = UnityEngine.Random.insideUnitSphere * maxDist;
             randomPosition += currentPosition;
             if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, maxDist, 1)) {
-                if (InsideScoutRadius(hit.position)) {
+                Vector3 pathVec = hit.position - currentPosition;
+                float angle = Vector3.Angle(human.transform.forward, pathVec);
+                if (InsideScoutRadius(hit.position) && angle <= 90) {
                     finalPosition = hit.position;
                     break;
                 } else {
@@ -51,6 +62,7 @@ public class AIScouting : MonoBehaviour {
                 }
             }
         }
+        SetPrevDest(finalPosition);
         return finalPosition;
     }
 
