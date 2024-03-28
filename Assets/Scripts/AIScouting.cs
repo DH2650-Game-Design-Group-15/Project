@@ -29,7 +29,13 @@ public class AIScouting : MonoBehaviour {
         }
     }
 
-    public Vector3 RandomNavMeshLocation () {
+    /// <summary>
+    /// Generates a random position on the NavMesh and makes sure that the position is
+    /// inside the scouting radius and that the direction change doesn't exceed a 90
+    /// degree angle
+    /// </summary>
+    /// <returns>Random position on the NavMesh</returns>
+    private Vector3 RandomNavMeshLocation () {
         Vector3 finalPosition = GetInitPosition();
         Vector3 currentPosition = transform.position;
         for (int i = 0; i < 30; i++){
@@ -50,7 +56,12 @@ public class AIScouting : MonoBehaviour {
         return finalPosition;
     }
 
-    public bool InsideScoutRadius (Vector3 pos) {
+    /// <summary>
+    /// Checks if a position is inside the scouting radius
+    /// </summary>
+    /// <param name="pos">The position to check</param>
+    /// <returns>boolean</returns>
+    private bool InsideScoutRadius (Vector3 pos) {
         float dist = Vector3.Distance(pos, basePosition);
         if (dist <= scoutRadius) {
             return true;
@@ -58,6 +69,10 @@ public class AIScouting : MonoBehaviour {
         return false;
     }
 
+    private bool NextArea () {
+
+    }
+    
     private void SetInitPosition (Vector3 pos) {
         initPosition = pos;
     }
