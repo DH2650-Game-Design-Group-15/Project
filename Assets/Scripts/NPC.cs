@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    public string npcName = "NPC1";
     public string dialogueText = "Hello, traveler!";
     private DialogueManager dialogueManager;
 
@@ -19,7 +20,7 @@ public class NPC : MonoBehaviour
     public void StartDialogue()
     {
         Debug.Log(dialogueText);
-        dialogueManager.ShowDialogue(dialogueText);
+        dialogueManager.ShowDialogue(npcName, dialogueText);
     }
     public void ExitDialogue()
     {

@@ -6,9 +6,11 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
     public GameObject dialogueTemplate;
+    public GameObject dialogueNameObject;
     public GameObject dialogueTextObject;
 
     TextMeshProUGUI dialogueText;
+    TextMeshProUGUI dialogueName;
 
     private void Awake()
     {
@@ -18,10 +20,12 @@ public class DialogueManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void ShowDialogue(string dialogue)
+    public void ShowDialogue(string name, string dialogue)
     {
         dialogueText = dialogueTextObject.GetComponent<TextMeshProUGUI>();
+        dialogueName = dialogueNameObject.GetComponent<TextMeshProUGUI>();
         dialogueText.text = dialogue;
+        dialogueName.text = name;
         dialogueTemplate.SetActive(true);
     }
 
