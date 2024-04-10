@@ -15,11 +15,13 @@ public class AIScouting : MonoBehaviour {
     private float timerStart;
     private int areaCounter;
     private bool wait;
+    private bool dialogue;
     public Vector3 basePosition;
     private Vector3 initPosition;
     private Vector3 currAreaCenter;
 
     private void Start () {
+        SetDialogue(false);
         human = GetComponent<NavMeshAgent>();
         SetInitPosition(human.transform.position);
         if (human != null) {
@@ -29,7 +31,9 @@ public class AIScouting : MonoBehaviour {
     }
 
     private void Update () {
-        if (human != null && human.remainingDistance <= human.stoppingDistance) {
+        if (GetDialogue() == true) {
+            human.SetDestination(transform.position);
+        } else if (human != null && human.remainingDistance <= human.stoppingDistance) {
             if (WaitTimer(UnityEngine.Random.Range(1.5f, 4.0f))) {
                 human.SetDestination(RandomNavMeshLocation());
             }
@@ -146,6 +150,14 @@ public class AIScouting : MonoBehaviour {
 
     private bool GetWait () {
         return wait;
+    }
+
+    private void SetDialogue (bool status) {
+        dialogue = status;
+    }
+
+    private bool GetDialogue () {
+        return dialogue;
     }
 
     private void SetInitPosition (Vector3 pos) {
