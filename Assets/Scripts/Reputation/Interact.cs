@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A test script to test the fraction behaviour
+/// </summary>
 public class Interact : MonoBehaviour
 {
     Fractions fractionSkript;
-    DetectAI detectAISkript;
+    CacheCloseObjects closeObjectsSkript;
     public bool interact = false;
 
     // Start is called before the first frame update
     void Start()
     {
         fractionSkript = GetComponent<Fractions>();
-        detectAISkript = GetComponentInChildren<DetectAI>();
+        closeObjectsSkript = GetComponentInChildren<CacheCloseObjects>();
     }
 
     // Update is called once per frame
@@ -25,8 +28,8 @@ public class Interact : MonoBehaviour
     }
 
     void doSomething(){
-        HashSet<Collider> others = detectAISkript.getNearPlayers();
-        foreach (Collider other in others) {
+        HashSet<GameObject> others = closeObjectsSkript.GetNearPlayers();
+        foreach (GameObject other in others) {
             Fractions otherFraction = other.GetComponent<Fractions>();
             if (otherFraction != null) {
                 int reputation = fractionSkript.getReputation(otherFraction.getFraction());

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enum contains all fractions, a character can be part of. Every character must be part of a fraction, else it isn't possible to interact with it.
+/// </summary>
 public enum Fraction {
     Player,
     Friends,
@@ -11,15 +14,16 @@ public enum Fraction {
     WorstEnemy
 }
 
+/// <summary>
+/// This class safes the fraction of this character. It contains also static tables to store which fraction has which reputation to other fractions.
+/// It's possible to have a different reputation for fraction A to B then for fraction B to A.
+/// </summary>
 public class Fractions : MonoBehaviour {
     private static Hashtable reputation;
     private static object reputationLock = new object();
     public Fraction ownFraction;
 
     private void Start() {
-        if (ownFraction == null) {
-            ownFraction = Fraction.Neutral;
-        }
         if (reputation == null){
             InitReputation();
         }
