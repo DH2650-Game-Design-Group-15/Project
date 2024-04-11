@@ -7,8 +7,9 @@ public class ItemsInput : MonoBehaviour {
     private PlayerInventory playerInventoryScript;
 
     void Start(){
-        closeObjectsScript = GetComponentInChildren<CacheCloseObjects>();
-        playerInventoryScript = GetComponent<PlayerInventory>();
+        Transform parent = transform.parent ?? transform;
+        closeObjectsScript = parent.GetComponentInChildren<CacheCloseObjects>();
+        playerInventoryScript = parent.GetComponent<PlayerInventory>();
     }
 
     public void OnTakeItem(InputAction.CallbackContext context){

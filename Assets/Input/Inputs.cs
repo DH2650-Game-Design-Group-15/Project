@@ -6,8 +6,12 @@ public class Inputs : MonoBehaviour {
     private PlayerInput playerInput;
     private ArrayList lastMaps;
 
-    void Start(){
-        playerInput = GetComponent<PlayerInput>();
+    /// <summary>
+    /// Finds a playerInput in the parents and all their children, including itself and siblings.
+    /// </summary>
+    void Start() {
+        Transform parent = transform.parent ?? transform;
+        playerInput = parent.GetComponentInChildren<PlayerInput>();
         lastMaps = new ArrayList();
     }
 
