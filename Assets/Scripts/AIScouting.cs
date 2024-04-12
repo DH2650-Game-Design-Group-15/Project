@@ -48,12 +48,6 @@ public class AIScouting : MonoBehaviour {
                     SetWait(true);
                     StartCoroutine(waitTimer(UnityEngine.Random.Range(1.5f,4.0f)));
                 }
-                /* if (WaitTimer(UnityEngine.Random.Range(1.5f, 4.0f))) {
-                    human.isStopped = false;
-                    human.SetDestination(RandomNavMeshLocation());
-                } else {
-                    human.isStopped = true;
-                } */
             } else if (float.IsInfinity(human.remainingDistance)) {
                 human.isStopped = false;
                 human.SetDestination(RandomNavMeshLocation());
@@ -144,14 +138,6 @@ public class AIScouting : MonoBehaviour {
         SetWait(false);
         human.isStopped = false;
         human.SetDestination(RandomNavMeshLocation());
-    } 
-
-    private void SetTimerStart () {
-        timerStart = Time.time;
-    }
-
-    private float GetTimerStart () {
-        return timerStart;
     }
     
     private void SetAreaCounter (int count) {
