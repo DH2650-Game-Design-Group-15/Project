@@ -18,12 +18,15 @@ public class AIScouting : MonoBehaviour {
     private bool dialogue;
     public Vector3 basePosition;
     private Vector3 initPosition;
+    private Vector3 prevPosition;
     private Vector3 currAreaCenter;
+    private Quaternion prevRotation;
 
     private void Start () {
         SetDialogue(false);
         human = GetComponent<NavMeshAgent>();
         SetInitPosition(human.transform.position);
+        SetPrevPosition(human.transform.position);
         if (human != null) {
             human.speed = speed;
             human.SetDestination(RandomNavMeshLocation());
@@ -31,13 +34,31 @@ public class AIScouting : MonoBehaviour {
     }
 
     private void Update () {
+        Debug.Log(human.isStopped);
+        Debug.Log(human.remainingDistance);
+        Debug.Log(GetTimerStart());
+        Debug.Log(Time.time);
         if (GetDialogue() == true) {
-            human.SetDestination(transform.position);
-        } else if (human != null && human.remainingDistance <= human.stoppingDistance) {
-            if (WaitTimer(UnityEngine.Random.Range(1.5f, 4.0f))) {
+            human.isStopped = true;
+        } else if (human != null) {
+            if (human.isStopped) {
+                human.transform.position = GetPrevPosition();
+                human.transform.rotation = GetPrevRotation();
+            }
+            if (human.remainingDistance <= human.stoppingDistance) {
+                if (WaitTimer(UnityEngine.Random.Range(1.5f, 4.0f))) {
+                    human.isStopped = false;
+                    human.SetDestination(RandomNavMeshLocation());
+                } else {
+                    human.isStopped = true;
+                }
+            } else if (float.IsInfinity(human.remainingDistance)) {
                 human.SetDestination(RandomNavMeshLocation());
+                human.isStopped = false;
             }
         }
+        SetPrevPosition(human.transform.position);
+        SetPrevRotation(human.transform.rotation);
     }
 
     /// <summary>
@@ -174,6 +195,22 @@ public class AIScouting : MonoBehaviour {
 
     private Vector3 GetCurrAreaCenter () {
         return currAreaCenter;
+    }
+
+    private void SetPrevPosition (Vector3 pos) {
+        prevPosition = pos;
+    }
+
+    private Vector3 GetPrevPosition () {
+        return prevPosition;
+    }
+
+    private void SetPrevRotation (Quaternion rot) {
+        prevRotation = rot;
+    }
+
+    private Quaternion GetPrevRotation () {
+        return prevRotation;
     }
 
 }
