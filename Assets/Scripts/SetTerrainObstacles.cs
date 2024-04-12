@@ -30,7 +30,7 @@ public class SetTerrainObstacles : MonoBehaviour
 
             GameObject obs = new GameObject("Obstacle" + i);
             obs.transform.SetParent(parent.transform);
-            obs.transform.position = worldPosition; // Use the adjusted world position
+            obs.transform.position = worldPosition;
             obs.transform.rotation = tempRot;
 
             obs.AddComponent<NavMeshObstacle>();
@@ -40,7 +40,6 @@ public class SetTerrainObstacles : MonoBehaviour
 
             if (terrain.terrainData.treePrototypes[tree.prototypeIndex].prefab.GetComponent<Collider>() == null)
             {
-                Debug.LogError("ERROR  There is no CapsuleCollider or BoxCollider attached to ''" + terrain.terrainData.treePrototypes[tree.prototypeIndex].prefab.name + "'' please add one of them.");
                 break;
             }
             Collider coll = terrain.terrainData.treePrototypes[tree.prototypeIndex].prefab.GetComponent<Collider>();
@@ -67,7 +66,6 @@ public class SetTerrainObstacles : MonoBehaviour
             }
             else
             {
-                Debug.LogError("ERROR  There is no CapsuleCollider or BoxCollider attached to ''" + terrain.terrainData.treePrototypes[tree.prototypeIndex].prefab.name + "'' please add one of them.");
                 break;
             }
             i++;

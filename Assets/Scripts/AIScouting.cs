@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +22,7 @@ public class AIScouting : MonoBehaviour {
     private Vector3 prevPosition;
     private Vector3 currAreaCenter;
     private Quaternion prevRotation;
+    private Coroutine idleTimer;
 
     private void Start () {
         SetDialogue(false);
@@ -34,10 +36,6 @@ public class AIScouting : MonoBehaviour {
     }
 
     private void Update () {
-        Debug.Log(human.isStopped);
-        Debug.Log(human.remainingDistance);
-        Debug.Log(GetTimerStart());
-        Debug.Log(Time.time);
         if (GetDialogue() == true) {
             human.isStopped = true;
         } else if (human != null) {
@@ -46,15 +44,19 @@ public class AIScouting : MonoBehaviour {
                 human.transform.rotation = GetPrevRotation();
             }
             if (human.remainingDistance <= human.stoppingDistance) {
-                if (WaitTimer(UnityEngine.Random.Range(1.5f, 4.0f))) {
+                if (!GetWait()){
+                    SetWait(true);
+                    StartCoroutine(waitTimer(UnityEngine.Random.Range(1.5f,4.0f)));
+                }
+                /* if (WaitTimer(UnityEngine.Random.Range(1.5f, 4.0f))) {
                     human.isStopped = false;
                     human.SetDestination(RandomNavMeshLocation());
                 } else {
                     human.isStopped = true;
-                }
+                } */
             } else if (float.IsInfinity(human.remainingDistance)) {
-                human.SetDestination(RandomNavMeshLocation());
                 human.isStopped = false;
+                human.SetDestination(RandomNavMeshLocation());
             }
         }
         SetPrevPosition(human.transform.position);
@@ -130,24 +132,19 @@ public class AIScouting : MonoBehaviour {
     }
 
     /// <summary>
-    /// Timer that checks if the time that has passed is greater
-    /// than the wait time given as parameter
+    /// Stops the AI for timeToWait seconds and then gives
+    /// it a new destination to walk to
     /// </summary>
-    /// <param name="timeToWait">The time it takes for the function to return true</param>
-    /// <returns>boolean</returns>
-    private bool WaitTimer (float timeToWait) {
-        if (GetWait()) {
-            if (Time.time - GetTimerStart() < timeToWait) {
-                return false;
-            } else {
-                SetWait(false);
-                return true;
-            }
-        }
-        SetWait(true);
-        SetTimerStart();
-        return false;
-    }
+    /// <param name="timeToWait">The time the AI should wait
+    /// at a location</param>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator waitTimer (float timeToWait) {
+        human.isStopped = true;
+        yield return new WaitForSeconds(timeToWait);
+        SetWait(false);
+        human.isStopped = false;
+        human.SetDestination(RandomNavMeshLocation());
+    } 
 
     private void SetTimerStart () {
         timerStart = Time.time;
