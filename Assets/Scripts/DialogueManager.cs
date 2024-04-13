@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueTemplate;
     public GameObject dialogueNameObject;
     public GameObject dialogueTextObject;
+    public GameObject dialogueHint;
 
     TextMeshProUGUI dialogueText;
     TextMeshProUGUI dialogueName;

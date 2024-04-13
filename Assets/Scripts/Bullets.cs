@@ -27,12 +27,14 @@ public class Bullets : MonoBehaviour
         {
             other.GetComponent<Enemy>().Hit(100);
         }
-        gameObject.SetActive(false); // Disable the bullet
+        Destroy(gameObject);
+        // gameObject.SetActive(false); // Disable the bullet
     }
 
     IEnumerator DestroyAfterLifetime()
     {
         yield return new WaitForSeconds(lifetime);
-        gameObject.SetActive(false); // Disable the bullet
+        // gameObject.SetActive(false); // Disable the bullet
+        Destroy(gameObject);
     }
 }

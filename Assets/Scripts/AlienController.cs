@@ -8,10 +8,9 @@ public class AlienController : MonoBehaviour
     public GameObject bullet;
     public float speed;
     public float rotationSpeed;
-    public float jumpHeight = 10.0f;
     public Animator animator;
     public GameObject myCamera;
-    private bool groundedPlayer;
+    public float dialogueDistance = 5.0f;
     private DialogueManager dialogueManager;
     private bool inDialogue = false;
     private CharacterController characterController;
@@ -56,16 +55,29 @@ public class AlienController : MonoBehaviour
             Fire();
         }
 
+        Ray ray = new Ray(myCamera.transform.position, myCamera.transform.forward);
+        RaycastHit hit;
+        if (!inDialogue && Physics.Raycast(ray, out hit, dialogueDistance, LayerMask.GetMask("NPC")))
+        {
+            dialogueManager.dialogueHint.SetActive(true);
+        }
+        else
+        {
+            dialogueManager.dialogueHint.SetActive(false);
+        }
+
         // Press Z to trigger dialog
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position + Vector3.up * 0.2f, transform.forward, out hit, 1.5f, LayerMask.GetMask("NPC")))
+
+            if (Physics.Raycast(ray, out hit, dialogueDistance, LayerMask.GetMask("NPC")))
             {
                 // Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+
                 NPC npc = hit.collider.gameObject.GetComponent<NPC>();
                 if (npc != null)
                 {
+                    dialogueManager.dialogueHint.SetActive(false);
                     npc.StartDialogue();
                     inDialogue = true;
                 }
