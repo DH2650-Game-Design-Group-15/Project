@@ -15,6 +15,7 @@ public class AIScouting : MonoBehaviour {
     public float idleRadius;
     public float fireRange;
     public float huntSpeed;
+    public int reputation;
     private int areaCounter;
     private bool wait;
     private bool dialogue;
@@ -42,7 +43,7 @@ public class AIScouting : MonoBehaviour {
         if (GetDialogue() == true) {
             human.isStopped = true;
         } else if (human != null) {
-            if (GetFOVScript().GetIsPlayerVisible()) {
+            if (GetFOVScript().GetIsPlayerVisible() && reputation < 0) {
                 HuntMovement();
             } else {
                 PatrolMovement();
@@ -72,6 +73,7 @@ public class AIScouting : MonoBehaviour {
         human.speed = speed;
         if (GetHunting()) {
             SetHunting(false);
+            human.isStopped = false;
             human.SetDestination(RandomNavMeshLocation());
         }
         if (human.isStopped) {
