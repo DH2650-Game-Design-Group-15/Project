@@ -185,7 +185,7 @@ public class AIVisionField : MonoBehaviour {
         playerPosition = pos;
     }
 
-    private Vector3 GetPlayerPosition () {
+    public Vector3 GetPlayerPosition () {
         return playerPosition;
     }
 
@@ -193,7 +193,7 @@ public class AIVisionField : MonoBehaviour {
         playerIsVisible = visible;
     }
 
-    private bool GetIsPlayerVisible () {
+    public bool GetIsPlayerVisible () {
         return playerIsVisible;
     }
 

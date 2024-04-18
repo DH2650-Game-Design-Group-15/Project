@@ -13,19 +13,22 @@ public class AIScouting : MonoBehaviour {
     public float maxDist;
     public float scoutRadius;
     public float idleRadius;
-    private float timerStart;
+    public float fireRange;
+    public float huntSpeed;
     private int areaCounter;
     private bool wait;
     private bool dialogue;
+    private bool hunting;
     public Vector3 basePosition;
     private Vector3 initPosition;
     private Vector3 prevPosition;
     private Vector3 currAreaCenter;
     private Quaternion prevRotation;
-    private Coroutine idleTimer;
+    private AIVisionField vision;
 
     private void Start () {
         SetDialogue(false);
+        SetFOVScript(GetComponentInChildren<AIVisionField>());
         human = GetComponent<NavMeshAgent>();
         SetInitPosition(human.transform.position);
         SetPrevPosition(human.transform.position);
@@ -39,22 +42,51 @@ public class AIScouting : MonoBehaviour {
         if (GetDialogue() == true) {
             human.isStopped = true;
         } else if (human != null) {
-            if (human.isStopped) {
-                human.transform.position = GetPrevPosition();
-                human.transform.rotation = GetPrevRotation();
-            }
-            if (human.remainingDistance <= human.stoppingDistance) {
-                if (!GetWait()){
-                    SetWait(true);
-                    StartCoroutine(waitTimer(UnityEngine.Random.Range(1.5f,4.0f)));
-                }
-            } else if (float.IsInfinity(human.remainingDistance)) {
-                human.isStopped = false;
-                human.SetDestination(RandomNavMeshLocation());
+            if (GetFOVScript().GetIsPlayerVisible()) {
+                HuntMovement();
+            } else {
+                PatrolMovement();
             }
         }
         SetPrevPosition(human.transform.position);
         SetPrevRotation(human.transform.rotation);
+    }
+
+    public void HuntMovement () {
+        SetHunting(true);
+        if (Vector3.Distance(human.transform.position, GetFOVScript().GetPlayerPosition()) > fireRange) {
+            human.isStopped = false;
+            human.speed = huntSpeed;
+            human.SetDestination(GetFOVScript().GetPlayerPosition());
+        } else {
+            human.isStopped = true;
+            human.transform.position = GetPrevPosition();
+            human.transform.rotation = GetPrevRotation();
+        }
+    }
+
+    /// <summary>
+    /// Updates the destination of the human and if it is waiting
+    /// </summary>
+    private void PatrolMovement () {
+        human.speed = speed;
+        if (GetHunting()) {
+            SetHunting(false);
+            human.SetDestination(RandomNavMeshLocation());
+        }
+        if (human.isStopped) {
+            human.transform.position = GetPrevPosition();
+            human.transform.rotation = GetPrevRotation();
+        }
+        if (human.remainingDistance <= human.stoppingDistance) {
+            if (!GetWait()){
+                SetWait(true);
+                StartCoroutine(waitTimer(UnityEngine.Random.Range(1.5f,4.0f)));
+            }
+        } else if (float.IsInfinity(human.remainingDistance)) {
+            human.isStopped = false;
+            human.SetDestination(RandomNavMeshLocation());
+        }
     }
 
     /// <summary>
@@ -194,6 +226,22 @@ public class AIScouting : MonoBehaviour {
 
     private Quaternion GetPrevRotation () {
         return prevRotation;
+    }
+
+    private void SetFOVScript (AIVisionField fieldOfView) {
+        vision = fieldOfView;
+    }
+
+    private AIVisionField GetFOVScript () {
+        return vision;
+    }
+
+    private void SetHunting (bool huntStatus) {
+        hunting = huntStatus;
+    }
+
+    private bool GetHunting () {
+        return hunting;
     }
 
 }
