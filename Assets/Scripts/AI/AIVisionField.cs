@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
+using UnityEditor.ShaderGraph;
 
 public class AIVisionField : MonoBehaviour {
 
@@ -69,6 +70,7 @@ public class AIVisionField : MonoBehaviour {
     private void TargetDetection () {
         SetIsPlayerVisible(false);
         Collider[] targetPlayer = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+        shapeColor = new Color(0, 0, 1, 1);
         
         if (targetPlayer.Length > 0) {
             Vector3 playerPos = targetPlayer[0].transform.position;
@@ -78,6 +80,7 @@ public class AIVisionField : MonoBehaviour {
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask)) {
                     SetPlayerPosition(playerPos);
                     SetIsPlayerVisible(true);
+                    shapeColor = new Color(0, 1, 0,1);
                 }
             }
         }
