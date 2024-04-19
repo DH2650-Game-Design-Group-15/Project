@@ -23,14 +23,14 @@ public class AIVisionField : MonoBehaviour {
         StartCoroutine(FindPlayerDelay(delayTime));
     }
 
-    private void Update () {
-        
-    }
-
-    private void OnValidate () {
+    private void LateUpdate () {
         viewMesh = CreateShapeMesh();
         GetComponent<MeshFilter>().mesh = viewMesh;
     }
+
+    /* private void OnValidate () {
+        
+    } */
 
     private void OnDrawGizmos () {
         if (viewMesh) {
@@ -99,6 +99,10 @@ public class AIVisionField : MonoBehaviour {
         for (int i = 0; i <= steps; i++){
             float currAngle = transform.eulerAngles.y - angle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = ViewCast(currAngle);
+            if (i==0){
+                Debug.Log("Start");
+            }
+            Debug.Log("Point: " + newViewCast.point + "HitStatus: " + newViewCast.hit + "DIst: " + newViewCast.dist);
             viewPoints.Add(newViewCast.point);
         }
 
@@ -161,7 +165,7 @@ public class AIVisionField : MonoBehaviour {
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
-            return new ViewCastInfo(true, hit.distance, globalAngle, hit.point);
+            return new ViewCastInfo(true, hit.distance, globalAngle, transform.parent.gameObject.transform.position + transform.InverseTransformPoint(hit.point));
         } else {
             return new ViewCastInfo(false, viewRadius, globalAngle, dir * viewRadius);
         }
