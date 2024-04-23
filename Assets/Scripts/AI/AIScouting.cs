@@ -26,11 +26,13 @@ public class AIScouting : MonoBehaviour {
     private Vector3 currAreaCenter;
     private Quaternion prevRotation;
     private AIVisionField vision;
+    private Rigidbody rb;
 
     private void Start () {
         SetDialogue(false);
         SetFOVScript(GetComponentInChildren<AIVisionField>());
         human = GetComponent<NavMeshAgent>();
+        SetRigidBody(human.transform.GetComponent<Rigidbody>());
         SetInitPosition(human.transform.position);
         SetPrevPosition(human.transform.position);
         if (human != null) {
@@ -244,6 +246,14 @@ public class AIScouting : MonoBehaviour {
 
     private bool GetHunting () {
         return hunting;
+    }
+
+    private void SetRigidBody (Rigidbody body) {
+        rb = body;
+    }
+
+    private Rigidbody GetRigidBody () {
+        return rb;
     }
 
 }

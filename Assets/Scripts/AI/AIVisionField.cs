@@ -28,10 +28,9 @@ public class AIVisionField : MonoBehaviour {
         GetComponent<MeshFilter>().mesh = viewMesh;
     }
 
-    /* private void OnValidate () {
-        
-    } */
-
+    /// <summary>
+    /// Draws gizmos which can be seen when debugging
+    /// </summary>
     private void OnDrawGizmos () {
         if (viewMesh) {
             Gizmos.color = shapeColor;
@@ -97,12 +96,8 @@ public class AIVisionField : MonoBehaviour {
         List<Vector3> viewPoints = new List<Vector3>();
 
         for (int i = 0; i <= steps; i++){
-            float currAngle = transform.eulerAngles.y - angle / 2 + stepAngleSize * i;
+            float currAngle = stepAngleSize * i - angle / 2;
             ViewCastInfo newViewCast = ViewCast(currAngle);
-            if (i==0){
-                Debug.Log("Start");
-            }
-            Debug.Log("Point: " + newViewCast.point + "HitStatus: " + newViewCast.hit + "DIst: " + newViewCast.dist);
             viewPoints.Add(newViewCast.point);
         }
 
@@ -165,7 +160,7 @@ public class AIVisionField : MonoBehaviour {
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
-            return new ViewCastInfo(true, hit.distance, globalAngle, transform.parent.gameObject.transform.position + transform.InverseTransformPoint(hit.point));
+            return new ViewCastInfo(true, hit.distance, globalAngle, transform.InverseTransformPoint(hit.point));
         } else {
             return new ViewCastInfo(false, viewRadius, globalAngle, dir * viewRadius);
         }
