@@ -103,7 +103,7 @@ public class AIVisionField : MonoBehaviour {
 
         int vertexCount = viewPoints.Count + 1;
         Vector3[] vertices = new Vector3[vertexCount * 2 + 1];
-        int[] triangles = new int[(vertexCount*2+(vertexCount-1)*2)*3]; //vertexCount*4-2
+        int[] triangles = new int[(vertexCount*2+(vertexCount-1)*2)*3];
         vertices[0] = Vector3.zero;
 
         for (int i = 0; i <  vertexCount - 1; i++) {
