@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Materials/Buildings.meta
 guid: 60a4da0168cd54ffd99d42f7ba5fec4f
+========
+guid: 97cc7a4be17879cf7b2927b6ab314326
+>>>>>>>> 563d5f6a4f55f95864004dfadc1263c03ff347e1:Assets/Resources/2DTextures.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
