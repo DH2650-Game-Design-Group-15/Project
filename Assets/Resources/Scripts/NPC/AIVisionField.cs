@@ -1,9 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO.Compression;
-using System.Linq;
-using UnityEditor.ShaderGraph;
 using UnityEngine.InputSystem;
 
 public class AIVisionField : MonoBehaviour {
