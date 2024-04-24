@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using UnityEditor.ShaderGraph;
+using UnityEngine.InputSystem;
 
 public class AIVisionField : MonoBehaviour {
 
@@ -16,16 +17,29 @@ public class AIVisionField : MonoBehaviour {
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     private bool playerIsVisible;
+    private bool playerIsCrouched = false;
     private Vector3 playerPosition;
-    Mesh viewMesh;
+    private Mesh viewMesh;
+    private MeshRenderer meshRenderer;
 
     private void Start () {
         StartCoroutine(FindPlayerDelay(delayTime));
+        SetMeshRenderer(GetComponent<MeshRenderer>());
+    }
+
+    private void Update () {
+        if (playerIsCrouched) {
+            meshRenderer.enabled = false;
+        } else {
+            meshRenderer.enabled = true;
+        }
     }
 
     private void LateUpdate () {
-        viewMesh = CreateShapeMesh();
-        GetComponent<MeshFilter>().mesh = viewMesh;
+        if (GetMeshRenderer().enabled) {
+            viewMesh = CreateShapeMesh();
+            GetComponent<MeshFilter>().mesh = viewMesh;
+        }
     }
 
     /// <summary>
@@ -194,6 +208,24 @@ public class AIVisionField : MonoBehaviour {
 
     public bool GetIsPlayerVisible () {
         return playerIsVisible;
+    }
+
+    public void SetIsPlayerCrouched (InputAction.CallbackContext context) {
+        if (context.started) {
+            playerIsCrouched = !GetIsPlayerCrouched();
+        }
+    }
+
+    private bool GetIsPlayerCrouched () {
+        return playerIsCrouched;
+    }
+
+    private void SetMeshRenderer (MeshRenderer renderer) {
+        meshRenderer = renderer;
+    }
+
+    private MeshRenderer GetMeshRenderer () {
+        return meshRenderer;
     }
 
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Actions",
+    "name": "Inputs",
     "maps": [
         {
             "name": "Player",
@@ -27,6 +27,15 @@
                     "name": "TakeItem",
                     "type": "Button",
                     "id": "171b32c7-7823-4103-9999-ddca0ae65fbb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "0067150e-3e39-4cc2-ab1c-067e7235c723",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -185,6 +194,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TakeItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1ef1139-ab23-464a-af99-574214ce75aa",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
