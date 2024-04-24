@@ -156,10 +156,10 @@ public class AIVisionField : MonoBehaviour {
     }
 
     public ViewCastInfo ViewCast (float globalAngle) {
+        Vector3 localDir = DirFromAngle(globalAngle, false);
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask)) {
+        if (Physics.Raycast(transform.position, localDir, out hit, viewRadius, obstacleMask)) {
             return new ViewCastInfo(true, hit.distance, globalAngle, transform.InverseTransformPoint(hit.point));
         } else {
             return new ViewCastInfo(false, viewRadius, globalAngle, dir * viewRadius);
