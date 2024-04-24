@@ -43,16 +43,6 @@ public class AIVisionField : MonoBehaviour {
     }
 
     /// <summary>
-    /// Draws gizmos which can be seen when debugging
-    /// </summary>
-    private void OnDrawGizmos () {
-        if (viewMesh) {
-            Gizmos.color = shapeColor;
-            Gizmos.DrawMesh(viewMesh, transform.position, transform.rotation);
-        }
-    }
-
-    /// <summary>
     /// Searches for player with a delay
     /// </summary>
     /// <param name="delay">Time in seconds to wait</param>
