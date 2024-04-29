@@ -15,8 +15,7 @@ public class ItemsInput : MonoBehaviour {
         playerInventoryScript = parent.GetComponent<PlayerInventory>();
     }
 
-    /// <summary>
-    /// Called when the player tries to take an object. 
+    /// <summary> Called when the player tries to take an object. 
     /// If there're objects nearby a random item gets picked. If no object is nearby nothing happens.
     /// </summary>
     public void OnTakeItem(InputAction.CallbackContext context){
@@ -38,9 +37,7 @@ public class ItemsInput : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Returns a UI GameObject, that's below the mouse. The GameObjects name must equal pattern
-    /// </summary>
+    /// <summary> Returns a UI GameObject, that's below the mouse. The GameObjects name must equal pattern </summary>
     /// <param name="pattern"> RegEx Expression, that has to fit the GameObjects name </param>
     /// <returns> The GameObject below the mouse. Returns null, if no GameObject fits with the name </returns>
     public GameObject ItemOnMouse(string pattern){
@@ -63,7 +60,6 @@ public class ItemsInput : MonoBehaviour {
     /// <param name="name"> String that must contain 4 digits. </param>
     /// <returns> The position as Tuple (column, row). If the string had more or less than 4 digits it returns (-1, -1), 
     /// else it returns the position. </returns>
-    
     public (int, int) GetPositionFromName(string name){
         List<int> digits = new();
         foreach (char digit in name) {
@@ -81,8 +77,7 @@ public class ItemsInput : MonoBehaviour {
         return (column, row);
     }
 
-    /// <summary>
-    /// Called when a player press the button to remove an item from the inventory.
+    /// <summary> Called when a player press the button to remove an item from the inventory.
     /// Removes the texture from this item slot and deletes the entry in the players inventory
     /// </summary>
     public void OnRemoveStack(InputAction.CallbackContext context){

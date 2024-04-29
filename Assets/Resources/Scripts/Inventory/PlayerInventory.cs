@@ -191,23 +191,38 @@ public class PlayerInventory : MonoBehaviour {
         int tab = 0;
         char[] signs = {'{', '}', '[', ']', ','};
         int[] next = new int[signs.Length];
+        string res = "";
         for (int i = 0; i < signs.Length; i++){
             next[i] = json.IndexOf(signs[i]);
+            res += "-1";
         }
-        while (string.Join("", next) != "-1-1-1-1"){
+        int cancel = 500;
+        while (string.Join("", next) != res){
             (int min, int idx) = Min(next);
+            if (min == 2147483647){
+                break;
+            }
             switch (idx) {
-                case 0: break;
-                case 1: tab++; break;
-                case 2: tab--; break;
-                case 3: tab++; break;
-                case 4: tab--; break;
+                case 0: tab++; break;
+                case 1: tab--; break;
+                case 2: tab++; break;
+                case 3: tab--; break;
+                case 4: break;
                 default: break;
             }
             min++;
             json = json.Insert(min, InsertJson(tab));
             for (int i = 0; i < signs.Length; i++){
-                next[i] = json.IndexOf(signs[i]);
+                if (min < json.Length - 1){
+                    next[i] = json.IndexOf(signs[i], min);
+                } else {
+                    next[i] = -1;
+                }
+            }
+            cancel--;
+            if (cancel == 0){
+                Debug.LogWarning("Loop canceled");
+                break;
             }
         }
         return json;
@@ -217,7 +232,7 @@ public class PlayerInventory : MonoBehaviour {
     /// <param name="ints"> Values to compare </param>
     /// <returns> A tuple of (value, index). If all values are less than zero the value is max int and the index -1. </returns>
     private (int, int) Min(int[] ints){
-        int max = ((int)Math.Pow(2.0, 32.0)) - 1;
+        int max = 2147483647;
         for (int i = 0; i < ints.Length; i++){
             if (ints[i] < 0){
                 ints[i] = max;
