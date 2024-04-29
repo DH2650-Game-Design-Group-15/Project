@@ -191,17 +191,12 @@ public class PlayerInventory : MonoBehaviour {
         int tab = 0;
         char[] signs = {'{', '}', '[', ']', ','};
         int[] next = new int[signs.Length];
-        string res = "";
         for (int i = 0; i < signs.Length; i++){
             next[i] = json.IndexOf(signs[i]);
-            res += "-1";
         }
         int cancel = 500;
-        while (string.Join("", next) != res){
+        while (true){
             (int min, int idx) = Min(next);
-            if (min == 2147483647){
-                break;
-            }
             switch (idx) {
                 case 0: tab++; break;
                 case 1: tab--; break;
@@ -211,6 +206,9 @@ public class PlayerInventory : MonoBehaviour {
                 default: break;
             }
             min++;
+            if (min >= json.Length){
+                break;
+            }
             json = json.Insert(min, InsertJson(tab));
             for (int i = 0; i < signs.Length; i++){
                 if (min < json.Length - 1){
