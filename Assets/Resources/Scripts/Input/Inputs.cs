@@ -22,6 +22,8 @@ public class Inputs : MonoBehaviour {
     /// <summary>
     /// Deactivates the input map with the given name. 
     /// </summary>
+    /// <param name="mapName"> The name of the map to disable. </param>
+    /// <returns> True, if the map was enabled before, else false. </returns>
     public bool RemoveActionMap(string mapName){
         InputActionMap map = playerInput.actions.FindActionMap(mapName);
         bool oldValue = map.enabled;
@@ -33,6 +35,8 @@ public class Inputs : MonoBehaviour {
     /// Activates the input map with the given name. Doesn't activate different action maps.
     /// This can lead to different events on the same key.
     /// </summary>
+    /// <param name="mapName"> The name of the map to enable. </param>
+    /// <returns> True, if the map was disabled before, else false. </returns>
     public bool AddActionMap(string mapName){
         InputActionMap map = playerInput.actions.FindActionMap(mapName);
         bool oldValue = map.enabled;
@@ -43,6 +47,7 @@ public class Inputs : MonoBehaviour {
     /// <summary>
     /// Disables all active input maps and activates only the one with the given name.
     /// </summary>
+    /// <param name="mapName"> The name of the only map to enable. </param>
     public void ChangeActionMap(string mapName){
         lastMaps.Clear();
         foreach (InputActionMap map in playerInput.actions.actionMaps) {
@@ -57,6 +62,7 @@ public class Inputs : MonoBehaviour {
     /// <summary>
     /// Deactivates all active input maps and activates all input maps with the given names.
     /// </summary>
+    /// <param name="mapName"> The name of all maps to enable. </param>
     public void ChangeActionMaps(string[] mapNames){
         ChangeActionMap(mapNames[0]);
         for (int i = 1; i < mapNames.Length; i++){
@@ -84,6 +90,7 @@ public class Inputs : MonoBehaviour {
     /// <summary>
     /// Returns all active input maps.
     /// </summary>
+    /// <returns> A list of all active input maps. </returns>
     public List<string> GetActionMaps(){
         List<string> maps = new();
         foreach(InputActionMap map in playerInput.actions.actionMaps){

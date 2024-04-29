@@ -89,6 +89,8 @@ public class ItemSlot{
         this.row = row;
     }
 
+    /// <summary> Returns this slot as an json string. </summary>
+    /// <returns> The item as a json string. </summary>
     public string ToJson(){
         string json = "{";
         json += string.Format("\"Amount\":{0},\"column\":{1},\"row\":{2}", item.Amount, column, row);

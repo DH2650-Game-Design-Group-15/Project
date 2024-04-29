@@ -30,6 +30,9 @@ public class PlayerInventory : MonoBehaviour {
         printStateInventory = false;
     }
 
+    /// <summary> Adds the given item to the inventory. </summary>
+    /// <param name="item"> The item to store in the inventory. </param>
+    /// <returns> Returns the amount of this item, that can't be stored in this inventory. </returns>
     public int Add(Item item){
         foreach (InventoryItemHelper inventoryItem in inventoryItems){
             if (inventoryItem.ItemName == item.GetType().Name){
@@ -38,13 +41,24 @@ public class PlayerInventory : MonoBehaviour {
             }
         }
         inventoryItems.Add(new InventoryItemHelper(item, this));
-        return inventoryItems[inventoryItems.Count - 1].Add(item);
+        return inventoryItems[^1].Add(item);
     }
 
+    /// <summary> 
+    /// Removes the item the given amount of times. If the inventory hasn't the necessary amount nothing gets removed.
+    /// </summary>
+    /// <param name="item"> The name and the amount of the removed item stored in an item. </param>
+    /// <returns> True, if it removed the item the given amount of times. False, if the inventory hadn't enough items stored. </returns>
     public bool Remove(Item item){
         return Remove(item.GetType().Name, item.Amount);
     }
 
+    /// <summary> 
+    /// Removes the item the given amount of times. If the inventory hasn't the necessary amount nothing gets removed.
+    /// </summary>
+    /// <param name="itemName"> The name of the removed item. </param>
+    /// <param name="amount"> The amount of the removed item. </param>
+    /// <returns> True, if it removed the item the given amount of times. False, if the inventory hadn't enough items stored. </returns>
     public bool Remove(string itemName, int amount){
         foreach (InventoryItemHelper inventoryItem in inventoryItems){
             if (inventoryItem.ItemName == itemName){
@@ -55,6 +69,13 @@ public class PlayerInventory : MonoBehaviour {
         return false;
     }
 
+    /// <summary> 
+    /// Removes the whole stack of this item. 
+    /// </summary>
+    /// <param name="itemName"> The name of the removed item. </param>
+    /// <param name="column"> The column of the items position in the inventory </param>
+    /// <param name="row"> The row of the items position in the inventory </param>
+    /// <returns> True, if the item existed on this position. False, if the item didn't exist there. </returns>
     public bool RemoveStack(string itemName, int column, int row){
         foreach (InventoryItemHelper inventoryItem in inventoryItems){
             if (inventoryItem.ItemName == itemName){
@@ -65,15 +86,40 @@ public class PlayerInventory : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// Moves this item to a new position in the inventory. If this slot was already used by another item it swaps the position. 
+    /// If this slot was already used by an item of the same type it fills this stack, if this stack isn't big enough the remaining part stays in the old slot.
+    /// <summary>
+    /// <param name="itemName"> The name of the moved item. </param>
+    /// <param name="oldColumn"> The column, where the item was stored in the inventory. </param>
+    /// <param name="oldRow"> The row, where the item was stored in the inventory. </param>
+    /// <param name="newColumn"> The column, where the item is now stored in the inventory. </param>
+    /// <param name="newRow"> The row, where the item is now stored in the inventory. </param>
     public void Move(string itemName, int oldColumn, int oldRow, int newColumn, int newRow){
         // TODO
     }
 
+    /// <summary>
+    /// Splits a stack. One part stays in this item slot and the other part is moved to another slot. 
+    /// The other slot must be empty.
+    /// <summary>
+    /// <param name="itemName"> The name of the moved item. </param>
+    /// <param name="oldColumn"> The column, where the item was stored in the inventory. </param>
+    /// <param name="oldRow"> The row, where the item was stored in the inventory. </param>
+    /// <param name="newColumn"> The column, where a part of this item is now stored in the inventory. </param>
+    /// <param name="newRow"> The row, where a part of this item is now stored in the inventory. </param>
+    /// <returns> 
+    /// True, if the new slot was empty. False, if the new slot wasn't empty. If false returns nothing happened in the inventory.
+    /// </returns>
     public bool Split(string itemName, int oldColumn, int oldRow, int newColumn, int newRow, int amount){
         // TODO
         return false;
     }
 
+    /// <summary> Returns true, if this inventory has at least one free slot. </summary>
+    /// <returns> True, if at least one slot is free. 
+    /// False, if all slots have an item.
+    /// </returns>
     public bool HasFreeSlots(){
         foreach (List<bool> row in freeSlot){
             foreach(bool slot in row){
@@ -85,6 +131,8 @@ public class PlayerInventory : MonoBehaviour {
         return false;
     }
 
+    /// <summary> Returns the next free slot in the inventory. It goes from the top left frist to the right and then down until it finds the first free spot. </summary>
+    /// <returns> Tuple of (column, row). The position of the free slot. </returns>
     public (int, int) NextFreeSlot(){
         for (int column = 0; column < columns; column++){
             for (int row = 0; row < rows; row++){
@@ -104,7 +152,9 @@ public class PlayerInventory : MonoBehaviour {
         }
     }
 
-    public string ToJson(){
+    /// <summary> Returns the inventory in json format. </summary>
+    /// <param name="readable"> If true, it's in multiple lines and with tabs in the beginning. If false, it's one line without spaces </param>
+    public string ToJson(bool readable){
         string json = "{";
         json += string.Format("\"columns\":{0},\"rows\":{1},\"freeSlot\":[", columns, rows);
         for (int i = 0; i < freeSlot.Count; i++) {
@@ -127,9 +177,16 @@ public class PlayerInventory : MonoBehaviour {
             }
         }
         json += "]}";
-        return MakeReadable(json);
+        if (readable){
+            return MakeReadable(json);
+        } else {
+            return json;
+        }
     }
 
+    /// <summary> Formats a json string in an easier readable text </summary>
+    /// <param name="json"> String to format </param>
+    /// <returns> Formated string </returns>
     public string MakeReadable(string json){
         int tab = 0;
         char[] signs = {'{', '}', '[', ']', ','};
@@ -156,6 +213,9 @@ public class PlayerInventory : MonoBehaviour {
         return json;
     }
 
+    /// <summary> Returns the lowest value greater than or equal to zero and it's first index </summary>
+    /// <param name="ints"> Values to compare </param>
+    /// <returns> A tuple of (value, index). If all values are less than zero the value is max int and the index -1. </returns>
     private (int, int) Min(int[] ints){
         int max = ((int)Math.Pow(2.0, 32.0)) - 1;
         for (int i = 0; i < ints.Length; i++){
@@ -186,7 +246,7 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     public string SaveInventory(){
-        return ToJson();
+        return ToJson(true);
     }
 
     public int Rows { get => rows; set => rows = value; }

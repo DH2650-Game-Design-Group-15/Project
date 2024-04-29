@@ -7,6 +7,9 @@ public class InventoryItemHelper {
     private readonly List<ItemSlot> slots;
     private readonly PlayerInventory inventory;
 
+    /// <summary> 
+    /// Creates the helper to save all slots for this item. It doesn't store the item in this object. 
+    /// </summary>
     public InventoryItemHelper(Item item, PlayerInventory inventory){
         slots = new();
         itemName = item.GetType().Name;
@@ -86,17 +89,36 @@ public class InventoryItemHelper {
         return false;
     }
 
-    /// <summary> Moves the slot on position to the new position </summary>
+    /// <summary>
+    /// Moves this item to a new position in the inventory. If this slot was already used by another item it swaps the position. 
+    /// If this slot was already used by an item of the same type it fills this stack, if this stack isn't big enough the remaining part stays in the old slot.
+    /// <summary>
+    /// <param name="itemName"> The name of the moved item. </param>
+    /// <param name="oldColumn"> The column, where the item was stored in the inventory. </param>
+    /// <param name="oldRow"> The row, where the item was stored in the inventory. </param>
+    /// <param name="newColumn"> The column, where the item is now stored in the inventory. </param>
+    /// <param name="newRow"> The row, where the item is now stored in the inventory. </param>
     public void Move(int oldColumn, int oldRow, int newColumn, int newRow) {
         // TODO
     }
 
-    /// <summary> Splits the amount on position to the new position. Everything else stays on the old position. </summary>
+    /// <summary>
+    /// Splits a stack. One part stays in this item slot and the other part is moved to another slot. 
+    /// The other slot must be empty.
+    /// <summary>
+    /// <param name="itemName"> The name of the moved item. </param>
+    /// <param name="oldColumn"> The column, where the item was stored in the inventory. </param>
+    /// <param name="oldRow"> The row, where the item was stored in the inventory. </param>
+    /// <param name="newColumn"> The column, where a part of this item is now stored in the inventory. </param>
+    /// <param name="newRow"> The row, where a part of this item is now stored in the inventory. </param>
     public void Split(int oldColumn, int oldRow, int newColumn, int newRow, int amount){
         // TODO
     }
 
     /// <summary> Returns true, if a slot of this item contains the position. </summary>
+    /// <param name="column"> The column in the inventory </param>
+    /// <param name="row"> The row in the inventory </param>
+    /// <returns> True, if this postion contains at least one element of this item. False otherwise. </returns>
     public bool ContainsPosition(int column, int row){
         for (int i = slots.Count - 1; i >= 0; i--){
             if (slots[i].Column == column && slots[i].Row == row){
@@ -106,6 +128,9 @@ public class InventoryItemHelper {
         return false;
     }
 
+
+    /// <summary> Returns this item with all its slots as an json string. </summary>
+    /// <returns> The item as a json string. </summary>
     public string ToJson(){
         string json = "{";
         json += string.Format("\"itemName\":\"{0}\",\"amount\":{1}", itemName, amount);

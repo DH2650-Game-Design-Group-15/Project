@@ -58,6 +58,12 @@ public class ItemsInput : MonoBehaviour {
         return null;
     }
 
+    /// <summary> Returns a position stored in name. name must contain 4 digits, else it can't identify the values. 
+    /// The first to digits are the column, the two other digits are the row. </summary>
+    /// <param name="name"> String that must contain 4 digits. </param>
+    /// <returns> The position as Tuple (column, row). If the string had more or less than 4 digits it returns (-1, -1), 
+    /// else it returns the position. </returns>
+    
     public (int, int) GetPositionFromName(string name){
         List<int> digits = new();
         foreach (char digit in name) {

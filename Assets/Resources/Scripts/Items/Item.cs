@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Abstract class for all items a player can pick up. 
+/// It's only a data class without functions
+/// </summary>
 public abstract class Item : MonoBehaviour {
     public Texture imageInventory;
 

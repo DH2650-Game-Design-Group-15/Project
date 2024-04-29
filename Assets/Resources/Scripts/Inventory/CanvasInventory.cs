@@ -1,10 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Creates the UI for the inventory and changes the images in each slot.
+/// </summary>
 public class CanvasInventory : MonoBehaviour {
     public GameObject itemPrefab;
     public PlayerInventory player;
     
+    /// <summary> Fills the slot in the inventory UI with this item </summary>
+    /// <param name="item"> The item, especially it's image, to display in the inventory. </param>
+    /// <param name="column"> The column to store the item in the inventory </param>
+    /// <param name="row"> The row to store the item in the inventory </param>
     public void EnableSlot(Item item, int column, int row){
         string slotName = "Item" + column.ToString("00") + row.ToString("00");
         Transform slot = transform.Find(slotName);
@@ -19,6 +26,9 @@ public class CanvasInventory : MonoBehaviour {
         reference.Item = item;
     }
 
+    /// <summary> Removes a existing item from this slot in the inventories UI. </summary>
+    /// <param name="column"> The column to remove the item in the inventory </param>
+    /// <param name="row"> The row to remove the item in the inventory </param>
     public void DisableSlot(int column, int row){
         string slotName = "Item" + column.ToString("00") + row.ToString("00");
         Transform slot = transform.Find(slotName);
@@ -33,6 +43,7 @@ public class CanvasInventory : MonoBehaviour {
         reference.Item = null;
     }
 
+    /// <summary> Creates an empty inventory. The size is stored in playerInventory. </summary>
     public void CreateEmptyInventory(){
         for (int i = 0; i < player.Rows; i++){
             for (int j = 0; j < player.Columns; j++) {
@@ -47,7 +58,7 @@ public class CanvasInventory : MonoBehaviour {
         GetComponent<RectTransform>().sizeDelta = new Vector2(player.Rows * (cellSize.x + spacing.x), player.Columns * (cellSize.y + spacing.y));
     }
 
-    void CreateEmptyInventorySlot(int row, int column){
+    private void CreateEmptyInventorySlot(int row, int column){
         int index = row * player.Columns + column;
         GameObject slot = Instantiate(itemPrefab, transform);
         slot.name = "Item" + row.ToString("D2") + column.ToString("D2");
