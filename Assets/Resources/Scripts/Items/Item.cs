@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class Item : MonoBehaviour {
-    public Texture pictureInventory;
-    private int amount;
+    public Texture imageInventory;
 
-    public Texture PictureInventory { get => pictureInventory; }
+    public Texture ImageInventory { get => imageInventory; }
     public abstract int MaxStackSize { get; }
     public abstract double Weight { get; }
-    public int Amount { get => amount; set => amount = value; }
+    public abstract int Amount { get; set; }
+
+    /// <summary>
+    /// Returns the difference between the maximal amount and the amount now
+    /// </summary>
+    /// <returns> Returns the available space
+    public int SpaceAvailable(){
+        return MaxStackSize - Amount;
+    }
 }

@@ -13,7 +13,6 @@ public class InventoryInput : MonoBehaviour {
         if (context.started){
             inputs.ChangeActionMap("Inventory");
             inventoryCanvas.SetActive(true);
-            inventoryCanvas.GetComponentInChildren<CanvasInventory>().CreateInventory();
         }
     }
 
