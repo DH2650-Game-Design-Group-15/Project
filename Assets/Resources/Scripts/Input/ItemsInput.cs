@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -41,9 +40,9 @@ public class ItemsInput : MonoBehaviour {
 
     /// <summary>
     /// Returns a UI GameObject, that's below the mouse. The GameObjects name must equal pattern
-    /// The pattern has to be a RegEx expression
-    /// Returns null, if no GameObject with this name is found
     /// </summary>
+    /// <param name="pattern"> RegEx Expression, that has to fit the GameObjects name </param>
+    /// <returns> The GameObject below the mouse. Returns null, if no GameObject fits with the name </returns>
     public GameObject ItemOnMouse(string pattern){
         List<RaycastResult> raycasts = new();
         PointerEventData pointer = new(EventSystem.current) {
@@ -60,17 +59,19 @@ public class ItemsInput : MonoBehaviour {
     }
 
     public (int, int) GetPositionFromName(string name){
-        string columnStr = name.Substring(5, 2);
-        string rowStr = name.Substring(7, 2);
-        bool columnIsNum = int.TryParse(columnStr, out int column);
-        bool rowIsNum = int.TryParse(rowStr, out int row);
-        if (!columnIsNum || !rowIsNum){
-            Debug.LogWarning(string.Format("Position isn't an integer. Column is: {0,2} and Row is: {1,2}", column, row));
-            return (-1, -1);
-        } else if (column < 0 || row < 0){
-            Debug.LogWarning(string.Format("Number was negativ: {0:3}", math.min(column, row)));
+        List<int> digits = new();
+        foreach (char digit in name) {
+            bool isDigit = int.TryParse(digit.ToString(), out int number);
+            if (isDigit){
+                digits.Add(number);
+            }
+        }
+        if (digits.Count != 4){
+            Debug.LogWarning("Position isn't an integer.");
             return (-1, -1);
         }
+        int column = 10 * digits[0] + digits[1];
+        int row = 10 * digits[2] * digits[3];
         return (column, row);
     }
 
