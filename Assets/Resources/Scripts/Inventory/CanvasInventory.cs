@@ -23,7 +23,9 @@ public class CanvasInventory : MonoBehaviour {
         RawImage image = reference.GetComponent<RawImage>();
         image.texture = item.ImageInventory;
         image.enabled = true;
-        reference.Item = item;
+        reference.ItemName = item.GetType().ToString();
+        reference.Amount = item.Amount;
+        Debug.Log(reference.ItemName);
     }
 
     /// <summary> Removes a existing item from this slot in the inventories UI. </summary>
@@ -40,7 +42,8 @@ public class CanvasInventory : MonoBehaviour {
         RawImage image = reference.GetComponent<RawImage>();
         image.texture = null;
         image.enabled = false;
-        reference.Item = null;
+        reference.ItemName = null;
+        reference.Amount = 0;
     }
 
     /// <summary> Creates an empty inventory. The size is stored in playerInventory. </summary>

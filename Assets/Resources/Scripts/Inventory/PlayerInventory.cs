@@ -60,10 +60,14 @@ public class PlayerInventory : MonoBehaviour {
     /// <param name="amount"> The amount of the removed item. </param>
     /// <returns> True, if it removed the item the given amount of times. False, if the inventory hadn't enough items stored. </returns>
     public bool Remove(string itemName, int amount){
-        foreach (InventoryItemHelper inventoryItem in inventoryItems){
-            if (inventoryItem.ItemName == itemName){
+        for (int i = 0; i < inventoryItems.Count; i++) {
+            if (inventoryItems[i].ItemName == itemName){
                 inventoryChanged = true;
-                return inventoryItem.Remove(amount);
+                bool isRemoved = inventoryItems[i].Remove(amount);
+                if (inventoryItems[i].Slots.Count == 0){
+                    inventoryItems.RemoveAt(i);
+                }
+                return isRemoved;
             }
         }
         return false;

@@ -81,6 +81,7 @@ public class InventoryItemHelper {
     public bool RemoveStack(int column, int row){
         for (int i = slots.Count - 1; i >= 0; i--){
             if (slots[i].Column == column && slots[i].Row == row){
+                amount -= slots[i].Item.Amount;
                 slots[i].RemoveStack();
                 slots.RemoveAt(i);
                 return true;

@@ -31,7 +31,7 @@ public class ItemSlot{
         this.row = row;
         this.full = item.SpaceAvailable() == 0;
         this.canvas = canvas;
-        canvas.EnableSlot(item, column, row);
+        canvas.EnableSlot(this.item, column, row);
     }
 
     /// <summary>

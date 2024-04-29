@@ -86,17 +86,18 @@ public class ItemsInput : MonoBehaviour {
             GameObject itemUI = ItemOnMouse(itemPattern);
             if (itemUI != null){
                 ItemReference reference = itemUI.GetComponentInChildren<ItemReference>();
-                Item item = reference.Item;
-                if (item != null){
+                string itemName = reference.ItemName;
+                if (itemName != null){
                     (int column, int row) = GetPositionFromName(itemUI.name);
                     if (column < 0 || row < 0){
                         return;
                     }
-                    bool removed = playerInventoryScript.RemoveStack(item.name, column, row);
+                    bool removed = playerInventoryScript.RemoveStack(itemName, column, row);
                     if (removed){
                         reference.GetComponent<RawImage>().enabled = false;
                         reference.GetComponent<RawImage>().texture = null;
                     }
+                    // TODO Spawn Object
                 }
             }
         }
