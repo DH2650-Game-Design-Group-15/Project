@@ -89,6 +89,14 @@ public class ItemSlot{
         this.row = row;
     }
 
+    public string ToJson(){
+        string json = "{";
+        json += string.Format("\"Amount\":{0},\"column\":{1},\"row\":{2}", item.Amount, column, row);
+        json += "}";
+        return json;
+        
+    }
+
     public Item Item { get => item; }
     public int Column { get => column; }
     public int Row { get => row; }

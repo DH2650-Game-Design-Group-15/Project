@@ -10,7 +10,7 @@ public class InventoryItemHelper {
     public InventoryItemHelper(Item item, PlayerInventory inventory){
         slots = new();
         itemName = item.GetType().Name;
-        amount = item.Amount;
+        amount = 0;
         this.inventory = inventory;
     }
 
@@ -106,6 +106,19 @@ public class InventoryItemHelper {
         return false;
     }
 
+    public string ToJson(){
+        string json = "{";
+        json += string.Format("\"itemName\":\"{0}\",\"amount\":{1}", itemName, amount);
+        json += ",\"slots\":[";
+        for (int i = 0; i < slots.Count; i++) {
+            json += slots[i].ToJson();
+            if (i != slots.Count - 1){
+                json += ",";
+            }
+        }
+        json += "]}";
+        return json;
+    }
 
     public int Amount { get => amount; }
     public string ItemName { get => itemName; }
