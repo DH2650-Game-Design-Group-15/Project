@@ -32,6 +32,7 @@ public class SetTerrainObstacles : MonoBehaviour
             obs.transform.SetParent(parent.transform);
             obs.transform.position = worldPosition;
             obs.transform.rotation = tempRot;
+            obs.layer = 6;
 
             obs.AddComponent<NavMeshObstacle>();
             NavMeshObstacle obsElement = obs.GetComponent<NavMeshObstacle>();
