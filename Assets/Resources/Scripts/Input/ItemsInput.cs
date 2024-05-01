@@ -8,6 +8,12 @@ using UnityEngine.UI;
 public class ItemsInput : MonoBehaviour {
     public CacheCloseObjects closeObjectsScript;
     public PlayerInventory playerInventoryScript;
+    private bool move = false;
+    private bool split = false;
+    private GameObject moveObject;
+    private GameObject slotMoveObject;
+    private Vector2 mouseStartPos;
+    private Vector3 startingPos;
 
     void Start(){
         Transform parent = transform.parent ?? transform;
@@ -86,20 +92,87 @@ public class ItemsInput : MonoBehaviour {
             GameObject itemUI = ItemOnMouse(itemPattern);
             if (itemUI != null){
                 ItemReference reference = itemUI.GetComponentInChildren<ItemReference>();
-                string itemName = reference.ItemName;
-                if (itemName != null){
-                    (int column, int row) = GetPositionFromName(itemUI.name);
-                    if (column < 0 || row < 0){
-                        return;
-                    }
-                    bool removed = playerInventoryScript.RemoveStack(itemName, column, row);
-                    if (removed){
-                        reference.GetComponent<RawImage>().enabled = false;
-                        reference.GetComponent<RawImage>().texture = null;
-                    }
-                    // TODO Spawn Object
+                RemoveStack(reference);
+            }
+        }
+    }
+
+    private void RemoveStack(ItemReference reference){
+        string itemName = reference.ItemName;
+        if (itemName != null){
+            (int column, int row) = GetPositionFromName(reference.transform.parent.gameObject.name);
+            if (column < 0 || row < 0){
+                return;
+            }
+            bool removed = playerInventoryScript.RemoveStack(itemName, column, row);
+            if (removed){
+                reference.GetComponent<RawImage>().enabled = false;
+                reference.GetComponent<RawImage>().texture = null;
+            }
+            // TODO Spawn Object
+        }
+
+    }
+
+    public void OnMoveItem(InputAction.CallbackContext context){
+        string itemPattern = @"^Item\d{4}";
+        if (context.started){
+            slotMoveObject = ItemOnMouse(itemPattern);
+            if (slotMoveObject != null && slotMoveObject.GetComponentInChildren<ItemReference>().ItemName != null){ // First check if there's an item slot and then if it stores an item
+                moveObject = slotMoveObject.GetComponentInChildren<ItemReference>().gameObject;
+                move = true;
+                mouseStartPos = Mouse.current.position.ReadValue();
+                startingPos = moveObject.GetComponent<RectTransform>().position;
+                moveObject.transform.SetParent(slotMoveObject.transform.parent.parent.Find("MoveHelper"));
+            }
+        }
+        if (context.canceled && move){
+            move = false;
+            if (split){
+                
+            } else {
+                GameObject newSlot = ItemOnMouse(itemPattern);
+                if (newSlot == null){
+                    moveObject.transform.SetParent(slotMoveObject.transform);
+                    RemoveStack(moveObject.GetComponent<ItemReference>());
+                } else if (newSlot != moveObject.transform.parent.gameObject) {
+                    GameObject oldItemInSlot = newSlot.GetComponentInChildren<ItemReference>().gameObject;
+                    (int oldColumn, int oldRow) = GetPositionFromName(oldItemInSlot.name);
+                    (int newColumn, int newRow) = GetPositionFromName(moveObject.name);
+                    Vector3 position = new(1, 0, 0);
+                    oldItemInSlot.transform.SetParent(slotMoveObject.transform);
+                    moveObject.transform.SetParent(newSlot.transform);
+                    oldItemInSlot.GetComponent<RectTransform>().localPosition = position;
+                    moveObject.GetComponent<RectTransform>().localPosition = position;
+                    playerInventoryScript.Move(oldItemInSlot.GetComponent<ItemReference>().ItemName, newColumn, newRow, oldColumn, oldRow);
+                    playerInventoryScript.Move(moveObject.GetComponent<ItemReference>().ItemName, oldColumn, oldRow, newColumn, newRow);
+                    // TODO Add if same item
+                } else {
+                    moveObject.transform.SetParent(slotMoveObject.transform);
+                    moveObject.transform.localPosition = new Vector3(1, 0, 0);
                 }
             }
+        }
+    }
+
+    void Update(){
+        if (move){
+            Move();
+        }
+    }
+
+    private void Move(){
+        Vector2 mouse = Mouse.current.position.ReadValue();
+        Vector3 newPosition = new(mouse.x - mouseStartPos.x + startingPos.x, mouse.y - mouseStartPos.y + startingPos.y, startingPos.z);
+        moveObject.GetComponent<RectTransform>().position = newPosition;
+    }
+
+    public void OnSplitItem(InputAction.CallbackContext context){
+        if (context.started){
+            split = true;
+        }
+        if (context.canceled){
+            split = false;
         }
     }
 }

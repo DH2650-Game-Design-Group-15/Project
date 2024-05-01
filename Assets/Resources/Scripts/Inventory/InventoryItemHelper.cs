@@ -100,7 +100,7 @@ public class InventoryItemHelper {
     /// <param name="newColumn"> The column, where the item is now stored in the inventory. </param>
     /// <param name="newRow"> The row, where the item is now stored in the inventory. </param>
     public void Move(int oldColumn, int oldRow, int newColumn, int newRow) {
-        // TODO
+        GetPosition(oldColumn, oldRow)?.Move(newColumn, newRow);
     }
 
     /// <summary>
@@ -114,6 +114,15 @@ public class InventoryItemHelper {
     /// <param name="newRow"> The row, where a part of this item is now stored in the inventory. </param>
     public void Split(int oldColumn, int oldRow, int newColumn, int newRow, int amount){
         // TODO
+    }
+
+    public ItemSlot GetPosition(int column, int row){
+        for (int i = slots.Count - 1; i >= 0; i--){
+            if (slots[i].Column == column && slots[i].Row == row){
+                return slots[i];
+            }
+        }
+        return null;
     }
 
     /// <summary> Returns true, if a slot of this item contains the position. </summary>

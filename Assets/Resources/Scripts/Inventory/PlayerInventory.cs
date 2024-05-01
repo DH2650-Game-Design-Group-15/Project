@@ -100,7 +100,8 @@ public class PlayerInventory : MonoBehaviour {
     /// <param name="newColumn"> The column, where the item is now stored in the inventory. </param>
     /// <param name="newRow"> The row, where the item is now stored in the inventory. </param>
     public void Move(string itemName, int oldColumn, int oldRow, int newColumn, int newRow){
-        // TODO
+        InventoryItemHelper itemHelper = GetInventoryItemHelper(itemName);
+        itemHelper?.Move(oldColumn, oldRow, newColumn, newRow);
     }
 
     /// <summary>
@@ -146,6 +147,15 @@ public class PlayerInventory : MonoBehaviour {
             }
         }
         return (-1, -1);
+    }
+
+    public InventoryItemHelper GetInventoryItemHelper(string itemName){
+        foreach (InventoryItemHelper inventoryItem in inventoryItems){
+            if (inventoryItem.ItemName == itemName){
+                return inventoryItem;
+            }
+        }
+        return null;
     }
 
     void Update(){
