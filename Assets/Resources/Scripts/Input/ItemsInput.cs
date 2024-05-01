@@ -8,12 +8,14 @@ using UnityEngine.UI;
 public class ItemsInput : MonoBehaviour {
     public CacheCloseObjects closeObjectsScript;
     public PlayerInventory playerInventoryScript;
+    // Only for Move and Split 
     private bool move = false;
     private bool split = false;
-    private GameObject moveObject;
-    private GameObject slotMoveObject;
+    private GameObject moveItem;
+    private GameObject moveSlot;
     private Vector2 mouseStartPos;
     private Vector3 startingPos;
+    private static Vector3 positionInSlot = new(1, 0, 0);
 
     void Start(){
         Transform parent = transform.parent ?? transform;
@@ -65,7 +67,7 @@ public class ItemsInput : MonoBehaviour {
     /// <param name="name"> String that must contain 4 digits. </param>
     /// <returns> The position as Tuple (column, row). If the string had more or less than 4 digits it returns (-1, -1), 
     /// else it returns the position. </returns>
-    public (int, int) GetPositionFromName(string name){
+    public Vector2Int GetPositionFromName(string name){
         List<int> digits = new();
         foreach (char digit in name) {
             bool isDigit = int.TryParse(digit.ToString(), out int number);
@@ -75,11 +77,9 @@ public class ItemsInput : MonoBehaviour {
         }
         if (digits.Count != 4){
             Debug.LogWarning("Position isn't an integer: " + name);
-            return (-1, -1);
+            return new Vector2Int(-1, -1);
         }
-        int column = 10 * digits[0] + digits[1];
-        int row = 10 * digits[2] + digits[3];
-        return (column, row);
+        return new Vector2Int(10 * digits[0] + digits[1], 10 * digits[2] + digits[3]);
     }
 
     /// <summary> Called when a player press the button to remove an item from the inventory.
@@ -99,11 +99,11 @@ public class ItemsInput : MonoBehaviour {
     private void RemoveStack(ItemReference reference){
         string itemName = reference.ItemName;
         if (itemName != null){
-            (int column, int row) = GetPositionFromName(reference.transform.parent.gameObject.name);
-            if (column < 0 || row < 0){
+            Vector2Int position = GetPositionFromName(reference.transform.parent.gameObject.name);
+            if (position.x < 0 || position.y < 0){
                 return;
             }
-            bool removed = playerInventoryScript.RemoveStack(itemName, column, row);
+            bool removed = playerInventoryScript.RemoveStack(itemName, position);
             if (removed){
                 reference.GetComponent<RawImage>().enabled = false;
                 reference.GetComponent<RawImage>().texture = null;
@@ -114,55 +114,64 @@ public class ItemsInput : MonoBehaviour {
     }
 
     public void OnMoveItem(InputAction.CallbackContext context){
-        string itemPattern = @"^Item\d{4}";
         if (context.started){
-            slotMoveObject = ItemOnMouse(itemPattern);
-            if (slotMoveObject != null && slotMoveObject.GetComponentInChildren<ItemReference>().ItemName != null){ // First check if there's an item slot and then if it stores an item
-                moveObject = slotMoveObject.GetComponentInChildren<ItemReference>().gameObject;
-                move = true;
-                mouseStartPos = Mouse.current.position.ReadValue();
-                startingPos = moveObject.GetComponent<RectTransform>().position;
-                moveObject.transform.SetParent(slotMoveObject.transform.parent.parent.Find("MoveHelper"));
-            }
+            MoveStart();
         }
         if (context.canceled && move){
-            move = false;
-            if (split){
-                
-            } else {
-                moveObject.transform.SetParent(slotMoveObject.transform);
-                GameObject newSlot = ItemOnMouse(itemPattern);
-                if (newSlot == null){
-                    RemoveStack(moveObject.GetComponent<ItemReference>());
-                } else if (newSlot != slotMoveObject) {
-                    GameObject oldItemInSlot = newSlot.GetComponentInChildren<ItemReference>().gameObject;
-                    (int oldColumn, int oldRow) = GetPositionFromName(slotMoveObject.name);
-                    (int newColumn, int newRow) = GetPositionFromName(newSlot.name);
-                    playerInventoryScript.Move(oldItemInSlot.GetComponent<ItemReference>().ItemName, newColumn, newRow, oldColumn, oldRow);
-                    playerInventoryScript.Move(moveObject.GetComponent<ItemReference>().ItemName, oldColumn, oldRow, newColumn, newRow);
-                    Vector3 position = new(1, 0, 0);
-                    oldItemInSlot.transform.SetParent(slotMoveObject.transform);
-                    moveObject.transform.SetParent(newSlot.transform);
-                    oldItemInSlot.GetComponent<RectTransform>().localPosition = position;
-                    moveObject.GetComponent<RectTransform>().localPosition = position;
-                    // TODO Add if same item
-                } else {
-                    moveObject.transform.localPosition = new Vector3(1, 0, 0);
-                }
+            MoveEnd();
+        }
+    }
+
+    private void MoveStart(){
+        string itemPattern = @"^Item\d{4}";
+        moveSlot = ItemOnMouse(itemPattern);
+        if (moveSlot != null && moveSlot.GetComponentInChildren<ItemReference>().ItemName != null){ // First check if there's an item slot and then if it stores an item
+            move = true;
+            mouseStartPos = Mouse.current.position.ReadValue();
+            moveItem = moveSlot.GetComponentInChildren<ItemReference>().gameObject;
+            startingPos = moveItem.GetComponent<RectTransform>().position;
+            moveItem.transform.SetParent(moveSlot.transform.parent.parent.Find("MoveHelper")); // Lower in the hierarchy means in the foreground. This image has to be in front of all other images
+        }
+
+    }
+
+    private void MoveProgress(){
+        Vector2 mouse = Mouse.current.position.ReadValue();
+        Vector3 newPosition = new(mouse.x - mouseStartPos.x + startingPos.x, mouse.y - mouseStartPos.y + startingPos.y, startingPos.z);
+        moveItem.GetComponent<RectTransform>().position = newPosition;
+    }
+
+    private void MoveEnd(){
+        move = false;
+        if (split){
+            
+        } else {
+            string itemPattern = @"^Item\d{4}";
+            moveItem.transform.SetParent(moveSlot.transform); // Reset parent to swap position
+            GameObject newSlot = ItemOnMouse(itemPattern);
+            if (newSlot == null){ // Outside the inventory
+                RemoveStack(moveItem.GetComponent<ItemReference>());
+            } else if (newSlot != moveSlot) { // Isn't the same slot as before
+                GameObject oldItemInSlot = newSlot.GetComponentInChildren<ItemReference>().gameObject;
+                Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
+                Vector2Int newPosition = GetPositionFromName(newSlot.name);
+                playerInventoryScript.Move(oldItemInSlot.GetComponent<ItemReference>().ItemName, newPosition, oldPosition);
+                playerInventoryScript.Move(moveItem.GetComponent<ItemReference>().ItemName, oldPosition, newPosition);
+                oldItemInSlot.transform.SetParent(moveSlot.transform);
+                moveItem.transform.SetParent(newSlot.transform);
+                oldItemInSlot.GetComponent<RectTransform>().localPosition = positionInSlot;
+                moveItem.GetComponent<RectTransform>().localPosition = positionInSlot;
+                // TODO Add if same item
+            } else { // same slot as before, restore position
+                moveItem.transform.localPosition = positionInSlot;
             }
         }
     }
 
     void Update(){
         if (move){
-            Move();
+            MoveProgress();
         }
-    }
-
-    private void Move(){
-        Vector2 mouse = Mouse.current.position.ReadValue();
-        Vector3 newPosition = new(mouse.x - mouseStartPos.x + startingPos.x, mouse.y - mouseStartPos.y + startingPos.y, startingPos.z);
-        moveObject.GetComponent<RectTransform>().position = newPosition;
     }
 
     public void OnSplitItem(InputAction.CallbackContext context){

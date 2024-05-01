@@ -10,10 +10,9 @@ public class CanvasInventory : MonoBehaviour {
     
     /// <summary> Fills the slot in the inventory UI with this item </summary>
     /// <param name="item"> The item, especially it's image, to display in the inventory. </param>
-    /// <param name="column"> The column to store the item in the inventory </param>
-    /// <param name="row"> The row to store the item in the inventory </param>
-    public void EnableSlot(Item item, int column, int row){
-        string slotName = "Item" + column.ToString("00") + row.ToString("00");
+    /// <param name="position"> The position to store the item in the inventory </param>
+    public void EnableSlot(Item item, Vector2Int position){
+        string slotName = "Item" + position.x.ToString("00") + position.y.ToString("00");
         Transform slot = transform.Find(slotName);
         if (slot == null){
             Debug.LogWarning("Can't find item slot: " + slotName);
@@ -28,10 +27,9 @@ public class CanvasInventory : MonoBehaviour {
     }
 
     /// <summary> Removes a existing item from this slot in the inventories UI. </summary>
-    /// <param name="column"> The column to remove the item in the inventory </param>
-    /// <param name="row"> The row to remove the item in the inventory </param>
-    public void DisableSlot(int column, int row){
-        string slotName = "Item" + column.ToString("00") + row.ToString("00");
+    /// <param name="position"> Where to remove the item in the inventory </param>
+    public void DisableSlot(Vector2Int position){
+        string slotName = "Item" + position.x.ToString("00") + position.y.ToString("00");
         Transform slot = transform.Find(slotName);
         if (slot == null) {
             Debug.LogWarning("Can't find item slot: " + slotName);
@@ -47,23 +45,26 @@ public class CanvasInventory : MonoBehaviour {
 
     /// <summary> Creates an empty inventory. The size is stored in playerInventory. </summary>
     public void CreateEmptyInventory(){
-        for (int i = 0; i < player.Rows; i++){
-            for (int j = 0; j < player.Columns; j++) {
-                string name = "Item" + i.ToString("D2") + j.ToString("D2");
+        for (int x = 0; x < player.InventorySize.x; x++){
+            for (int y = 0; y < player.InventorySize.y; y++) {
+                string name = "Item" + x.ToString("D2") + y.ToString("D2");
                 if (transform.Find(name) == null){
-                    CreateEmptyInventorySlot(i, j);
+                    CreateEmptyInventorySlot(new Vector2Int(x, y));
                 }
             }
         }
         Vector2 cellSize = GetComponent<GridLayoutGroup>().cellSize;
         Vector2 spacing = GetComponent<GridLayoutGroup>().spacing;
-        GetComponent<RectTransform>().sizeDelta = new Vector2(player.Rows * (cellSize.x + spacing.x), player.Columns * (cellSize.y + spacing.y));
+        GetComponent<RectTransform>().sizeDelta = new Vector2(player.InventorySize.x * (cellSize.x + spacing.x), player.InventorySize.y * (cellSize.y + spacing.y));
     }
 
-    private void CreateEmptyInventorySlot(int row, int column){
-        int index = row * player.Columns + column;
+    private void CreateEmptyInventorySlot(Vector2Int position){
+        int index = position.x * player.InventorySize.y + position.y;
         GameObject slot = Instantiate(itemPrefab, transform);
-        slot.name = "Item" + row.ToString("D2") + column.ToString("D2");
+        if (index >= transform.GetComponentsInChildren<ItemReference>().Length){
+            Debug.LogWarning("index is too big: " + position);
+        }
+        slot.name = "Item" + position.x.ToString("D2") + position.y.ToString("D2");
         slot.transform.SetSiblingIndex(index);
         RawImage image = slot.GetComponentInChildren<ItemReference>().GetComponent<RawImage>();
         image.enabled = false;

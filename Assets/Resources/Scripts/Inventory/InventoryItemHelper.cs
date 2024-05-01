@@ -78,65 +78,58 @@ public class InventoryItemHelper {
     /// Removes it only, if it has the same type than this helpers items.
     /// </summary>
     /// <returns> True, if the slot was used by this slot. False if it didn't exist in this slot </returns>
-    public bool RemoveStack(int column, int row){
-        for (int i = slots.Count - 1; i >= 0; i--){
-            if (slots[i].Column == column && slots[i].Row == row){
-                amount -= slots[i].Item.Amount;
-                slots[i].RemoveStack();
-                slots.RemoveAt(i);
-                return true;
-            }
+    public bool RemoveStack(Vector2Int position){
+        (ItemSlot slot, int index) = GetByPosition(position);
+        if (slot != null){
+            amount -= slot.Item.Amount;
+            slot.RemoveStack();
+            slots.RemoveAt(index);
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /// <summary>
     /// Moves this item to a new position in the inventory. If this slot was already used by another item it swaps the position. 
     /// If this slot was already used by an item of the same type it fills this stack, if this stack isn't big enough the remaining part stays in the old slot.
     /// <summary>
-    /// <param name="itemName"> The name of the moved item. </param>
-    /// <param name="oldColumn"> The column, where the item was stored in the inventory. </param>
-    /// <param name="oldRow"> The row, where the item was stored in the inventory. </param>
-    /// <param name="newColumn"> The column, where the item is now stored in the inventory. </param>
-    /// <param name="newRow"> The row, where the item is now stored in the inventory. </param>
-    public void Move(int oldColumn, int oldRow, int newColumn, int newRow) {
-        ItemSlot slot = GetPosition(oldColumn, oldRow);
-        slot?.Move(newColumn, newRow);
+    /// <param name="oldPosition"> The position, where the item was stored in the inventory. </param>
+    /// <param name="newPosition"> The position, where the item is now stored in the inventory. </param>
+    public void Move(Vector2Int oldPosition, Vector2Int newPosition) {
+        (ItemSlot slot, _) = GetByPosition(oldPosition);
+        slot?.Move(newPosition);
     }
 
     /// <summary>
     /// Splits a stack. One part stays in this item slot and the other part is moved to another slot. 
     /// The other slot must be empty.
     /// <summary>
-    /// <param name="itemName"> The name of the moved item. </param>
-    /// <param name="oldColumn"> The column, where the item was stored in the inventory. </param>
-    /// <param name="oldRow"> The row, where the item was stored in the inventory. </param>
-    /// <param name="newColumn"> The column, where a part of this item is now stored in the inventory. </param>
-    /// <param name="newRow"> The row, where a part of this item is now stored in the inventory. </param>
-    public void Split(int oldColumn, int oldRow, int newColumn, int newRow, int amount){
+    /// <param name="oldPosition"> The position, where the item was stored in the inventory. </param>
+    /// <param name="newPosition"> The position, where a part of this item is now stored in the inventory. </param>
+    /// <param name="amount"> The amount of items stored in the new slot. Must be between 1 and the old amount. </param>
+    public void Split(Vector2Int oldPosition, Vector2Int newPosition, int amount){
         // TODO
     }
 
-    public ItemSlot GetPosition(int column, int row){
+    public (ItemSlot, int) GetByPosition(Vector2Int position){
         for (int i = slots.Count - 1; i >= 0; i--){
-            if (slots[i].Position.x == column && slots[i].Position.y == row){
-                return slots[i];
+            if (slots[i].Position.Equals(position)){
+                return (slots[i], i);
             }
         }
-        return null;
+        return (null, -1);
     }
 
     /// <summary> Returns true, if a slot of this item contains the position. </summary>
-    /// <param name="column"> The column in the inventory </param>
-    /// <param name="row"> The row in the inventory </param>
+    /// <param name="position"> The position in the inventory </param>
     /// <returns> True, if this postion contains at least one element of this item. False otherwise. </returns>
-    public bool ContainsPosition(int column, int row){
-        for (int i = slots.Count - 1; i >= 0; i--){
-            if (slots[i].Column == column && slots[i].Row == row){
-                return true;
-            }
+    public bool ContainsPosition(Vector2Int position){
+        if (GetByPosition(position).Item1 == null){
+            return false;
+        } else {
+            return true;
         }
-        return false;
     }
 
 
