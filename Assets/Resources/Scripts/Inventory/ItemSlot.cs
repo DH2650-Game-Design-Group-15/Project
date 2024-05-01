@@ -6,11 +6,10 @@ using UnityEngine;
 /// </summary>
 public class ItemSlot{
     private readonly Item item;
-    private int column;
-    private int row;
+    private Vector2Int position;
     private bool full;
     private readonly CanvasInventory canvas;
-    private PlayerInventory inventory;
+    private readonly PlayerInventory inventory;
 
     /// <summary>
     /// Calls the constructor with the next free slot in the players inventory
@@ -28,8 +27,7 @@ public class ItemSlot{
     /// <param name="row"> Row to store the item. Msut be between 0 and player inventories row </param>
     public ItemSlot(CanvasInventory canvas, Item item, PlayerInventory inventory, int column, int row){
         this.item = item;
-        this.column = column;
-        this.row = row;
+        position = new Vector2Int(column, row);
         this.full = item.SpaceAvailable() == 0;
         this.canvas = canvas;
         canvas.EnableSlot(this.item, column, row);
@@ -67,8 +65,8 @@ public class ItemSlot{
         // TODO Canvas update
         full = false;
         if (Item.Amount < amount){
-            canvas.DisableSlot(column, row);
-            inventory.FreeSlot[column][row] = true;
+            canvas.DisableSlot(position.x, position.y);
+            inventory.FreeSlot[position.x][position.y] = true;
             return amount - Item.Amount;
         } else {
             Item.Amount -= amount;
@@ -80,34 +78,34 @@ public class ItemSlot{
     /// Removes the whole stack from the players inventory
     /// </summary>
     public void RemoveStack(){
-        canvas.DisableSlot(column, row);
-        inventory.FreeSlot[column][row] = true;
+        canvas.DisableSlot(position.x, position.y);
+        inventory.FreeSlot[position.x][position.y] = true;
     }
 
     /// <summary>
     /// Changes the slot
     /// </summary>
     public void Move(int column, int row){
-        inventory.FreeSlot[this.column][this.row] = true;
-        canvas.DisableSlot(this.column, this.row);
+        inventory.FreeSlot[position.x][position.y] = true;
+        canvas.DisableSlot(position.x, position.y);
+        position = new Vector2Int(column, row);
         canvas.EnableSlot(item, column, row);
         inventory.FreeSlot[column][row] = false;
-        this.column = column;
-        this.row = row;
     }
 
     /// <summary> Returns this slot as an json string. </summary>
     /// <returns> The item as a json string. </summary>
     public string ToJson(){
         string json = "{";
-        json += string.Format("\"Amount\":{0},\"column\":{1},\"row\":{2}", item.Amount, column, row);
+        json += string.Format("\"Amount\":{0},\"column\":{1},\"row\":{2}", item.Amount, position.x, position.y);
         json += "}";
         return json;
         
     }
 
     public Item Item { get => item; }
-    public int Column { get => column; }
-    public int Row { get => row; }
+    public Vector2Int Position { get => position; }
+    public int Column { get => position.x; }
+    public int Row { get => position.y; }
     public bool Full { get => full; }
 }

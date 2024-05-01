@@ -74,11 +74,11 @@ public class ItemsInput : MonoBehaviour {
             }
         }
         if (digits.Count != 4){
-            Debug.LogWarning("Position isn't an integer.");
+            Debug.LogWarning("Position isn't an integer: " + name);
             return (-1, -1);
         }
         int column = 10 * digits[0] + digits[1];
-        int row = 10 * digits[2] * digits[3];
+        int row = 10 * digits[2] + digits[3];
         return (column, row);
     }
 
@@ -130,24 +130,23 @@ public class ItemsInput : MonoBehaviour {
             if (split){
                 
             } else {
+                moveObject.transform.SetParent(slotMoveObject.transform);
                 GameObject newSlot = ItemOnMouse(itemPattern);
                 if (newSlot == null){
-                    moveObject.transform.SetParent(slotMoveObject.transform);
                     RemoveStack(moveObject.GetComponent<ItemReference>());
-                } else if (newSlot != moveObject.transform.parent.gameObject) {
+                } else if (newSlot != slotMoveObject) {
                     GameObject oldItemInSlot = newSlot.GetComponentInChildren<ItemReference>().gameObject;
-                    (int oldColumn, int oldRow) = GetPositionFromName(oldItemInSlot.name);
-                    (int newColumn, int newRow) = GetPositionFromName(moveObject.name);
+                    (int oldColumn, int oldRow) = GetPositionFromName(slotMoveObject.name);
+                    (int newColumn, int newRow) = GetPositionFromName(newSlot.name);
+                    playerInventoryScript.Move(oldItemInSlot.GetComponent<ItemReference>().ItemName, newColumn, newRow, oldColumn, oldRow);
+                    playerInventoryScript.Move(moveObject.GetComponent<ItemReference>().ItemName, oldColumn, oldRow, newColumn, newRow);
                     Vector3 position = new(1, 0, 0);
                     oldItemInSlot.transform.SetParent(slotMoveObject.transform);
                     moveObject.transform.SetParent(newSlot.transform);
                     oldItemInSlot.GetComponent<RectTransform>().localPosition = position;
                     moveObject.GetComponent<RectTransform>().localPosition = position;
-                    playerInventoryScript.Move(oldItemInSlot.GetComponent<ItemReference>().ItemName, newColumn, newRow, oldColumn, oldRow);
-                    playerInventoryScript.Move(moveObject.GetComponent<ItemReference>().ItemName, oldColumn, oldRow, newColumn, newRow);
                     // TODO Add if same item
                 } else {
-                    moveObject.transform.SetParent(slotMoveObject.transform);
                     moveObject.transform.localPosition = new Vector3(1, 0, 0);
                 }
             }

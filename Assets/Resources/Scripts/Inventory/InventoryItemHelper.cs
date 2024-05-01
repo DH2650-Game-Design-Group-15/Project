@@ -100,7 +100,8 @@ public class InventoryItemHelper {
     /// <param name="newColumn"> The column, where the item is now stored in the inventory. </param>
     /// <param name="newRow"> The row, where the item is now stored in the inventory. </param>
     public void Move(int oldColumn, int oldRow, int newColumn, int newRow) {
-        GetPosition(oldColumn, oldRow)?.Move(newColumn, newRow);
+        ItemSlot slot = GetPosition(oldColumn, oldRow);
+        slot?.Move(newColumn, newRow);
     }
 
     /// <summary>
@@ -118,7 +119,7 @@ public class InventoryItemHelper {
 
     public ItemSlot GetPosition(int column, int row){
         for (int i = slots.Count - 1; i >= 0; i--){
-            if (slots[i].Column == column && slots[i].Row == row){
+            if (slots[i].Position.x == column && slots[i].Position.y == row){
                 return slots[i];
             }
         }
