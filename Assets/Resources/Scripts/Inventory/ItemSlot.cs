@@ -10,14 +10,15 @@ public class ItemSlot{
     private int row;
     private bool full;
     private readonly CanvasInventory canvas;
+    private PlayerInventory inventory;
 
     /// <summary>
     /// Calls the constructor with the next free slot in the players inventory
     /// </summary>
     /// <param name="item"> Item stored in this slot </param>
     /// <param name="inventory"> Whos inventory this item is. Searchs there for the next free slot </param>
-    public ItemSlot(CanvasInventory canvas, Item item, PlayerInventory inventory): this(canvas, item, inventory.NextFreeSlot()){}
-    private ItemSlot(CanvasInventory canvas, Item item, (int, int) slot):this(canvas, item, slot.Item1, slot.Item2){}
+    public ItemSlot(CanvasInventory canvas, Item item, PlayerInventory inventory): this(canvas, item, inventory, inventory.NextFreeSlot()){}
+    private ItemSlot(CanvasInventory canvas, Item item, PlayerInventory inventory, (int, int) slot):this(canvas, item, inventory, slot.Item1, slot.Item2){}
     /// <summary>
     /// Calls the constructor with a chosen slot
     /// Doesn't check if the slot is already used somewhere else
@@ -25,13 +26,15 @@ public class ItemSlot{
     /// <param name="item"> Item stored in this slot </param>
     /// <param name="column"> Column to store the item. Must be between 0 and player inventories column </param>
     /// <param name="row"> Row to store the item. Msut be between 0 and player inventories row </param>
-    public ItemSlot(CanvasInventory canvas, Item item, int column, int row){
+    public ItemSlot(CanvasInventory canvas, Item item, PlayerInventory inventory, int column, int row){
         this.item = item;
         this.column = column;
         this.row = row;
         this.full = item.SpaceAvailable() == 0;
         this.canvas = canvas;
         canvas.EnableSlot(this.item, column, row);
+        this.inventory = inventory;
+        inventory.FreeSlot[column][row] = false;
     }
 
     /// <summary>
@@ -65,6 +68,7 @@ public class ItemSlot{
         full = false;
         if (Item.Amount < amount){
             canvas.DisableSlot(column, row);
+            inventory.FreeSlot[column][row] = true;
             return amount - Item.Amount;
         } else {
             Item.Amount -= amount;
@@ -77,14 +81,17 @@ public class ItemSlot{
     /// </summary>
     public void RemoveStack(){
         canvas.DisableSlot(column, row);
+        inventory.FreeSlot[column][row] = true;
     }
 
     /// <summary>
     /// Changes the slot
     /// </summary>
     public void Move(int column, int row){
+        inventory.FreeSlot[this.column][this.row] = true;
         canvas.DisableSlot(this.column, this.row);
         canvas.EnableSlot(item, column, row);
+        inventory.FreeSlot[column][row] = false;
         this.column = column;
         this.row = row;
     }
