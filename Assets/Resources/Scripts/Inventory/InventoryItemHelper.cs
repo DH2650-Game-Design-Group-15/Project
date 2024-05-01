@@ -30,7 +30,7 @@ public class InventoryItemHelper {
         int amountLeft = item.Amount;
         foreach (ItemSlot slot in slots) {
             amountLeft = slot.Add(amountLeft);
-            if (amountLeft == 0){
+            if (amountLeft <= 0){
                 break;
             }
         }

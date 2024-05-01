@@ -25,7 +25,6 @@ public class CanvasInventory : MonoBehaviour {
         image.enabled = true;
         reference.ItemName = item.GetType().ToString();
         reference.Amount = item.Amount;
-        Debug.Log(reference.ItemName);
     }
 
     /// <summary> Removes a existing item from this slot in the inventories UI. </summary>

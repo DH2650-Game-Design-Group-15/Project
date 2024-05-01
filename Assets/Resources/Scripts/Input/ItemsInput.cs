@@ -32,7 +32,6 @@ public class ItemsInput : MonoBehaviour {
                     int left = playerInventoryScript.Add(item.GetComponent<Item>());
                     if (left == 0){
                         closeObjectsScript.OnTriggerExit(item.GetComponent<Collider>());
-                        Debug.Log(item.GetComponent<Item>().Amount);
                         Destroy(item);
                     } else {
                         item.GetComponent<Item>().Amount = left;

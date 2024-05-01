@@ -45,11 +45,11 @@ public class ItemSlot{
     /// Returns 0, if it stored all entities it should.
     /// </returns>
     public int Add(int amount) {
-        // TODO Canvas update
-        if (Item.SpaceAvailable() <= amount){
+        int space = Item.SpaceAvailable();
+        if (space <= amount){
             Item.Amount = Item.MaxStackSize;
             full = true;
-            return amount - Item.SpaceAvailable();
+            return amount - space;
         } else {
             Item.Amount += amount;
             return 0;
