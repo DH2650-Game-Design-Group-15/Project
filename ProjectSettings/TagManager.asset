@@ -10,13 +10,20 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
+<<<<<<< HEAD
   - 
   - 
   - DestroyItDebris
   - 
+=======
+  - Trees
+  - Player
+  - Enemy
+  - Building
+>>>>>>> 10081c2b5abf5d8ed17d1532c61f69cbff96bcf8
   - 
   - 
   - 
