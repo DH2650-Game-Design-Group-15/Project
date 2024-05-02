@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/DemoTerrain5.asset.meta
 guid: fcc3287b0c7f62c4fb4b3c89e78dbcea
+========
+guid: 201dd48e3b431804fa0fd60691f7a338
+>>>>>>>> 10081c2b5abf5d8ed17d1532c61f69cbff96bcf8:Assets/Scenes/DemoScene/NavMesh-Terrain 1.asset.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 15600000
+  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
