@@ -299,7 +299,7 @@ namespace DestroyIt
             ti.widthScale = 0f;
             if (cubePrefab != null)
             {
-
+                Debug.Log("???");
                 Instantiate(cubePrefab, tree.Position, Quaternion.identity); // 在当前位置实例化Cube预制体
             }
             currentTreeInstances[tree.Index] = ti;

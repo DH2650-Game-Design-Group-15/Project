@@ -14,7 +14,7 @@ public class SelfDestruct : MonoBehaviour
 
     IEnumerator DestroyAndSpawn()
     {
-        yield return new WaitForSeconds(5); // µÈ´ıÈıÃë
+        yield return new WaitForSeconds(5); // µÈ´ı5Ãë
 
         if (cubePrefab != null)
         {
