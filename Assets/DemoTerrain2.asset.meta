@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/DemoTerrain2.asset.meta
+guid: 8f69cb58efcdf884dbb3d50752a3a51f
+========
+guid: 16d7b0e865f1ccd42a3836511f90d4b2
+>>>>>>>> 10081c2b5abf5d8ed17d1532c61f69cbff96bcf8:Assets/Resources/Materials/Ship/AIVisionMaterial.mat.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
