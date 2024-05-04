@@ -11,13 +11,14 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     [SerializeField] private List<List<bool>> freeSlot;
     [SerializeField] private List<ItemType> type;
     [SerializeField] private Vector2Int inventorySize;
-    private InventoryCanvas inventoryCanvas;
+    public InventoryCanvas inventoryCanvas;
+    public GameObject canvas;
     // Debug
     public bool printInventory;
 
     void Awake(){
-        GameObject canvasPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
-        GameObject canvas = GameObject.FindWithTag("Canvas");
+        canvasPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
+        canvas = GameObject.FindWithTag("Canvas").transform.Find("Inventories").gameObject;
         inventorySize = new Vector2Int(3, 5);
         type = new();
         freeSlot = new();
@@ -42,6 +43,13 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         inventoryCanvas.transform.parent.gameObject.SetActive(false);
     }
 
+    public void ReloadInventoryCanvas(){
+        inventoryCanvas = Instantiate(canvasPrefab, canvas.transform).GetComponentInChildren<InventoryCanvas>();
+        inventoryCanvas.transform.parent.name = gameObject.name + "Inventory";
+        inventoryCanvas.Inventory = this;
+        inventoryCanvas.UpdateInventory();
+        inventoryCanvas.transform.parent.SetAsFirstSibling();
+    }
 
     // Called to perform an action
     /// <summary> Adds the given item to the inventory. </summary>
@@ -124,7 +132,9 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
             FreeSlot[oldPosition.x][oldPosition.y] = false;
             FreeSlot[newPosition.x][newPosition.y] = true;
         }
-        inventoryCanvas.MoveSlot(oldPosition, newPosition);
+        try{
+            InventoryCanvas.MoveSlot(oldPosition, newPosition);
+        } catch (NullReferenceException){}
     }
 
     /// <summary>

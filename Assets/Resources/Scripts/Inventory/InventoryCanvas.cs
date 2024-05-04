@@ -1,4 +1,3 @@
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -101,6 +100,31 @@ public class InventoryCanvas : MonoBehaviour{
         }
         GridLayoutGroup layout = GetComponent<GridLayoutGroup>();
         GetComponent<RectTransform>().sizeDelta = new Vector2(inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x), inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y));
+    }
+
+    public void UpdateInventory(){
+        CreateInventoryCanvas();
+        ClearInventory();
+        FillInventory();
+    }
+
+    private void FillInventory(){
+        foreach (ItemType type in inventory.Type) {
+            foreach (ItemSlot item in type.Slots) {
+                AddSlot(item.Position, type.ItemName, item.Amount, type.Texture);
+            }
+        }
+    }
+
+    private void ClearInventory(){
+        ItemReference[] references = GetComponentsInChildren<ItemReference>();
+        foreach (ItemReference reference in references) {
+            reference.Amount = 0;
+            reference.ItemName = null;
+            RawImage image = reference.GetComponent<RawImage>();
+            image.enabled = false;
+            image.texture = null;
+        }
     }
 
     /// <summary> Returns the default name of a slot in the UI. 
