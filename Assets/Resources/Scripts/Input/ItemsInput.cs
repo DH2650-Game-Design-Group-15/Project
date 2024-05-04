@@ -127,13 +127,11 @@ public class ItemsInput : MonoBehaviour {
         string itemPattern = @"^Item\d{4}";
         moveSlot = ItemOnMouse(itemPattern);
         if (moveSlot != null && moveSlot.GetComponentInChildren<ItemReference>().ItemName != null){ // First check if there's an item slot and then if it stores an item
-            Debug.Log(moveSlot.name);
             move = true;
             mouseStartPos = Mouse.current.position.ReadValue();
             moveItem = moveSlot.GetComponentInChildren<ItemReference>().gameObject;
             startingPos = moveItem.GetComponent<RectTransform>().position;
             moveInventory = GetInventory(moveSlot);
-            Debug.Log(moveInventory.gameObject.name);
             moveItem.transform.SetParent(moveSlot.transform.parent.parent.Find("MoveHelper")); // Lower in the hierarchy means in the foreground. This image has to be in front of all other images
         }
     }
@@ -182,7 +180,6 @@ public class ItemsInput : MonoBehaviour {
     public Inventory GetInventory(GameObject game){
         Transform inventory = game.transform;
         for (int i = 0; i < 5; i++){
-            Debug.Log(inventory.gameObject.name);
             InventoryCanvas result = inventory.GetComponent<InventoryCanvas>();
             if (result != null){
                 return result.Inventory;

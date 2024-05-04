@@ -127,7 +127,6 @@ public class ItemType{
     /// <param name="newPosition"> The position, where the item is now stored in the inventory. </param>
 
     public void Move(Vector2Int oldPosition, Vector2Int newPosition){
-        Debug.Log(oldPosition.ToString() + " goes to " + newPosition.ToString());
         ItemSlot item = GetItemSlot(oldPosition);
         item.Move(newPosition);
     }
@@ -143,6 +142,8 @@ public class ItemType{
             inventory.Type.Add(newType);
         }
         slot.Move(newPosition, newType);
+        slots.Remove(slot);
+        newType.slots.Add(slot);
         amount -= slot.Amount;
         newType.amount += slot.Amount;
     }
