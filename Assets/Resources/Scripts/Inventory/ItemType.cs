@@ -132,6 +132,21 @@ public class ItemType{
         item.Move(newPosition);
     }
 
+    public void Move(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
+        ItemSlot slot = GetItemSlot(oldPosition);
+        if (slot == null){
+            Debug.LogError("Item wasn't found at " + oldPosition.ToString());
+        }
+        ItemType newType = inventory.GetItemType(itemName);
+        if (newType == null){
+            newType = new(itemName, maxStackSize, texture, inventory);
+            inventory.Type.Add(newType);
+        }
+        slot.Move(newPosition, newType);
+        amount -= slot.Amount;
+        newType.amount += slot.Amount;
+    }
+
     /// <summary> Returns true, if an item of this type is stored at position </summary>
     /// <param name="position"> The position to check </param>
     /// <returns> True, if the position exists here, otherwise false. </returns>

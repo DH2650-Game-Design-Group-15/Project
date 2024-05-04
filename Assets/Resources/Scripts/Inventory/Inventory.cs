@@ -146,7 +146,19 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <param name="inventory"> The inventory of the new position. </param>
     /// <remarks> Right now it doesn't add the same type. Instead both are swapping like different items. </remarks>
     public void Move(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
-
+        ItemType thisType = GetItemType(oldPosition);
+        ItemType otherType = inventory.GetItemType(oldPosition);
+        thisType.Move(oldPosition, newPosition, inventory);
+        if (thisType.Amount == 0){
+            type.Remove(thisType);
+        }
+        if (otherType != null){
+            otherType.Move(newPosition, oldPosition, this);
+            if (otherType.Amount == 0){
+                inventory.type.Remove(otherType);
+            }
+        }
+        inventoryCanvas.MoveSlot(oldPosition, newPosition, inventory);
     }
 
     public void Split(Vector2Int oldPosition, Vector2Int newPosition){

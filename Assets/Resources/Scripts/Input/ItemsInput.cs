@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ItemsInput : MonoBehaviour {
     public CacheCloseObjects closeObjectsScript;
-    public Inventory playerInventoryScript;
+    public Inventory inventory;
     // Only for Move and Split 
     private bool move = false;
     private bool split = false;
@@ -16,11 +16,12 @@ public class ItemsInput : MonoBehaviour {
     private Vector2 mouseStartPos;
     private Vector3 startingPos;
     private static Vector3 positionInSlot = new(1, 0, 0);
+    public Inventory moveInventory;
 
     void Start(){
         Transform parent = transform.parent ?? transform;
         closeObjectsScript = parent.GetComponentInChildren<CacheCloseObjects>();
-        playerInventoryScript = parent.GetComponent<Inventory>();
+        inventory = parent.GetComponent<Inventory>();
     }
 
     /// <summary> Called when the player tries to take an object. 
@@ -31,7 +32,7 @@ public class ItemsInput : MonoBehaviour {
             HashSet<GameObject> items = closeObjectsScript.GetNearItems();
             if (items.Count > 0){
                 foreach (GameObject item in items) {
-                    int left = playerInventoryScript.Add(item.GetComponent<Item>().GetType().ToString(), item.GetComponent<Item>(), item.GetComponent<Item>().Amount);
+                    int left = inventory.Add(item.GetComponent<Item>().GetType().ToString(), item.GetComponent<Item>(), item.GetComponent<Item>().Amount);
                     if (left == 0){
                         closeObjectsScript.OnTriggerExit(item.GetComponent<Collider>());
                         Destroy(item);
@@ -103,7 +104,7 @@ public class ItemsInput : MonoBehaviour {
             if (position.x < 0 || position.y < 0){
                 return;
             }
-            bool removed = playerInventoryScript.RemoveStack(position);
+            bool removed = GetInventory(reference.gameObject).RemoveStack(position);
             if (removed){
                 reference.GetComponent<RawImage>().enabled = false;
                 reference.GetComponent<RawImage>().texture = null;
@@ -126,13 +127,15 @@ public class ItemsInput : MonoBehaviour {
         string itemPattern = @"^Item\d{4}";
         moveSlot = ItemOnMouse(itemPattern);
         if (moveSlot != null && moveSlot.GetComponentInChildren<ItemReference>().ItemName != null){ // First check if there's an item slot and then if it stores an item
+            Debug.Log(moveSlot.name);
             move = true;
             mouseStartPos = Mouse.current.position.ReadValue();
             moveItem = moveSlot.GetComponentInChildren<ItemReference>().gameObject;
             startingPos = moveItem.GetComponent<RectTransform>().position;
+            moveInventory = GetInventory(moveSlot);
+            Debug.Log(moveInventory.gameObject.name);
             moveItem.transform.SetParent(moveSlot.transform.parent.parent.Find("MoveHelper")); // Lower in the hierarchy means in the foreground. This image has to be in front of all other images
         }
-
     }
 
     private void MoveProgress(){
@@ -151,13 +154,19 @@ public class ItemsInput : MonoBehaviour {
             GameObject newSlot = ItemOnMouse(itemPattern);
             if (newSlot == null){ // Outside the inventory
                 RemoveStack(moveItem.GetComponent<ItemReference>());
-            } else if (newSlot != moveSlot) { // Isn't the same slot as before
+            } else if (GetInventory(newSlot) == moveInventory){
+                if (newSlot != moveSlot) { // Isn't the same slot as before
+                    Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
+                    Vector2Int newPosition = GetPositionFromName(newSlot.name);
+                    moveInventory.Move(oldPosition, newPosition);
+                    // TODO Add if same item
+                } else { // same slot as before, restore position
+                    moveItem.transform.localPosition = positionInSlot;
+                }
+            } else {
                 Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
                 Vector2Int newPosition = GetPositionFromName(newSlot.name);
-                playerInventoryScript.Move(oldPosition, newPosition);
-                // TODO Add if same item
-            } else { // same slot as before, restore position
-                moveItem.transform.localPosition = positionInSlot;
+                moveInventory.Move(oldPosition, newPosition, GetInventory(newSlot));
             }
         }
     }
@@ -166,6 +175,22 @@ public class ItemsInput : MonoBehaviour {
         if (move){
             MoveProgress();
         }
+    }
+
+    /// <summary> Returns the Inventory component in a parent. </summary>
+    /// <returns> parent Inventory. null if no inventory is found in the 5 next parents
+    public Inventory GetInventory(GameObject game){
+        Transform inventory = game.transform;
+        for (int i = 0; i < 5; i++){
+            Debug.Log(inventory.gameObject.name);
+            InventoryCanvas result = inventory.GetComponent<InventoryCanvas>();
+            if (result != null){
+                return result.Inventory;
+            }
+            inventory = inventory.parent;
+        }
+        Debug.LogWarning("No Inventory found");
+        return null;
     }
 
     public void OnSplitItem(InputAction.CallbackContext context){

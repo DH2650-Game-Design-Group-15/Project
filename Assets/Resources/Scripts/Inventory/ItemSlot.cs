@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary> Stores all information about an item on a special slot in the inventory </summary>
@@ -6,7 +7,7 @@ using UnityEngine;
 public class ItemSlot{
     [SerializeField] private Vector2Int position;
     [SerializeField] private int amount;
-    private readonly ItemType itemType;
+    private ItemType itemType;
 
     /// <summary> Creates an item Slot. The amount is 0 at the beginning but it blocks already a slot in the inventory. </summary>
     /// <param name="position"> Position to store the item in the UI. x is the row, y is the column. </param>
@@ -52,6 +53,12 @@ public class ItemSlot{
     public void Move(Vector2Int position){
         this.position = position;
     }
+
+    public void Move(Vector2Int position, ItemType type){
+        this.position = position;
+        itemType = type;
+    }
+
     public Vector2Int Position { get => position; }
     public int Amount { get => amount; }
     public ItemType Type { get => itemType; }
