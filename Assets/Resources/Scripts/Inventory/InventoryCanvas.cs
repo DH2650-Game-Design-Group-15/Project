@@ -21,12 +21,6 @@ public class InventoryCanvas : MonoBehaviour{
     /// <param name="amount"> The amount of the item in this slot </param>
     /// <param name="texture"> The texture of the item in the UI. This is usually an image of how the item looks like. </param>
     public void AddSlot(Vector2Int position, string itemName, int amount, Texture texture){
-        Transform[] childs = GetComponentsInChildren<Transform>();
-        foreach (Transform child in childs) {
-            Debug.Log("child: " + child);
-        }
-
-        Debug.Log(transform.Find("Item0000"));
         ItemReference slotReference = transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>();
         RawImage slotImage = slotReference.GetComponent<RawImage>();
         slotImage.texture = texture;

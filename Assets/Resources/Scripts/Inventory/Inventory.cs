@@ -38,9 +38,8 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         } else {
             inventoryCanvas = transform.GetComponentInChildren<InventoryCanvas>();
         }
-        Debug.Log("Create canvas");
         inventoryCanvas.CreateInventoryCanvas();
-        Debug.Log("Finished canvas");
+        inventoryCanvas.transform.parent.gameObject.SetActive(false);
     }
 
 
