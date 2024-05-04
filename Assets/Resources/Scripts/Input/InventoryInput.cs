@@ -6,6 +6,7 @@ public class InventoryInput : MonoBehaviour {
     public GameObject inventoryCanvas;
     
     void Start() {
+        inventoryCanvas = transform.parent.GetComponent<Inventory>().InventoryCanvas.transform.parent.gameObject;
         inputs = GetComponent<Inputs>();
     }
 

@@ -1,104 +1,58 @@
+using System;
 using UnityEngine;
 
-
-/// <summary>
-/// Stores the amount of items in this item slot and on which field in the inventory it's displayed.
-/// </summary>
+/// <summary> Stores all information about an item on a special slot in the inventory </summary>
+[Serializable]
 public class ItemSlot{
-    private readonly Item item;
-    private Vector2Int position;
-    private bool full;
-    private readonly CanvasInventory canvas;
-    private readonly PlayerInventory inventory;
+    [SerializeField] private Vector2Int position;
+    [SerializeField] private int amount;
+    private readonly ItemType itemType;
 
-    /// <summary>
-    /// Calls the constructor with the next free slot in the players inventory
-    /// </summary>
-    /// <param name="item"> Item stored in this slot </param>
-    /// <param name="inventory"> Whos inventory this item is. Searchs there for the next free slot </param>
-    public ItemSlot(CanvasInventory canvas, Item item, PlayerInventory inventory): this(canvas, item, inventory, inventory.NextFreeSlot()){}
-    /// <summary>
-    /// Calls the constructor with a chosen slot
-    /// Doesn't check if the slot is already used somewhere else
-    /// </summary>
-    /// <param name="item"> Item stored in this slot </param>
-    /// <param name="position"> Position to store the item. Both values must be between 0 and position in inventory </param>
-    public ItemSlot(CanvasInventory canvas, Item item, PlayerInventory inventory, Vector2Int position){
-        this.item = item;
-        this.full = item.SpaceAvailable() == 0;
-        this.canvas = canvas;
-        canvas.EnableSlot(this.item, position);
-        this.inventory = inventory;
-        inventory.FreeSlot[position.x][position.y] = false;
+    /// <summary> Creates an item Slot. The amount is 0 at the beginning but it blocks already a slot in the inventory. </summary>
+    /// <param name="position"> Position to store the item in the UI. x is the row, y is the column. </param>
+    /// <param name="itemType"> A group for all items of this type in this inventory. </param>
+    public ItemSlot(Vector2Int position, ItemType itemType){
+        this.position = position;
+        this.itemType = itemType;
+        amount = 0;
+        itemType.Inventory.FreeSlot[position.x][position.y] = false;
     }
 
-    /// <summary>
-    /// Adds the given amount to the item. If the amount is greater than the available space it adds only as much as possible.
-    /// </summary>
-    /// <param name="amount"> How many entities more it should store in this slot. </param>
-    /// <returns> How many entites can't be stored in this slot because it reached the maximum amount.\n
-    /// Returns 0, if it stored all entities it should.
-    /// </returns>
-    public int Add(int amount) {
-        int space = Item.SpaceAvailable();
-        if (space <= amount){
-            Item.Amount = Item.MaxStackSize;
-            full = true;
-            return amount - space;
+    /// <summary> Adds the given amount of items to this slot. If the new amount would be greater than the allowed stack size it 
+    /// sets the amount on this value and returns the difference. </summary>
+    /// <param name="amount"> The amount of items to be added to this slot </param>
+    /// <returns> The amount of items which can't be stored in this slot. Returns 0, if all items are stored here. </returns>
+    public int Add(int amount){
+        this.amount += amount;
+        int overflow = Amount - itemType.MaxStackSize;
+        if (overflow > 0){
+            this.amount = itemType.MaxStackSize;
+            return overflow;
         } else {
-            Item.Amount += amount;
             return 0;
         }
     }
 
-    /// <summary>
-    /// Removes amount from the stored amount. 
-    /// </summary>
-    /// <param name="amount"> How many entities should be removed from this slot. </param>
-    /// <returns> If it didn't remove all entities from this slot it returns how many entities aren't removed.\n
-    /// If the given amount is removed and there're still entities left it returns -1.
-    /// </returns>
+    /// <summary> Removes the given amount of items to this slot. Returns the amount of items which aren't removed here. </summary>
+    /// <param name="amount"> The amount of items to be removed from this slot </param>
+    /// <returns> The amount of items which can't be removed from this slot. Returns -1, if all items are removed and there're still items in this slot left. 
+    /// Returns 0, if all items are removed but the new amount of this slot is 0. </returns>
     public int Remove(int amount){
-        full = false;
-        if (Item.Amount < amount){
-            canvas.DisableSlot(position);
-            inventory.FreeSlot[position.x][position.y] = true;
-            return amount - Item.Amount;
-        } else {
-            Item.Amount -= amount;
+        if (Amount > amount){
+            this.amount = Amount - amount;
             return -1;
+        } else {
+            this.amount = 0;
+            return amount - Amount;
         }
     }
 
-    /// <summary>
-    /// Removes the whole stack from the players inventory
-    /// </summary>
-    public void RemoveStack(){
-        canvas.DisableSlot(position);
-        inventory.FreeSlot[position.x][position.y] = true;
+    /// <summary> Moves this item to a new position. Doesn't check, if the new position is empty or not. </summary>
+    /// <param name="position"> The new position in the inventory. </param>
+    public void Move(Vector2Int position){
+        this.position = position;
     }
-
-    /// <summary>
-    /// Changes the slot
-    /// </summary>
-    public void Move(Vector2Int newPosition){
-        inventory.FreeSlot[position.x][position.y] = true;
-        canvas.DisableSlot(position);
-        canvas.EnableSlot(item, newPosition);
-        inventory.FreeSlot[newPosition.x][newPosition.y] = false;
-    }
-
-    /// <summary> Returns this slot as an json string. </summary>
-    /// <returns> The item as a json string. </summary>
-    public string ToJson(){
-        string json = "{";
-        json += string.Format("\"Amount\":{0},\"column\":{1},\"row\":{2}", item.Amount, position.x, position.y);
-        json += "}";
-        return json;
-        
-    }
-
-    public Item Item { get => item; }
     public Vector2Int Position { get => position; }
-    public bool Full { get => full; }
+    public int Amount { get => amount; }
+    public ItemType Type { get => itemType; }
 }
