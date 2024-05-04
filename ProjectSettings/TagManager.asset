@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - NPC
+  - Enemy
   - Canvas
   layers:
   - Default
@@ -16,7 +18,7 @@ TagManager:
   - Player
   - Enemy
   - Building
-  - 
+  - NPC
   - 
   - 
   - 
