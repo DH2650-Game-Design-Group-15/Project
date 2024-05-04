@@ -18,6 +18,15 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     void Awake(){
         GameObject canvasPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
         GameObject canvas = GameObject.FindWithTag("Canvas");
+        inventorySize = new Vector2Int(3, 5);
+        type = new();
+        freeSlot = new();
+        for (int x = 0; x < inventorySize.x; x++){
+            freeSlot.Add(new List<bool>());
+            for (int y = 0; y < inventorySize.y; y++){
+                freeSlot[^1].Add(true);
+            }
+        }
         if (canvas == null){
             Debug.LogError("No canvas to build the UI");
         }
@@ -29,15 +38,9 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         } else {
             inventoryCanvas = transform.GetComponentInChildren<InventoryCanvas>();
         }
-        inventorySize = new Vector2Int(3, 5);
-        type = new();
-        freeSlot = new();
-        for (int x = 0; x < inventorySize.x; x++){
-            freeSlot.Add(new List<bool>());
-            for (int y = 0; y < inventorySize.y; y++){
-                freeSlot[^1].Add(true);
-            }
-        }
+        Debug.Log("Create canvas");
+        inventoryCanvas.CreateInventoryCanvas();
+        Debug.Log("Finished canvas");
     }
 
 
@@ -184,6 +187,24 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
             }
         }
         return new Vector2Int(-1, -1);
+    }
+
+    /// <summary> Fills the inventory at the start with all items, that are component of the same GameObject as this inventory. </summary>
+    private void PrefillInventory(){
+        Item[] items = GetComponents<Item>();
+        for (int i = 0; i < items.Length; i++){
+            Item item = items[i];
+            int left = Add(item.GetType().ToString(), item, item.Amount);
+            if (left > 0){
+                Debug.LogWarning("Can't store all items in this inventory");
+            }
+            Destroy(item);
+        }
+    }
+
+    void Start()
+    {
+        PrefillInventory();
     }
 
     // Debug + save game state

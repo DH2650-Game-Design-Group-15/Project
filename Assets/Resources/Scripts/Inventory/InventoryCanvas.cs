@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class InventoryCanvas : MonoBehaviour{
     private bool changeSize;
     private Vector3 positionInSlot = Vector3.right;
 
-    void Start(){
+    void Awake(){
         itemPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Item");
     }
 
@@ -20,6 +21,12 @@ public class InventoryCanvas : MonoBehaviour{
     /// <param name="amount"> The amount of the item in this slot </param>
     /// <param name="texture"> The texture of the item in the UI. This is usually an image of how the item looks like. </param>
     public void AddSlot(Vector2Int position, string itemName, int amount, Texture texture){
+        Transform[] childs = GetComponentsInChildren<Transform>();
+        foreach (Transform child in childs) {
+            Debug.Log("child: " + child);
+        }
+
+        Debug.Log(transform.Find("Item0000"));
         ItemReference slotReference = transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>();
         RawImage slotImage = slotReference.GetComponent<RawImage>();
         slotImage.texture = texture;
@@ -66,7 +73,7 @@ public class InventoryCanvas : MonoBehaviour{
     /// If the DB is bigger it creates slots in the UI until it fits. If the DB is smaller it deletes
     /// the slots most right or below until it fits. </summary>
     /// <remarks> Right now items in deleted slots get lost. </remarks>
-    private void CreateInventoryCanvas(){
+    public void CreateInventoryCanvas(){
         int sibling = 0;
         int x = 0;
         int y = 0;

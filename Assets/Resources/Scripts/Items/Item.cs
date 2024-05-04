@@ -5,7 +5,7 @@ using UnityEngine;
 /// It's only a data class without functions
 /// </summary>
 public abstract class Item : MonoBehaviour {
-    public Texture imageInventory;
+    protected Texture imageInventory;
 
     public Texture ImageInventory { get => imageInventory; }
     public abstract int MaxStackSize { get; }
