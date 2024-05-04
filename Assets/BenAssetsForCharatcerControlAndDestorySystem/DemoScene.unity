@@ -832,6 +832,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: First Person Controller Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3734834473500644823, guid: 5a3ce4bea44ffdb41b23e244c167c92b, type: 3}
+      propertyPath: remapCurve.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736678782573675943, guid: 5a3ce4bea44ffdb41b23e244c167c92b, type: 3}
+      propertyPath: redChannel.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736678782573675943, guid: 5a3ce4bea44ffdb41b23e244c167c92b, type: 3}
+      propertyPath: blueChannel.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -871,15 +883,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4841980012866316756, guid: b1085e7db45c05a4a9758d2784940ce0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 4841980012866316756, guid: b1085e7db45c05a4a9758d2784940ce0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.78
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4841980012866316756, guid: b1085e7db45c05a4a9758d2784940ce0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.15
+      value: 14.1
       objectReference: {fileID: 0}
     - target: {fileID: 4841980012866316756, guid: b1085e7db45c05a4a9758d2784940ce0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -924,5 +936,5 @@ SceneRoots:
   - {fileID: 1002684630}
   - {fileID: 176957847}
   - {fileID: 1233092562}
-  - {fileID: 1503883193}
   - {fileID: 1891855092}
+  - {fileID: 1503883193}
