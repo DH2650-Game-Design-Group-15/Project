@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenChest",
+                    "type": "Button",
+                    "id": "caacc3f8-751a-4941-87b8-96258ad7b292",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -207,6 +216,17 @@
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32a2aeb6-44d9-4538-93b4-f31787c92ef6",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenChest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -236,6 +256,15 @@
                     "name": "Remove",
                     "type": "Button",
                     "id": "c9cd7c16-8152-44cf-aa42-556adbba9c99",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SplitItem",
+                    "type": "Button",
+                    "id": "b6aad406-7baa-44b5-9c16-c9f697da1934",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -284,6 +313,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Remove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f64ab27-e99e-4d1d-a8f4-949d6a597da4",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SplitItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
