@@ -141,9 +141,11 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
             int amount = thisType.GetItemSlot(oldPosition).Amount;
             int left = otherType.Add(amount, newPosition);
             if (left == 0){
-                thisType.Slots.Remove(thisType.GetItemSlot(newPosition));
+                thisType.Slots.Remove(thisType.GetItemSlot(oldPosition));
+                inventoryCanvas.RemoveSlot(oldPosition);
             } else {
                 thisType.Remove(amount - left, oldPosition);
+                inventoryCanvas.ResetPosition(oldPosition);
             }
         }
     }
@@ -175,9 +177,11 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
             int amount = thisType.GetItemSlot(oldPosition).Amount;
             int left = otherType.Add(amount, newPosition);
             if (left == 0){
-                thisType.Slots.Remove(thisType.GetItemSlot(newPosition));
+                thisType.Slots.Remove(thisType.GetItemSlot(oldPosition));
+                inventoryCanvas.RemoveSlot(oldPosition);
             } else {
                 thisType.Remove(amount - left, oldPosition);
+                inventoryCanvas.ResetPosition(oldPosition);
             }
         }
     }

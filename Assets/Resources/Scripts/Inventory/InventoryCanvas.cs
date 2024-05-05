@@ -64,6 +64,10 @@ public class InventoryCanvas : MonoBehaviour{
         oldItem.GetComponent<RectTransform>().localPosition = positionInSlot;
     }
 
+    public void ResetPosition(Vector2Int position){
+        transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>().GetComponent<RectTransform>().localPosition = positionInSlot;
+    }
+
     /// <summary> Changes the amount of items in this slot. 
     /// The amount here should always equal the amount in the inventory DB. </summary>
     /// <param name="position"> The position of the item in the inventory. </param>
