@@ -8,8 +8,6 @@ TagManager:
   - ClingPoint
   - NPC
   - Enemy
-  - Canvas
-  - Storage
   layers:
   - Default
   - TransparentFX
