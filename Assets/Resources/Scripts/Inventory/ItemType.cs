@@ -31,25 +31,17 @@ public class ItemType{
     public int Add(int amount){
         this.amount += amount;
         for (int i = slots.Count - 1; i >= 0; i--){
-            int oldAmount = amount;
-            amount = slots[i].Add(amount);
-            if (oldAmount != amount){
-                inventory.InventoryCanvas?.Amount(slots[i].Position, slots[i].Amount);
-            }
+            amount = AddExistingSlot(amount, slots[i]);
             if (amount == 0){
                 return 0;
             }
         }
         while (amount > 0 && inventory.NextFreeSlot() != new Vector2Int(-1, -1)){
-            slots.Add(new ItemSlot(inventory.NextFreeSlot(), this));
-            amount = slots[^1].Add(amount);
-            inventory.InventoryCanvas?.AddSlot(slots[^1].Position, itemName, slots[^1].Amount, texture);
-            inventory.FreeSlot[slots[^1].Position.x][slots[^1].Position.y] = false;
+            amount = AddNewSlot(amount, inventory.NextFreeSlot());
         }
         this.amount -= amount;
         return amount;
     }
-
 
     /// <summary>
     /// Adds the item first to already existing slots of the same type. 
@@ -61,20 +53,34 @@ public class ItemType{
     /// If it can't store all items because this position has not enough space it returns the remaining amount.
     /// </returns>
     public int Add(int amount, Vector2Int position){
+        if (position == new Vector2Int(-1, -1)){
+            return Add(amount);
+        }
         this.amount += amount;
         ItemSlot slot = GetItemSlot(position);
         if (slot == null){
-            slots.Add(new ItemSlot(inventory.NextFreeSlot(), this));
-            int left = slots[^1].Add(amount);
-            inventory.InventoryCanvas?.AddSlot(slots[^1].Position, itemName, slots[^1].Amount, texture);
-            inventory.FreeSlot[slots[^1].Position.x][slots[^1].Position.y] = false;
-            return left;
-        } else {
-            int left = slot.Add(amount);
-            inventory.InventoryCanvas?.Amount(slot.Position, slot.Amount);
-            this.amount -= left;
-            return left;
+            slot = new ItemSlot(position, this);
+            slots.Add(slot);
         }
+        amount = AddExistingSlot(amount, slot);
+        this.amount -= amount;
+        return amount;
+    }
+
+    private int AddExistingSlot(int amount, ItemSlot slot){
+        int newAmount = slot.Add(amount);
+        if (amount != newAmount){
+            inventory.InventoryCanvas?.Amount(slot.Position, slot.Amount);
+        }
+        return newAmount;
+    }
+
+    private int AddNewSlot(int amount, Vector2Int position){
+        slots.Add(new ItemSlot(position, this));
+        amount = slots[^1].Add(amount);
+        inventory.InventoryCanvas?.AddSlot(slots[^1].Position, itemName, slots[^1].Amount, texture);
+        inventory.FreeSlot[slots[^1].Position.x][slots[^1].Position.y] = false;
+        return amount;
     }
 
     /// <summary>
@@ -115,7 +121,8 @@ public class ItemType{
         this.amount -= amount;
         slot.Remove(amount);
         if (slot.Amount == 0){
-            slots.Remove(GetItemSlot(position));
+            slots.Remove(slot);
+            inventory.FreeSlot[slot.Position.x][slot.Position.y] = true;
         }
         return true;
     }
@@ -125,11 +132,7 @@ public class ItemType{
     /// </summary>
     /// <returns> True, if the slot was used by this slot. False if it didn't exist in this slot </returns>
     public void RemoveStack(Vector2Int position){
-        ItemSlot slot = GetItemSlot(position);
-        inventory.InventoryCanvas?.RemoveSlot(slot.Position);
-        inventory.FreeSlot[slot.Position.x][slot.Position.y] = true;
-        amount -= slot.Amount;
-        slots.Remove(slot);
+        Remove(GetItemSlot(position).Amount, position);
     }
 
     /// <summary>

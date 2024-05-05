@@ -7,20 +7,36 @@ using UnityEngine;
 /// </summary>
 [Serializable]
 public class Inventory : MonoBehaviour{ // Later abstract, change Start for each type of inventory because of inventorySize
-    private GameObject canvasPrefab;
+    private GameObject uiPrefab; // prefab for the inventories UI
+    public Transform inventories; // parent of all inventories
+    public InventoryCanvas inventoryCanvas; // reference to the UI
     [SerializeField] private List<List<bool>> freeSlot;
     [SerializeField] private List<ItemType> type;
     [SerializeField] private Vector2Int inventorySize;
-    public InventoryCanvas inventoryCanvas;
-    public GameObject canvas;
+    private bool isPlayer;
     // Debug
     public bool printInventory;
 
     void Awake(){
-        canvasPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
-        canvas = GameObject.FindWithTag("Canvas").transform.Find("Inventories").gameObject;
+        uiPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
+        inventories = Parent.FindChild(GameObject.FindWithTag("Canvas"), "Inventories");
         inventorySize = new Vector2Int(3, 5);
         type = new();
+        InitFreeSlots();
+        if (inventories == null){
+            Debug.LogError("No GameObject inventories to build the UI");
+        }
+        Transform transform = inventories.Find(gameObject.name + "Inventory");
+        if (inventoryCanvas == null){
+            CreateInventoryUI();
+        } else {
+            inventoryCanvas = transform.GetComponentInChildren<InventoryCanvas>();
+        }
+        inventoryCanvas.CreateInventoryCanvas();
+        isPlayer = GetComponentInChildren<InventoryInput>() != null;
+    }
+
+    private void InitFreeSlots(){
         freeSlot = new();
         for (int x = 0; x < inventorySize.x; x++){
             freeSlot.Add(new List<bool>());
@@ -28,26 +44,17 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
                 freeSlot[^1].Add(true);
             }
         }
-        if (canvas == null){
-            Debug.LogError("No canvas to build the UI");
-        }
-        Transform transform = canvas.transform.Find(gameObject.name + "Inventory");
-        if (inventoryCanvas == null){
-            inventoryCanvas = Instantiate(canvasPrefab, canvas.transform).GetComponentInChildren<InventoryCanvas>();
-            inventoryCanvas.transform.parent.name = gameObject.name + "Inventory";
-            inventoryCanvas.Inventory = this;
-        } else {
-            inventoryCanvas = transform.GetComponentInChildren<InventoryCanvas>();
-        }
-        inventoryCanvas.CreateInventoryCanvas();
-        inventoryCanvas.transform.parent.gameObject.SetActive(false);
+    }
+
+    private void CreateInventoryUI(){
+        inventoryCanvas = Instantiate(uiPrefab, inventories).GetComponentInChildren<InventoryCanvas>();
+        inventoryCanvas.name = gameObject.name + "Inventory";
+        inventoryCanvas.Inventory = this;
     }
 
     /// <summary> Creates the inventory, fills it with the items in this inventory and sets it as first sibling. The first sibling is always on the left side of the screen. </summary>
     public void ReloadInventoryCanvas(){
-        inventoryCanvas = Instantiate(canvasPrefab, canvas.transform).GetComponentInChildren<InventoryCanvas>();
-        inventoryCanvas.transform.parent.name = gameObject.name + "Inventory";
-        inventoryCanvas.Inventory = this;
+        CreateInventoryUI();
         inventoryCanvas.UpdateInventory();
         inventoryCanvas.transform.parent.SetAsFirstSibling();
     }
@@ -59,13 +66,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <param name="amount"> The amount to be added to the inventory </param>
     /// <returns> Returns the amount of this item, that can't be stored in this inventory. </returns>
     public int Add(string itemName, Item item, int amount){
-        ItemType itemType = GetItemType(itemName);
-        if (itemType != null){
-            return itemType.Add(amount);
-        } else {
-            type.Add(new ItemType(itemName, item.MaxStackSize, item.ImageInventory, this));
-            return type[^1].Add(amount);
-        }
+        return Add(itemName, item, amount, new Vector2Int(-1, -1));
     }
 
     /// <summary> Adds the given item to the inventory. Must be stored on given position </summary>
@@ -74,7 +75,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <param name="amount"> The amount to be added to the inventory </param>
     /// <param name="position"> The position, where the item is stored. The position must be empty or already containing some of this type. </param>
     /// <returns> Returns the amount of this item, that can't be stored on this position. </returns>
-    public int Add(string itemName, int amount, Item item, Vector2Int position){
+    public int Add(string itemName, Item item, int amount, Vector2Int position){
         ItemType itemType = GetItemType(itemName);
         if (itemType != null){
             return itemType.Add(amount, position);
@@ -268,9 +269,9 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         return JsonRecursive.ToJson(this, names, 5, true);
     }
 
-    public List<List<bool>> FreeSlot { get => freeSlot; set => freeSlot = value; }
+    public List<List<bool>> FreeSlot { get => freeSlot; }
     public List<ItemType> Type { get => type; set => type = value; }
     public Vector2Int InventorySize { get => inventorySize; set => inventorySize = value; }
     public InventoryCanvas InventoryCanvas { get => inventoryCanvas; set => inventoryCanvas = value; }
-
+    public bool IsPlayer { get => isPlayer; }
 }

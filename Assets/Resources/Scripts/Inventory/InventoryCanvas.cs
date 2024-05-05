@@ -11,6 +11,10 @@ public class InventoryCanvas : MonoBehaviour{
     private Vector3 positionInSlot = Vector3.right;
 
     void Awake(){
+        LoadPrefab();
+    }
+
+    private void LoadPrefab(){
         itemPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Item");
     }
 
@@ -88,6 +92,9 @@ public class InventoryCanvas : MonoBehaviour{
         while (true){
             if (x < inventory.InventorySize.x && y < inventory.InventorySize.y){
                 if (transform.Find(SlotName(x, y)) == null){
+                    if (itemPrefab == null){
+                        LoadPrefab();
+                    }
                     GameObject slot = Instantiate(itemPrefab, transform);
                     slot.name = SlotName(x, y);
                     slot.transform.SetSiblingIndex(sibling);

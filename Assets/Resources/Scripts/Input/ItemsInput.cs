@@ -19,9 +19,8 @@ public class ItemsInput : MonoBehaviour {
     public Inventory moveInventory;
 
     void Start(){
-        Transform parent = transform.parent ?? transform;
-        closeObjectsScript = parent.GetComponentInChildren<CacheCloseObjects>();
-        inventory = parent.GetComponent<Inventory>();
+        inventory = Parent.FindParent(gameObject, typeof(Inventory))?.GetComponent<Inventory>();
+        closeObjectsScript = Parent.FindChild(inventory, typeof(CacheCloseObjects))?.GetComponent<CacheCloseObjects>();
     }
 
     /// <summary> Called when the player tries to take an object. 
@@ -132,7 +131,7 @@ public class ItemsInput : MonoBehaviour {
             moveItem = moveSlot.GetComponentInChildren<ItemReference>().gameObject;
             startingPos = moveItem.GetComponent<RectTransform>().position;
             moveInventory = GetInventory(moveSlot);
-            moveItem.transform.SetParent(moveSlot.transform.parent.parent.Find("MoveHelper")); // Lower in the hierarchy means in the foreground. This image has to be in front of all other images
+            moveItem.transform.SetParent(Parent.FindParentSibling(inventory.InventoryCanvas, "MoveHelper")); // Lower in the hierarchy means in the foreground. This image has to be in front of all other images
         }
     }
 
