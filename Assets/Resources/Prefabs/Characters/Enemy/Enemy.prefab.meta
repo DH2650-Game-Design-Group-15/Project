@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Prefabs/UI/Character/First Person Controller Variant.prefab.meta
+guid: bf9304c17388c654e9d65f64bab35ea4
+========
 guid: 15d5d6820ebd15a47b5aa1a00fca8861
+>>>>>>>> 10081c2b5abf5d8ed17d1532c61f69cbff96bcf8:Assets/Resources/Prefabs/Characters/Enemy/Enemy.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
