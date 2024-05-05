@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public static class JsonRecursive {
@@ -33,11 +34,44 @@ public static class JsonRecursive {
     }
 
     private static string JsonList(FieldInfo field, object obj, List<string> names, int maxDepth){
-        List<object> list = (obj as IEnumerable<object>).Cast<object>().ToList();
         string json = "[";
         if (maxDepth > 0){
-            for (int i = 0; i < list.Count; i++){
-                json += CheckField(field, list[i], names, maxDepth) + ",";
+            Type type = obj.GetType().GetGenericArguments()[0];
+            if (type == typeof(bool)){
+                List<bool> list = (obj as IEnumerable<bool>).Cast<bool>().ToList();
+                for (int i = 0; i < list.Count; i++){
+                    json += CheckField(field, list[i], names, maxDepth) + ",";
+                }
+            } else if (type == typeof(int)){
+                List<int> list = (obj as IEnumerable<int>).Cast<int>().ToList();
+                for (int i = 0; i < list.Count; i++){
+                    json += CheckField(field, list[i], names, maxDepth) + ",";
+                }
+            } else if (type == typeof(float)){
+                List<float> list = (obj as IEnumerable<float>).Cast<float>().ToList();
+                for (int i = 0; i < list.Count; i++){
+                    json += CheckField(field, list[i], names, maxDepth) + ",";
+                }
+            } else if (type == typeof(double)){
+                List<double> list = (obj as IEnumerable<double>).Cast<double>().ToList();
+                for (int i = 0; i < list.Count; i++){
+                    json += CheckField(field, list[i], names, maxDepth) + ",";
+                }
+            } else if (type == typeof(char)){
+                List<char> list = (obj as IEnumerable<char>).Cast<char>().ToList();
+                for (int i = 0; i < list.Count; i++){
+                    json += CheckField(field, list[i], names, maxDepth) + ",";
+                }
+            } else if (type == typeof(string)){
+                List<string> list = (obj as IEnumerable<string>).Cast<string>().ToList();
+                for (int i = 0; i < list.Count; i++){
+                    json += CheckField(field, list[i], names, maxDepth) + ",";
+                }
+            } else {
+                List<object> list = (obj as IEnumerable<object>).Cast<object>().ToList();
+                for (int i = 0; i < list.Count; i++){
+                    json += CheckField(field, list[i], names, maxDepth) + ",";
+                }
             }
         }
         return json.TrimEnd(',') + "]";
@@ -59,12 +93,6 @@ public static class JsonRecursive {
             return "{}";
         } else if (value.GetType() == typeof(string)){
             return "\"" + value + "\"";
-        } else if (value.GetType().IsClass && !value.GetType().ToString().Contains("System.Collections.Generic.List")){
-            return JsonObject(value, names, maxDepth - 1);
-        } else if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>)){
-            return JsonList(field, value, names, maxDepth - 1);
-        } else if(field.FieldType.IsArray){
-            return JsonArray(field, value, names, maxDepth - 1);
         } else if (value.GetType() == typeof(Vector2)){
             Vector2 vector = (Vector2)value;
             return "{\"x\":" + vector.x + ",\"y\":" + vector.y + "}";
@@ -82,6 +110,12 @@ public static class JsonRecursive {
             return "{\"x\":" + vector.x + ",\"y\":" + vector.y + ",\"z\":" + vector.z + "}";
         } else if (value.GetType() == typeof(int) || value.GetType() == typeof(float) || value.GetType() == typeof(double) || value.GetType() == typeof(bool)){
             return value.ToString().ToLower();
+        } else if (value.GetType().IsClass && !value.GetType().ToString().Contains("System.Collections.Generic.List")){
+            return JsonObject(value, names, maxDepth - 1);
+        } else if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>)){
+            return JsonList(field, value, names, maxDepth - 1);
+        } else if(field.FieldType.IsArray){
+            return JsonArray(field, value, names, maxDepth - 1);
         } else {
             return "";
         }

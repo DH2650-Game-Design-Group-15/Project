@@ -264,8 +264,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <summary> Creates a json of the whole inventory </summary>
     /// <returns> The json inventory as a string </returns>
     public string PrintJsonInventory(){
-        //return JsonUtility.ToJson(this);
-        List<string> names = new(){"type", "inventorySize", "amount", "maxStackSize", "itemName", "slots", "position"};
+        List<string> names = new(){"freeSlot", "type", "inventorySize", "amount", "maxStackSize", "itemName", "slots", "position"};
         return JsonRecursive.ToJson(this, names, 5, true);
     }
 
