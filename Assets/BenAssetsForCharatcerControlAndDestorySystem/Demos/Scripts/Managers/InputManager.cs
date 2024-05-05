@@ -13,8 +13,8 @@ namespace DestroyIt
         public ParticleSystem muzzleFlash;
         [Range(1, 30)]
         public float startDistance = 1.5f; 		    // The distance projectiles/missiles will start in front of the player.
-        public WeaponType startingWeapon = WeaponType.Rocket;   // The weapon the player will start with.
-       // public GameObject groundChurnPrefab;
+        public WeaponType startingWeapon = WeaponType.Melee;   // The weapon the player will start with.
+                                                               // public GameObject groundChurnPrefab;
         [Range(0.1f, .5f)]
         public float timeSlowSpeed = 0.25f;
         public GameObject windZone;
@@ -120,19 +120,19 @@ namespace DestroyIt
                         rb.interpolation = RigidbodyInterpolation.Interpolate;
                 }
             }
-            
-            if (Input.GetKeyUp("q"))
-            {
-                SelectedWeapon = WeaponHelper.GetPrevious(SelectedWeapon);
-                PlayerPrefs.SetInt("SelectedWeapon", (int)SelectedWeapon);
-                SetActiveWeapon();
-            }
-            if (Input.GetKeyUp("e"))
-            {
-                SelectedWeapon = WeaponHelper.GetNext(SelectedWeapon);
-                PlayerPrefs.SetInt("SelectedWeapon", (int)SelectedWeapon);
-                SetActiveWeapon();
-            }
+
+            // if (Input.GetKeyUp("q"))
+            // {
+            //     SelectedWeapon = WeaponHelper.GetPrevious(SelectedWeapon);
+            //     PlayerPrefs.SetInt("SelectedWeapon", (int)SelectedWeapon);
+            //     SetActiveWeapon();
+            // }
+            // if (Input.GetKeyUp("e"))
+            // {
+            //     SelectedWeapon = WeaponHelper.GetNext(SelectedWeapon);
+            //     PlayerPrefs.SetInt("SelectedWeapon", (int)SelectedWeapon);
+            //     SetActiveWeapon();
+            // }
 
             float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
             if (scrollWheel > 0f) // scroll up
