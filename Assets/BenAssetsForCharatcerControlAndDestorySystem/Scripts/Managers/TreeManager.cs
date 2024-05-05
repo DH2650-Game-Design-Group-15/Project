@@ -90,21 +90,21 @@ namespace DestroyIt
 
             TreePrototype[] treePrototypes = terrain.terrainData.treePrototypes;
             TreeInstance[] treeInstances = terrain.terrainData.treeInstances;
-            
-#if UNITY_EDITOR
-            // Check if there is already a backup of the terrainData and exit if so.
-            string terrainDataPath = AssetDatabase.GetAssetPath(terrain.terrainData);
-            string terrainDataBkpPath = terrainDataPath.Replace(".asset", "") + "_bkp.asset";
-            TerrainData terrainDataBkp = AssetDatabase.LoadAssetAtPath<TerrainData>(terrainDataBkpPath);
-            if (terrainDataBkp != null)
-            {
-                // A terrainData backup already exists. Log an error and exit.
-                isTerrainDataDirty = true;
-                Debug.LogError("Cannot backup terrainData for [" + terrain.terrainData.name + "]. A backup already exists. Please exit Play mode to fix.");
-                return;
-            }
-#endif
-            
+
+            // #if UNITY_EDITOR
+            //             // Check if there is already a backup of the terrainData and exit if so.
+            //             string terrainDataPath = AssetDatabase.GetAssetPath(terrain.terrainData);
+            //             string terrainDataBkpPath = terrainDataPath.Replace(".asset", "") + "_bkp.asset";
+            //             TerrainData terrainDataBkp = AssetDatabase.LoadAssetAtPath<TerrainData>(terrainDataBkpPath);
+            //             if (terrainDataBkp != null)
+            //             {
+            //                 // A terrainData backup already exists. Log an error and exit.
+            //                 isTerrainDataDirty = true;
+            //                 Debug.LogError("Cannot backup terrainData for [" + terrain.terrainData.name + "]. A backup already exists. Please exit Play mode to fix.");
+            //                 return;
+            //             }
+            // #endif
+
             if (treeInstances == null || treeInstances.Length == 0 || treePrototypes == null || treePrototypes.Length == 0)
             {
                 Debug.LogWarning("No trees found on terrain. Nothing to manage.");
@@ -131,16 +131,16 @@ namespace DestroyIt
             currentTreeInstances = new List<TreeInstance>(treeInstances);
             treesToReset = new List<TreeReset>();
 
-#if UNITY_EDITOR
-            // Save the original terrainData object to a Resources folder, just in case there is a crash. 
-            // This way, the TerrainPreserver can check for any Resources data to load and ask the user if he/she wants to restore terrainData.
-            if (backupTerrain)
-            {
-                AssetDatabase.CopyAsset(terrainDataPath, terrainDataBkpPath);
-                AssetDatabase.Refresh();
-            }
-#endif
-            
+            // #if UNITY_EDITOR
+            //             // Save the original terrainData object to a Resources folder, just in case there is a crash. 
+            //             // This way, the TerrainPreserver can check for any Resources data to load and ask the user if he/she wants to restore terrainData.
+            //             if (backupTerrain)
+            //             {
+            //                 AssetDatabase.CopyAsset(terrainDataPath, terrainDataBkpPath);
+            //                 AssetDatabase.Refresh();
+            //             }
+            // #endif
+
             // For each terrain tree, place a stripped-down tree prototype object at its location
             for (int i = 0; i < treeInstances.Length; i++)
             {
