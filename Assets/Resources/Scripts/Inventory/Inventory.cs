@@ -43,6 +43,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         inventoryCanvas.transform.parent.gameObject.SetActive(false);
     }
 
+    /// <summary> Creates the inventory, fills it with the items in this inventory and sets it as first sibling. The first sibling is always on the left side of the screen. </summary>
     public void ReloadInventoryCanvas(){
         inventoryCanvas = Instantiate(canvasPrefab, canvas.transform).GetComponentInChildren<InventoryCanvas>();
         inventoryCanvas.transform.parent.name = gameObject.name + "Inventory";
@@ -118,23 +119,33 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <param name="newPosition"> The position, where the item is now stored in the inventory. </param>
     /// <remarks> Right now it doesn't add the same type. Instead both are swapping like different items. </remarks>
     public void Move(Vector2Int oldPosition, Vector2Int newPosition){
-        ItemType item = GetItemType(oldPosition);
-        ItemType otherItem = GetItemType(newPosition);
-        if (otherItem != null){
-            otherItem.Move(newPosition, oldPosition);
+        ItemType thisType = GetItemType(oldPosition);
+        ItemType otherType = GetItemType(newPosition);
+        if (otherType == null || thisType.ItemName != otherType.ItemName){
+            if (otherType != null){
+                otherType.Move(newPosition, oldPosition);
+            } else {
+                FreeSlot[oldPosition.x][oldPosition.y] = true;
+                FreeSlot[newPosition.x][newPosition.y] = false;
+            }
+            if (thisType != null){
+                thisType.Move(oldPosition, newPosition);
+            } else {
+                FreeSlot[oldPosition.x][oldPosition.y] = false;
+                FreeSlot[newPosition.x][newPosition.y] = true;
+            }
+            try{
+                InventoryCanvas.MoveSlot(oldPosition, newPosition);
+            } catch (NullReferenceException){}
         } else {
-            FreeSlot[oldPosition.x][oldPosition.y] = true;
-            FreeSlot[newPosition.x][newPosition.y] = false;
+            int amount = thisType.GetItemSlot(oldPosition).Amount;
+            int left = otherType.Add(amount, newPosition);
+            if (left == 0){
+                thisType.Slots.Remove(thisType.GetItemSlot(newPosition));
+            } else {
+                thisType.Remove(amount - left, oldPosition);
+            }
         }
-        if (item != null){
-            item.Move(oldPosition, newPosition);
-        } else {
-            FreeSlot[oldPosition.x][oldPosition.y] = false;
-            FreeSlot[newPosition.x][newPosition.y] = true;
-        }
-        try{
-            InventoryCanvas.MoveSlot(oldPosition, newPosition);
-        } catch (NullReferenceException){}
     }
 
     /// <summary>
@@ -148,17 +159,27 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     public void Move(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
         ItemType thisType = GetItemType(oldPosition);
         ItemType otherType = inventory.GetItemType(newPosition);
-        thisType.Move(oldPosition, newPosition, inventory);
-        if (otherType != null){
-            otherType.Move(newPosition, oldPosition, this);
-            if (otherType.Amount == 0){
-                inventory.type.Remove(otherType);
+        if (otherType == null || thisType.ItemName != otherType.ItemName){
+            thisType.Move(oldPosition, newPosition, inventory);
+            if (otherType != null){
+                otherType.Move(newPosition, oldPosition, this);
+                if (otherType.Amount == 0){
+                    inventory.type.Remove(otherType);
+                }
+            }
+            if (thisType.Amount == 0){
+                type.Remove(thisType);
+            }
+            inventoryCanvas.MoveSlot(oldPosition, newPosition, inventory);
+        } else {
+            int amount = thisType.GetItemSlot(oldPosition).Amount;
+            int left = otherType.Add(amount, newPosition);
+            if (left == 0){
+                thisType.Slots.Remove(thisType.GetItemSlot(newPosition));
+            } else {
+                thisType.Remove(amount - left, oldPosition);
             }
         }
-        if (thisType.Amount == 0){
-            type.Remove(thisType);
-        }
-        inventoryCanvas.MoveSlot(oldPosition, newPosition, inventory);
     }
 
     public void Split(Vector2Int oldPosition, Vector2Int newPosition){

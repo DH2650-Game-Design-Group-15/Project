@@ -107,6 +107,19 @@ public class ItemType{
         return true;
     }
 
+    public bool Remove(int amount, Vector2Int position){
+        ItemSlot slot = GetItemSlot(position);
+        if (amount > slot.Amount){
+            return false;
+        } 
+        this.amount -= amount;
+        slot.Remove(amount);
+        if (slot.Amount == 0){
+            slots.Remove(GetItemSlot(position));
+        }
+        return true;
+    }
+
     /// <summary>
     /// Removes the stack on this position from the players inventory. Removes it only, if it has the same type than this helpers items.
     /// </summary>
