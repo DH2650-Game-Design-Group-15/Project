@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Tree
+  - ClingPoint
   - NPC
   - Enemy
   - Canvas
@@ -12,14 +14,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Trees
-  - Player
-  - Enemy
-  - Building
   - NPC
+  - 
+  - DestroyItDebris
+  - 
+  - 
   - 
   - 
   - 

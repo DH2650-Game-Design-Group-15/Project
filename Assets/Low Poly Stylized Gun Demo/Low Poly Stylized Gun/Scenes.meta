@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/TempCharacterModel/Scenes.meta
+guid: e02359e9d2a1fc344874582bd9801753
+========
 guid: a76a3a5aa6ac4894a9d95bbb1ca0dba3
+>>>>>>>> main:Assets/Low Poly Stylized Gun Demo/Low Poly Stylized Gun/Scenes.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
