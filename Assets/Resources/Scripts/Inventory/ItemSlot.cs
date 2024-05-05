@@ -1,12 +1,9 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary> Stores all information about an item on a special slot in the inventory </summary>
-[Serializable]
 public class ItemSlot{
-    [SerializeField] private Vector2Int position;
-    [SerializeField] private int amount;
+    private Vector2Int position;
+    private int amount;
     private ItemType itemType;
 
     /// <summary> Creates an item Slot. The amount is 0 at the beginning but it blocks already a slot in the inventory. </summary>

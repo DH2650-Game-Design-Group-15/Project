@@ -47,14 +47,7 @@ public class InventoryCanvas : MonoBehaviour{
     /// <param name="oldPosition"> The position of the first item. </param>
     /// <param name="newPosition"> The position of the second item. </param>
     public void MoveSlot(Vector2Int oldPosition, Vector2Int newPosition){
-        Transform oldSlot = transform.Find(SlotName(oldPosition.x, oldPosition.y)).transform;
-        Transform newSlot = transform.Find(SlotName(newPosition.x, newPosition.y)).transform;
-        Transform oldItem = oldSlot.GetComponentInChildren<ItemReference>().transform;
-        Transform newItem = newSlot.GetComponentInChildren<ItemReference>().transform;
-        newItem.SetParent(oldSlot);
-        oldItem.SetParent(newSlot);
-        newItem.GetComponent<RectTransform>().localPosition = positionInSlot;
-        oldItem.GetComponent<RectTransform>().localPosition = positionInSlot;
+        MoveSlot(oldPosition, newPosition, inventory);
     }
 
     public void MoveSlot(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){

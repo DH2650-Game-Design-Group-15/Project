@@ -1,14 +1,12 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class ItemType{
-    [SerializeField] private int amount;
-    [SerializeField] private readonly int maxStackSize;
-    [SerializeField] private readonly string itemName;
-    [SerializeField] private readonly Texture texture;
-    [SerializeField] private readonly List<ItemSlot> slots;
+    private int amount;
+    private readonly int maxStackSize;
+    private readonly string itemName;
+    private readonly Texture texture;
+    private readonly List<ItemSlot> slots;
     private readonly Inventory inventory;
 
     public ItemType(string itemName, int stackSize, Texture texture, Inventory inventory){
@@ -136,19 +134,18 @@ public class ItemType{
     }
 
     /// <summary>
-    /// Moves this item to a new position in the inventory. If this slot was already used by another item it swaps the position. 
+    /// Moves this item to a new position. If this slot was already used by another item it swaps the position. 
     /// If this slot was already used by an item of the same type it fills this stack, if this stack isn't big enough the remaining part stays in the old slot.
     /// <summary>
     /// <param name="oldPosition"> The position, where the item was stored in the inventory. </param>
     /// <param name="newPosition"> The position, where the item is now stored in the inventory. </param>
-
-    public void Move(Vector2Int oldPosition, Vector2Int newPosition){
-        ItemSlot item = GetItemSlot(oldPosition);
-        item.Move(newPosition);
-    }
-
+    /// <param name="inventory"> The new inventory for this item </param>
     public void Move(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
         ItemSlot slot = GetItemSlot(oldPosition);
+        if (inventory == this.inventory){
+            slot.Move(newPosition);
+            return;
+        }
         if (slot == null){
             Debug.LogError("Item wasn't found at " + oldPosition.ToString());
         }

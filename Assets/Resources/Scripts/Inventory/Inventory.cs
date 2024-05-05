@@ -1,18 +1,16 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Saves how many items can be stored in an inventory, if a slot is used and which items are stored there. 
 /// </summary>
-[Serializable]
 public class Inventory : MonoBehaviour{ // Later abstract, change Start for each type of inventory because of inventorySize
     private GameObject uiPrefab; // prefab for the inventories UI
     public Transform inventories; // parent of all inventories
     public InventoryCanvas inventoryCanvas; // reference to the UI
-    [SerializeField] private List<List<bool>> freeSlot;
-    [SerializeField] private List<ItemType> type;
-    [SerializeField] private Vector2Int inventorySize;
+    private List<List<bool>> freeSlot;
+    private List<ItemType> type;
+    private Vector2Int inventorySize;
     private bool isPlayer;
     // Debug
     public bool printInventory;
@@ -105,11 +103,8 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <returns> True, if an item existed on this position. False, if no item existed before. </returns>
     public bool RemoveStack(Vector2Int position){
         ItemType item = GetItemType(position);
-        if (item != null){
-            item.RemoveStack(position);
-            return true;
-        }
-        return false;
+        item?.RemoveStack(position);
+        return item != null;
     }
 
     /// <summary>
@@ -120,35 +115,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <param name="newPosition"> The position, where the item is now stored in the inventory. </param>
     /// <remarks> Right now it doesn't add the same type. Instead both are swapping like different items. </remarks>
     public void Move(Vector2Int oldPosition, Vector2Int newPosition){
-        ItemType thisType = GetItemType(oldPosition);
-        ItemType otherType = GetItemType(newPosition);
-        if (otherType == null || thisType.ItemName != otherType.ItemName){
-            if (otherType != null){
-                otherType.Move(newPosition, oldPosition);
-            } else {
-                FreeSlot[oldPosition.x][oldPosition.y] = true;
-                FreeSlot[newPosition.x][newPosition.y] = false;
-            }
-            if (thisType != null){
-                thisType.Move(oldPosition, newPosition);
-            } else {
-                FreeSlot[oldPosition.x][oldPosition.y] = false;
-                FreeSlot[newPosition.x][newPosition.y] = true;
-            }
-            try{
-                InventoryCanvas.MoveSlot(oldPosition, newPosition);
-            } catch (NullReferenceException){}
-        } else {
-            int amount = thisType.GetItemSlot(oldPosition).Amount;
-            int left = otherType.Add(amount, newPosition);
-            if (left == 0){
-                thisType.Slots.Remove(thisType.GetItemSlot(oldPosition));
-                inventoryCanvas.RemoveSlot(oldPosition);
-            } else {
-                thisType.Remove(amount - left, oldPosition);
-                inventoryCanvas.ResetPosition(oldPosition);
-            }
-        }
+        Move(oldPosition, newPosition, this);
     }
 
     /// <summary>

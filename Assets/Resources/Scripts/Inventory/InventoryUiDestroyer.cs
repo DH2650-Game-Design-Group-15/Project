@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class DestroyCanvas : MonoBehaviour
-{
-    // Start is called before the first frame update
+public class InventoryUiDestroyer : MonoBehaviour {
+    /// <summary> Deletes the inventory of all storages in the first frame. </summary>
     void Update() {
         Transform inventories = Parent.FindParentSibling(gameObject, "Inventories");
         InventoryCanvas[] canvas = inventories.GetComponentsInChildren<InventoryCanvas>(true);

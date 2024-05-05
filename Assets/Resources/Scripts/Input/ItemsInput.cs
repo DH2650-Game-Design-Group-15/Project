@@ -156,7 +156,6 @@ public class ItemsInput : MonoBehaviour {
                     Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
                     Vector2Int newPosition = GetPositionFromName(newSlot.name);
                     moveInventory.Move(oldPosition, newPosition);
-                    // TODO Add if same item
                 } else { // same slot as before, restore position
                     moveItem.transform.localPosition = positionInSlot;
                 }
