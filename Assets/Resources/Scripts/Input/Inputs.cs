@@ -1,14 +1,10 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// Helper functions for the Input maps.
-/// Functions can return all active maps or activate or deactivate a map
-/// </summary>
 public class Inputs : MonoBehaviour {
     private PlayerInput playerInput;
-    private List<InputActionMap> lastMaps;
+    private ArrayList lastMaps;
 
     /// <summary>
     /// Finds a playerInput in the parents and all their children, including itself and siblings.
@@ -16,14 +12,9 @@ public class Inputs : MonoBehaviour {
     void Start() {
         Transform parent = transform.parent ?? transform;
         playerInput = parent.GetComponentInChildren<PlayerInput>();
-        lastMaps = new();
+        lastMaps = new ArrayList();
     }
 
-    /// <summary>
-    /// Deactivates the input map with the given name. 
-    /// </summary>
-    /// <param name="mapName"> The name of the map to disable. </param>
-    /// <returns> True, if the map was enabled before, else false. </returns>
     public bool RemoveActionMap(string mapName){
         InputActionMap map = playerInput.actions.FindActionMap(mapName);
         bool oldValue = map.enabled;
@@ -31,12 +22,6 @@ public class Inputs : MonoBehaviour {
         return oldValue;
     }
 
-    /// <summary>
-    /// Activates the input map with the given name. Doesn't activate different action maps.
-    /// This can lead to different events on the same key.
-    /// </summary>
-    /// <param name="mapName"> The name of the map to enable. </param>
-    /// <returns> True, if the map was disabled before, else false. </returns>
     public bool AddActionMap(string mapName){
         InputActionMap map = playerInput.actions.FindActionMap(mapName);
         bool oldValue = map.enabled;
@@ -44,10 +29,6 @@ public class Inputs : MonoBehaviour {
         return !oldValue;
     }
 
-    /// <summary>
-    /// Disables all active input maps and activates only the one with the given name.
-    /// </summary>
-    /// <param name="mapName"> The name of the only map to enable. </param>
     public void ChangeActionMap(string mapName){
         lastMaps.Clear();
         foreach (InputActionMap map in playerInput.actions.actionMaps) {
@@ -59,10 +40,6 @@ public class Inputs : MonoBehaviour {
         AddActionMap(mapName);
     }
 
-    /// <summary>
-    /// Deactivates all active input maps and activates all input maps with the given names.
-    /// </summary>
-    /// <param name="mapName"> The name of all maps to enable. </param>
     public void ChangeActionMaps(string[] mapNames){
         ChangeActionMap(mapNames[0]);
         for (int i = 1; i < mapNames.Length; i++){
@@ -70,12 +47,8 @@ public class Inputs : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Deactivates all active input maps.
-    /// Activates all input maps, that were active before last time ChangeActionMap or ChangeActionMaps was called
-    /// </summary>
     public void ReturnToActionMap(){
-        List<InputActionMap> newLastMaps = new();
+        ArrayList newLastMaps = new ArrayList();
         foreach(InputActionMap map in playerInput.actions.actionMaps){
             if (map.enabled){
                 newLastMaps.Add(map);
@@ -85,19 +58,5 @@ public class Inputs : MonoBehaviour {
         foreach(InputActionMap map in lastMaps){
             map.Enable();
         }
-    }
-
-    /// <summary>
-    /// Returns all active input maps.
-    /// </summary>
-    /// <returns> A list of all active input maps. </returns>
-    public List<string> GetActionMaps(){
-        List<string> maps = new();
-        foreach(InputActionMap map in playerInput.actions.actionMaps){
-            if(map.enabled){
-                maps.Add(map.name);
-            }
-        }
-        return maps;
     }
 }
