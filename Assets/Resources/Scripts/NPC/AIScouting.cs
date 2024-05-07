@@ -26,11 +26,13 @@ public class AIScouting : MonoBehaviour {
     private Vector3 currAreaCenter;
     private Quaternion prevRotation;
     private AIVisionField vision;
+    private Animator animator;
 
     private void Start () {
         SetDialogue(false);
         SetFOVScript(GetComponentInChildren<AIVisionField>());
         human = GetComponent<NavMeshAgent>();
+        SetAnimator(GetComponent<Animator>());
         SetInitPosition(human.transform.position);
         SetPrevPosition(human.transform.position);
         if (human != null) {
@@ -40,6 +42,7 @@ public class AIScouting : MonoBehaviour {
     }
 
     private void Update () {
+        GetAnimator().SetFloat("Speed", human.velocity.magnitude);
         if (GetDialogue() == true) {
             human.isStopped = true;
         } else if (human != null) {
@@ -244,6 +247,14 @@ public class AIScouting : MonoBehaviour {
 
     private bool GetHunting () {
         return hunting;
+    }
+
+    private void SetAnimator (Animator a) {
+        animator = a;
+    }
+
+    private Animator GetAnimator () {
+        return animator;
     }
 
 }
