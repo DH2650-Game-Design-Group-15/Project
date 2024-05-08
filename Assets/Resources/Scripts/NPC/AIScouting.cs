@@ -15,11 +15,13 @@ public class AIScouting : MonoBehaviour {
     public float idleRadius;
     public float fireRange;
     public float huntSpeed;
+    public float lookRotationSpeed;
     public int reputation;
     private int areaCounter;
     private bool wait;
     private bool dialogue;
     private bool hunting;
+    private bool shooting;
     public Vector3 basePosition;
     private Vector3 initPosition;
     private Vector3 prevPosition;
@@ -52,20 +54,27 @@ public class AIScouting : MonoBehaviour {
                 PatrolMovement();
             }
         }
-        SetPrevPosition(human.transform.position);
-        SetPrevRotation(human.transform.rotation);
     }
 
+    /// <summary>
+    /// Hunts the player until close enough to shoot
+    /// </summary>
     public void HuntMovement () {
         SetHunting(true);
+        human.SetDestination(GetFOVScript().GetPlayerPosition());
         if (Vector3.Distance(human.transform.position, GetFOVScript().GetPlayerPosition()) > fireRange) {
+            SetShooting(false);
             human.isStopped = false;
             human.speed = huntSpeed;
-            human.SetDestination(GetFOVScript().GetPlayerPosition());
+        } else if (!GetShooting()) {
+            human.isStopped = true;
+            SetPrevPosition(human.transform.position);
+            SetShooting(true);
         } else {
             human.isStopped = true;
             human.transform.position = GetPrevPosition();
-            human.transform.rotation = GetPrevRotation();
+            Quaternion lookRotation = Quaternion.LookRotation(GetFOVScript().GetPlayerPosition() - human.transform.position);
+            human.transform.rotation = Quaternion.Slerp(human.transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
         }
     }
 
@@ -73,17 +82,20 @@ public class AIScouting : MonoBehaviour {
     /// Updates the destination of the human and if it is waiting
     /// </summary>
     private void PatrolMovement () {
-        human.speed = speed;
         if (GetHunting()) {
-            SetHunting(false);
+            SetShooting(false);
             human.isStopped = false;
-            human.SetDestination(RandomNavMeshLocation());
+        } else {
+            human.speed = speed;
         }
         if (human.isStopped) {
             human.transform.position = GetPrevPosition();
             human.transform.rotation = GetPrevRotation();
         }
         if (human.remainingDistance <= human.stoppingDistance) {
+            if (GetHunting()) {
+                SetHunting(false);
+            }
             if (!GetWait()){
                 SetWait(true);
                 StartCoroutine(waitTimer(UnityEngine.Random.Range(1.5f,4.0f)));
@@ -114,8 +126,6 @@ public class AIScouting : MonoBehaviour {
                         finalPosition = hit.position;
                         break;
                     }
-                } else {
-                    finalPosition = currentPosition;
                 }
             }
         }
@@ -171,6 +181,8 @@ public class AIScouting : MonoBehaviour {
     /// <returns>IEnumerator</returns>
     private IEnumerator waitTimer (float timeToWait) {
         human.isStopped = true;
+        SetPrevPosition(human.transform.position);
+        SetPrevRotation(human.transform.rotation);
         yield return new WaitForSeconds(timeToWait);
         SetWait(false);
         human.isStopped = false;
@@ -199,6 +211,14 @@ public class AIScouting : MonoBehaviour {
 
     private bool GetDialogue () {
         return dialogue;
+    }
+
+    private void SetShooting (bool shoot) {
+        shooting = shoot;
+    }
+
+    public bool GetShooting () {
+        return shooting;
     }
 
     private void SetInitPosition (Vector3 pos) {
@@ -237,7 +257,7 @@ public class AIScouting : MonoBehaviour {
         vision = fieldOfView;
     }
 
-    private AIVisionField GetFOVScript () {
+    public AIVisionField GetFOVScript () {
         return vision;
     }
 
@@ -253,7 +273,7 @@ public class AIScouting : MonoBehaviour {
         animator = a;
     }
 
-    private Animator GetAnimator () {
+    public Animator GetAnimator () {
         return animator;
     }
 
