@@ -1,17 +1,13 @@
 using UnityEngine;
 
 public class Lighter : Tools {
-    private int maxStackSize = 20;
-    private double weight = 0.1;
-    public int amount;
-
-    public override int MaxStackSize { get => maxStackSize; }
-
-    public override double Weight { get => weight; }
-
-    public override int Amount { get => amount; set => amount = value; }
+    public override void UseInInventory() {}
 
     void Awake(){
+        maxStackSize = 64;
+        weight = 0.1;
+        prefab = Resources.Load<GameObject>("Prefabs/Items/Items/Tools/Lighter-class_open_i");
+        // TODO prefab is always the same -> changes style after pick up and throwing away
         imageInventory = Resources.Load<Texture>("UITextures/Items/Tools/lighter");
     }
 }

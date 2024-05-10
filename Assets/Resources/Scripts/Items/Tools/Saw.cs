@@ -1,17 +1,15 @@
 using UnityEngine;
 
 public class Saw : Tools {
-    private int maxStackSize = 1;
-    private double weight = 2;
-    public int amount;
-
-    public override int MaxStackSize { get => maxStackSize; }
-
-    public override double Weight { get => weight; }
-
-    public override int Amount { get => amount; set => amount = value; }
+    public override void UseInInventory() {
+        // TODO Player needs maybe water and it can refill players water
+    }
 
     void Awake(){
+        maxStackSize = 5;
+        weight = 2;
+        prefab = Resources.Load<GameObject>("Prefabs/Items/Items/Buck-saw_i");
+        // TODO prefab is always the same -> changes style after pick up and throwing away
         imageInventory = Resources.Load<Texture>("UITextures/Items/Tools/saw");
     }
 }

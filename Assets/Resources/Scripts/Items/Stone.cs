@@ -1,15 +1,14 @@
 using UnityEngine;
 
 public class Stone : Item {
-    private int maxStackSize = 5;
-    private double weight = 5;
-    public int amount;
-
-    void Awake(){
-        imageInventory = Resources.Load<Texture>("UITextures/Items/stone");
+    public override void UseInInventory() {
+        // TODO Player needs maybe water and it can refill players water
     }
 
-    public override int MaxStackSize { get => maxStackSize; }
-    public override double Weight { get => weight; }
-    public override int Amount { get => amount; set => amount = value; }
+    void Awake(){
+        maxStackSize = 20;
+        weight = 0.7;
+        Debug.LogWarning("Prefab missing for " + GetType().ToString());
+        imageInventory = Resources.Load<Texture>("UITextures/Items/stone");
+    }
 }

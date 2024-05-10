@@ -1,15 +1,14 @@
 using UnityEngine;
 
 public class Kukri:Knife {
-    private int maxStackSize = 10;
-    private double weight = 9;
-    public int amount;
-
-    void Awake(){
-        imageInventory = Resources.Load<Texture>("UITextures/Items/Weapons/CloseCombat/Knife/kukri");
+    public override void UseInInventory() {
+        // TODO Player needs maybe water and it can refill players water
     }
 
-    public override int MaxStackSize { get => maxStackSize; }
-    public override double Weight { get => weight; }
-    public override int Amount { get => amount; set => amount = value; }
+    void Awake(){
+        maxStackSize = 20;
+        weight = 0.7;
+        prefab = Resources.Load<GameObject>("Prefabs/Items/Items/Weapons/CloseCombat/Knife");
+        imageInventory = Resources.Load<Texture>("UITextures/Items/Weapons/CloseCombat/Knife/kukri");
+    }
 }
