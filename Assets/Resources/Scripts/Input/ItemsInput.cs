@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ItemsInput : MonoBehaviour {
-    public CacheCloseObjects closeObjectsScript;
     public Inventory inventory;
     // Only for Move and Split 
     private bool move = false;
@@ -22,7 +21,6 @@ public class ItemsInput : MonoBehaviour {
 
     void Start(){
         inventory = Parent.FindParent(gameObject, typeof(Inventory))?.GetComponent<Inventory>();
-        closeObjectsScript = Parent.FindChild(inventory, typeof(CacheCloseObjects))?.GetComponent<CacheCloseObjects>();
         objectDetection = Parent.FindChild(inventory, typeof(ObjectDetection))?.GetComponent<ObjectDetection>();
     }
 
