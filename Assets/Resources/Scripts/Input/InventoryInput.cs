@@ -5,11 +5,17 @@ using UnityEngine.UI;
 public class InventoryInput : MonoBehaviour {
     private Inputs inputs;
     public GameObject inventoryUI;
+    private ObjectDetection objectDetection;
+    private float maxStorageDistance = 10f;
     
     void Start() {
         Inventory inventory = Parent.FindParent(gameObject, typeof(Inventory)).GetComponent<Inventory>();
-        inventoryUI = Parent.FindParent(inventory.InventoryCanvas, "Inventory").gameObject;
+        inventoryUI = Parent.FindParent(inventory.InventoryCanvas, "Inventory")?.gameObject;
         inputs = GetComponent<Inputs>();
+        objectDetection = Parent.FindChild(inventory, typeof(ObjectDetection))?.GetComponent<ObjectDetection>();
+        if (inventoryUI == null || objectDetection == null){
+            Debug.LogError("Can't find all components");
+        }
     }
 
     public void OpenInventory(InputAction.CallbackContext context){
@@ -36,12 +42,16 @@ public class InventoryInput : MonoBehaviour {
 
     public void OpenStorage(InputAction.CallbackContext context){
         if (context.started){
-            inputs.ChangeActionMap("Inventory");
-            inventoryUI.SetActive(true);
-            GameObject storage = GameObject.FindWithTag("Storage");
-            storage.GetComponent<Inventory>().ReloadInventoryCanvas();
-            storage.GetComponent<Inventory>().InventoryCanvas.transform.parent.SetAsFirstSibling();
-            inventoryUI.GetComponentInChildren<HorizontalLayoutGroup>().spacing = 150;
+            GameObject[] objects = objectDetection.DetectObjects();
+            objects = ObjectDetection.ObjectsWithComponent(objects, typeof(Inventory));
+            (GameObject storage, float distance) = objectDetection.ClosestObject(objects);
+            if (distance < maxStorageDistance){
+                inputs.ChangeActionMap("Inventory");
+                inventoryUI.SetActive(true);
+                storage.GetComponent<Inventory>().ReloadInventoryCanvas();
+                storage.GetComponent<Inventory>().InventoryCanvas.transform.parent.SetAsFirstSibling();
+                inventoryUI.GetComponentInChildren<HorizontalLayoutGroup>().spacing = 150;
+            }
         }
     }
 }

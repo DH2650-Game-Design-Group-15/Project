@@ -17,10 +17,13 @@ public class ItemsInput : MonoBehaviour {
     private Vector3 startingPos;
     private static Vector3 positionInSlot = new(1, 0, 0);
     public Inventory moveInventory;
+    private ObjectDetection objectDetection;
+    private float pickUpDistance = 10f;
 
     void Start(){
         inventory = Parent.FindParent(gameObject, typeof(Inventory))?.GetComponent<Inventory>();
         closeObjectsScript = Parent.FindChild(inventory, typeof(CacheCloseObjects))?.GetComponent<CacheCloseObjects>();
+        objectDetection = Parent.FindChild(inventory, typeof(ObjectDetection))?.GetComponent<ObjectDetection>();
     }
 
     /// <summary> Called when the player tries to take an object. 
@@ -28,17 +31,16 @@ public class ItemsInput : MonoBehaviour {
     /// </summary>
     public void OnTakeItem(InputAction.CallbackContext context){
         if (context.started){
-            HashSet<GameObject> items = closeObjectsScript.GetNearItems();
-            if (items.Count > 0){
-                foreach (GameObject item in items) {
-                    int left = inventory.Add(item.GetComponent<Item>().GetType().ToString(), item.GetComponent<Item>(), item.GetComponent<Item>().Amount);
-                    if (left == 0){
-                        closeObjectsScript.OnTriggerExit(item.GetComponent<Collider>());
-                        Destroy(item);
-                    } else {
-                        item.GetComponent<Item>().Amount = left;
-                    }
-                    break;
+            GameObject[] objects = objectDetection.DetectObjects();                         // all objects nearby
+            objects = ObjectDetection.ObjectsWithComponent(objects, typeof(Item));          // filter by items
+            (GameObject obj, float distance) = objectDetection.ClosestObject(objects);      // filter closest one
+            if (obj != null && distance < pickUpDistance) {
+                Item item = obj.GetComponent<Item>();
+                int left = inventory.Add(item.GetType().ToString(), item, item.Amount);
+                if (left == 0){
+                    Destroy(obj);
+                } else {
+                    item.Amount = left;
                 }
             }
         }
