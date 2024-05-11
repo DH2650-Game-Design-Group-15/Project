@@ -121,7 +121,7 @@ public class ItemsInput : MonoBehaviour {
             if (position.x < 0 || position.y < 0){
                 return;
             }
-            bool removed = GetInventory(reference.gameObject).RemoveStack(position);
+            bool removed = Parent.FindParent(reference.gameObject, typeof(InventoryCanvas)).GetComponent<InventoryCanvas>().Inventory.RemoveStack(position);
             if (removed){
                 reference.GetComponent<RawImage>().enabled = false;
                 reference.GetComponent<RawImage>().texture = null;
@@ -150,7 +150,7 @@ public class ItemsInput : MonoBehaviour {
             mouseStartPos = Mouse.current.position.ReadValue();
             moveItem = moveSlot.GetComponentInChildren<ItemReference>().gameObject;
             startingPos = moveItem.GetComponent<RectTransform>().position;
-            moveInventory = GetInventory(moveSlot);
+            moveInventory = Parent.FindParent(moveSlot, typeof(InventoryCanvas))?.GetComponent<InventoryCanvas>().Inventory;
             moveItem.transform.SetParent(Parent.FindParentSibling(inventory.InventoryCanvas, "MoveHelper")); // Lower in the hierarchy means in the foreground. This image has to be in front of all other images
         }
     }
@@ -174,7 +174,7 @@ public class ItemsInput : MonoBehaviour {
             GameObject newSlot = ItemOnMouse(itemPattern);
             if (newSlot == null){ // Outside the inventory
                 RemoveStack(moveItem.GetComponent<ItemReference>());
-            } else if (GetInventory(newSlot) == moveInventory){
+            } else if (Parent.FindParent(newSlot, typeof(InventoryCanvas))?.GetComponent<InventoryCanvas>().Inventory == moveInventory){
                 if (newSlot != moveSlot) { // Isn't the same slot as before
                     Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
                     Vector2Int newPosition = GetPositionFromName(newSlot.name);
@@ -185,7 +185,7 @@ public class ItemsInput : MonoBehaviour {
             } else {
                 Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
                 Vector2Int newPosition = GetPositionFromName(newSlot.name);
-                moveInventory.Move(oldPosition, newPosition, GetInventory(newSlot));
+                moveInventory.Move(oldPosition, newPosition, Parent.FindParent(newSlot, typeof(InventoryCanvas))?.GetComponent<InventoryCanvas>().Inventory);
             }
         }
     }
@@ -195,22 +195,7 @@ public class ItemsInput : MonoBehaviour {
             MoveProgress();
         }
     }
-
-    /// <summary> Returns the Inventory component in a parent. </summary>
-    /// <returns> parent Inventory. null if no inventory is found in the 5 next parents
-    public Inventory GetInventory(GameObject game){
-        Transform inventory = game.transform;
-        for (int i = 0; i < 5; i++){
-            InventoryCanvas result = inventory.GetComponent<InventoryCanvas>();
-            if (result != null){
-                return result.Inventory;
-            }
-            inventory = inventory.parent;
-        }
-        Debug.LogWarning("No Inventory found");
-        return null;
-    }
-
+    
     /// <summary> Stores if the player tries to move an item or if he wants to split the stack. 
     /// It tries to split while the player holds the button pressed. </summary>
     public void OnSplitItem(InputAction.CallbackContext context){
