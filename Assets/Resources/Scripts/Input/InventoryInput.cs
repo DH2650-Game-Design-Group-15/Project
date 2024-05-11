@@ -20,6 +20,7 @@ public class InventoryInput : MonoBehaviour {
 
     public void OpenInventory(InputAction.CallbackContext context){
         if (context.started){
+            SetCursor(true);
             inputs.ChangeActionMap("Inventory");
             inventoryUI.SetActive(true);
         }
@@ -27,6 +28,7 @@ public class InventoryInput : MonoBehaviour {
 
     public void CloseInventory(InputAction.CallbackContext context){
         if (context.started){
+            SetCursor(false);
             inputs.ReturnToActionMap();
             inventoryUI.SetActive(false);
             if (Parent.FindChild(inventoryUI, "Inventories").transform.childCount > 1) {
@@ -42,6 +44,7 @@ public class InventoryInput : MonoBehaviour {
 
     public void OpenStorage(InputAction.CallbackContext context){
         if (context.started){
+            SetCursor(true);
             GameObject[] objects = objectDetection.DetectObjects();
             objects = ObjectDetection.ObjectsWithComponent(objects, typeof(Inventory));
             (GameObject storage, float distance) = objectDetection.ClosestObject(objects);
@@ -53,5 +56,14 @@ public class InventoryInput : MonoBehaviour {
                 inventoryUI.GetComponentInChildren<HorizontalLayoutGroup>().spacing = 150;
             }
         }
+    }
+
+    private void SetCursor(bool active){
+        if (active){
+            Cursor.lockState = CursorLockMode.Confined;
+        } else {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        Cursor.visible = active;
     }
 }
