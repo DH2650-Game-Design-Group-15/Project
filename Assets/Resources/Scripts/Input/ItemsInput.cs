@@ -110,7 +110,6 @@ public class ItemsInput : MonoBehaviour {
             }
             // TODO Spawn Object
         }
-
     }
 
     public void OnMoveItem(InputAction.CallbackContext context){

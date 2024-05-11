@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         if (itemType != null){
             return itemType.Add(amount, position);
         } else {
-            type.Add(new ItemType(itemName, item.MaxStackSize, item.ImageInventory, this));
+            type.Add(new ItemType(item, this));
             return type[^1].Add(amount, position);
         }
     }

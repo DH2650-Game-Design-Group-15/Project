@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ItemType{
@@ -6,16 +7,21 @@ public class ItemType{
     private readonly int maxStackSize;
     private readonly string itemName;
     private readonly Texture texture;
+    private readonly GameObject prefab;
     private readonly List<ItemSlot> slots;
     private readonly Inventory inventory;
 
-    public ItemType(string itemName, int stackSize, Texture texture, Inventory inventory){
+    public ItemType(string itemName, int stackSize, Texture texture, GameObject prefab, Inventory inventory){
         this.itemName = itemName;
         this.inventory = inventory;
         this.texture = texture;
+        this.prefab = prefab;
         maxStackSize = stackSize;
         slots = new();
         amount = 0;
+    }
+
+    public ItemType(Item item, Inventory inventory):this(item.GetType().ToString(), item.MaxStackSize, item.ImageInventory, item.Prefab, inventory){
     }
 
     /// <summary>
@@ -130,7 +136,13 @@ public class ItemType{
     /// </summary>
     /// <returns> True, if the slot was used by this slot. False if it didn't exist in this slot </returns>
     public void RemoveStack(Vector2Int position){
-        Remove(GetItemSlot(position).Amount, position);
+        Vector3 throwPosition = new(0, 1, 0.5f);
+        ItemSlot stack = GetItemSlot(position);
+        prefab.GetComponent<Item>().Amount = stack.Amount;
+        GameObject obj = GameObject.Instantiate(prefab, inventory.transform);
+        obj.transform.localPosition = throwPosition;
+        obj.transform.parent = null;
+        Remove(stack.Amount, position);
     }
 
     /// <summary>
@@ -151,7 +163,7 @@ public class ItemType{
         }
         ItemType newType = inventory.GetItemType(itemName);
         if (newType == null){
-            newType = new(itemName, maxStackSize, texture, inventory);
+            newType = new(itemName, maxStackSize, texture, prefab, inventory);
             inventory.Type.Add(newType);
         }
         slot.Move(newPosition, newType);

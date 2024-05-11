@@ -8,7 +8,7 @@ public class Kukri:Knife {
     void Awake(){
         maxStackSize = 20;
         weight = 0.7;
-        prefab = Resources.Load<GameObject>("Prefabs/Items/Items/Weapons/CloseCombat/Knife");
+        prefab = Resources.Load<GameObject>("Prefabs/Items/Items/Weapons/CloseCombat/Knife/Kukri_i");
         imageInventory = Resources.Load<Texture>("UITextures/Items/Weapons/CloseCombat/Knife/kukri");
     }
 }
