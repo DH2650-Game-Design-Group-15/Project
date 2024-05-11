@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
+/// Legacy. Use instead ObjectDetection to find a GameObject.
 /// This should be on a children component of a character.
 /// It safes all other characters close to this, that makes it easier to find later the character closest to you to interact with
 /// </summary>
