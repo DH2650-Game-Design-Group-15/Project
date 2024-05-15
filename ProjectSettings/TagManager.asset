@@ -21,12 +21,12 @@ TagManager:
   - 
   - DestroyItDebris
   - Base
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - PlayerPos
+  - TerrainMap
+  - BaseDisplay
+  - MapUI
+  - SceneLight
   - 
   - 
   - 
