@@ -1,3 +1,4 @@
+using DestroyIt;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,6 +13,8 @@ public class InventoryInput : MonoBehaviour {
     public GameObject inventoryUI;
     private ObjectDetection objectDetection;
     private float maxStorageDistance = 10f;
+    private FirstPersonController firstPersonController;
+    private InputManager inputManager;
     
     /// <summary> Finds the Component Inputs and the parent GameObject of the UI for inventories. </summary>
     void Start() {
@@ -22,6 +25,8 @@ public class InventoryInput : MonoBehaviour {
         if (inventoryUI == null || objectDetection == null){
             Debug.LogError("Can't find all components");
         }
+        inputManager = Parent.FindParent(inventory, typeof(InputManager))?.GetComponent<InputManager>();
+        firstPersonController = Parent.FindParent(inventory, typeof(FirstPersonController))?.GetComponent<FirstPersonController>();
     }
 
     /// <summary> Opens the inventory and enables the cursor. It changes also the action map to inventory. </summary>
@@ -79,6 +84,8 @@ public class InventoryInput : MonoBehaviour {
         } else {
             Cursor.lockState = CursorLockMode.Locked;
         }
+        firstPersonController.enabled = !active;
+        inputManager.enabled = !active;
         Cursor.visible = active;
     }
 }
