@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/// <summary> Stores all information about an item on a special slot in the inventory </summary>
+/// <summary> Stores all information about an item at this slot in the inventory </summary>
 public class ItemSlot{
     private Vector2Int position;
     private int amount;
@@ -33,7 +33,8 @@ public class ItemSlot{
 
     /// <summary> Removes the given amount of items to this slot. Returns the amount of items which aren't removed here. </summary>
     /// <param name="amount"> The amount of items to be removed from this slot </param>
-    /// <returns> The amount of items which can't be removed from this slot. Returns -1, if all items are removed and there're still items in this slot left. 
+    /// <returns> The amount of items which can't be removed from this slot. 
+    /// Returns -1, if all items are removed and there're still items in this slot left. 
     /// Returns 0, if all items are removed but the new amount of this slot is 0. </returns>
     public int Remove(int amount){
         if (Amount > amount){
@@ -50,7 +51,10 @@ public class ItemSlot{
     public void Move(Vector2Int position){
         this.position = position;
     }
-
+    
+    /// <summary> Moves this item to a new position in another inventory. Doesn't check, if the new position is empty or not. </summary>
+    /// <param name="position"> The new position in the inventory. </param>
+    /// <param name="type"> The same type like for itemType but from another inventory </param>
     public void Move(Vector2Int position, ItemType type){
         this.position = position;
         itemType = type;

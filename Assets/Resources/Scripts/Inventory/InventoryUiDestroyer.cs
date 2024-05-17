@@ -1,5 +1,6 @@
 using UnityEngine;
 
+/// <summary> Helper to delete the UI for all inventories except the players inventory. </summary>
 public class InventoryUiDestroyer : MonoBehaviour {
     /// <summary> Deletes the inventory of all storages in the first frame. </summary>
     void Update() {
