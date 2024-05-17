@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public abstract class Item : MonoBehaviour {
     protected Texture imageInventory;
-    protected GameObject prefab;
+    public GameObject prefab;
     protected int maxStackSize;
     protected double weight;
     [SerializeField] protected int amount;

@@ -8,7 +8,7 @@ public class Stone : Item {
     void Awake(){
         maxStackSize = 20;
         weight = 0.7;
-        Debug.LogWarning("Prefab missing for " + GetType().ToString());
+        prefab = Resources.Load<GameObject>("Prefabs/Items/Stone");
         imageInventory = Resources.Load<Texture>("UITextures/Items/stone");
     }
 }
