@@ -1,126 +1,45 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Enum contains all fractions, a character can be part of. Every character must be part of a fraction, else it isn't possible to interact with it.
-/// </summary>
-public enum Fraction {
-    Player,
-    Friends,
-    Neutral,
-    Enemy,
-    WorstEnemy
-}
-
-/// <summary>
-/// This class safes the fraction of this character. It contains also static tables to store which fraction has which reputation to other fractions.
-/// It's possible to have a different reputation for fraction A to B then for fraction B to A.
-/// </summary>
 public class Fractions : MonoBehaviour {
-    private static Hashtable reputation;
-    private static object reputationLock = new object();
-    public Fraction ownFraction;
+    [SerializeField] private Fraction ownFraction;
 
-    private void Start() {
-        if (reputation == null){
-            InitReputation();
-        }
-    }
-
-    public Fraction getFraction() {
-        return ownFraction;
-    }
-
-    public int getReputation(Fraction otherFraction) {
-        return getReputation(otherFraction, ownFraction);
-    }
-
-    public int getReputation(Fraction otherFraction, Fraction fraction){
-        lock(reputationLock) {
-            Hashtable reputationTable = (Hashtable) reputation[fraction];
-            return (int) reputationTable[otherFraction];
-        }
-    }
-
-    private void setReputation(Fraction otherFraction, int value) {
-        setReputation(otherFraction, ownFraction, value);
-    }
-
-    private void setReputation(Fraction otherFraction, Fraction fraction, int value) {
-        ((Hashtable)reputation[fraction])[otherFraction] = value;
-    }
+    private static readonly Dictionary<Tuple<Fraction, Fraction>, float> reputation = new();
     
-    private void changeReputation(Fraction otherFraction, int value) {
-        changeReputation(otherFraction, ownFraction, value);
+    private static Tuple<Fraction, Fraction> SortFraction(Tuple<Fraction, Fraction> fractions){
+        if ((int) fractions.Item1 < (int) fractions.Item2){
+            fractions = new (fractions.Item2, fractions.Item1);
+        }
+        return fractions;
     }
 
-    private void changeReputation(Fraction otherFraction, Fraction fraction, int value) {
-        int oldValue = (int)((Hashtable) reputation[fraction])[otherFraction];
-        setReputation(otherFraction, fraction, value + oldValue);
+    public static void SetRepuation(Tuple<Fraction, Fraction> fractions, float value){
+        SetRepuation(fractions, value, false);
     }
 
-    private void setReputationForBoth(Fraction otherFraction, int value) {
-        setReputation(otherFraction, ownFraction, value);
-        setReputation(ownFraction, otherFraction, value);
-    }
-
-    private void setReputationForBoth(Fraction otherFraction, Fraction fraction, int value) {
-        setReputation(otherFraction, fraction, value);
-        setReputation(fraction, otherFraction, value);
-    }
-    
-    private void changeReputationForBoth(Fraction otherFraction, int value) {
-        changeReputation(otherFraction, ownFraction, value);
-        changeReputation(ownFraction, otherFraction, value);
-    }
-
-    private void changeReputationForBoth(Fraction otherFraction, Fraction fraction, int value) {
-        changeReputation(otherFraction, fraction, value);
-        changeReputation(fraction, otherFraction, value);
-    }
-
-    /// <summary>
-    /// initialises the Hashtable reputation, if it isn't already initialised, it initialises it for each fraction to each other
-    /// </summary>
-    /// <returns></returns>
-    private static void InitReputation(){
-        lock(reputationLock){
-            if (reputation == null) {
-                reputation = new Hashtable();
-                InitReputationForFraction(new int[]{ 100, 50, 0, -50, -100}, Fraction.Player);
-                InitReputationForFraction(new int[]{ 50, 100, 0, -50, -100}, Fraction.Friends);
-                InitReputationForFraction(new int[]{ 0, 0, 100, 0, -100}, Fraction.Neutral);
-                InitReputationForFraction(new int[]{ -50, -50, 0, 100, -100}, Fraction.Enemy);
-                InitReputationForFraction(new int[]{ -100, -100, -100, -100, 100}, Fraction.WorstEnemy);
-            }
+    public static void SetRepuation(Tuple<Fraction, Fraction> fractions, float value, bool absolut){
+        fractions = SortFraction(fractions);
+        if (!absolut){
+            value += GetReputation(fractions);
+        }
+        if (reputation.ContainsKey(fractions)){
+            reputation[fractions] = value;
+        } else {
+            reputation.Add(fractions, value);
         }
     }
 
-    
-    /// <summary>
-    /// Creates a Hashtable with reputations to all fractions, for the given fraction.
-    /// The table is always from perspective of this fraction to all other fractions.
-    /// </summary>
-    /// <param name="reputation">Values, that are mapped to all fractions</param>
-    /// <param name="fraction">Fraction, that gets this Table</param>
-    /// <returns></returns>
-    private static void InitReputationForFraction(int[] reputations, Fraction fraction){
-        Hashtable mapping = new Hashtable();
-        Fraction[] fractions = (Fraction[])Enum.GetValues(typeof(Fraction));
-
-        if (fractions.Length != reputations.Length)
-        {
-            throw new ArgumentException("Array has a wrong length.");
+    public static float GetReputation(Tuple<Fraction, Fraction> fractions){
+        fractions = SortFraction(fractions);
+        bool found = reputation.TryGetValue(fractions, out float rep);
+        if (found){
+            return rep;
+        } else {
+            return 0;
         }
-
-        for (int i = 0; i < fractions.Length; i++)
-        {
-            mapping.Add(fractions[i], reputations[i]);
-        }
-
-        reputation.Add(fraction, mapping);
     }
+
+    public Fraction OwnFraction { get => ownFraction; set => ownFraction = value; }
     
 }
