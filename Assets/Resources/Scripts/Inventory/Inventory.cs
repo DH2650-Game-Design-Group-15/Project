@@ -35,6 +35,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         inventoryCanvas.CreateInventoryCanvas();
         isPlayer = GetComponentInChildren<InventoryInput>() != null;
 
+
     }
 
 

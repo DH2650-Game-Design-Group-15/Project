@@ -15,7 +15,7 @@ public class TooltipHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
 
-        tooltipText.text = messageToShow; // 使用Inspector中设置的文本
+        //tooltipText.text = messageToShow; // 使用Inspector中设置的文本
         tooltipText.gameObject.SetActive(true);
     }
 

@@ -23,8 +23,6 @@ public class InventoryInput : MonoBehaviour {
         inventoryUI = Parent.FindParent(inventory.InventoryCanvas, "Inventory")?.gameObject;
 
         craftableInventoryUI = GameObject.FindWithTag("CraftUI");
-        if (craftableInventoryUI == null)
-            Debug.Log("???");
         craftableInventoryUI.SetActive(false);
         inputs = GetComponent<Inputs>();
         objectDetection = Parent.FindChild(inventory, typeof(ObjectDetection))?.GetComponent<ObjectDetection>();
@@ -65,7 +63,29 @@ public class InventoryInput : MonoBehaviour {
         }
         
     }
-    
+    public void CloseInventory()
+    {
+        if (true)
+        {
+            SetCursor(false);
+            inputs.ReturnToActionMap();
+            inventoryUI.SetActive(false);
+            craftableInventoryUI.SetActive(false);
+            if (Parent.FindChild(inventoryUI, "Inventories").transform.childCount > 1)
+            {
+                InventoryCanvas[] inventories = inventoryUI.GetComponentsInChildren<InventoryCanvas>(true);
+                for (int i = 0; i < inventories.Length; i++)
+                {
+                    if (!inventories[i].Inventory.IsPlayer)
+                    {
+                        Destroy(inventories[i].gameObject);
+                    }
+                }
+            }
+        }
+
+    }
+
     /// <summary> Opens the player inventory and the inventory from the storage we are looking at. If no storage is in front of us 
     /// nothing happens. </summary>
     /// <param name="context"> CallbackContext, that the function is called only once when the button is pressed first. </param>
@@ -97,4 +117,13 @@ public class InventoryInput : MonoBehaviour {
         inputManager.enabled = !active;
         Cursor.visible = active;
     }
+    /*
+    public void ShowCursor()
+    {
+        firstPersonController.enabled = true;
+        inputManager.enabled = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+
+    }*/
 }

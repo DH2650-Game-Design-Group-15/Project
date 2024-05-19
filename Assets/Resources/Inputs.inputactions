@@ -328,6 +328,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Craft",
+            "id": "e326a7fc-1f49-4161-9c1c-ab1ca4731f72",
+            "actions": [
+                {
+                    "name": "Craft",
+                    "type": "Button",
+                    "id": "4d2b7ed5-bef5-4575-a992-026ceb2f0340",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d1991188-cd18-45f2-a693-52c6cdef12e7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Craft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
