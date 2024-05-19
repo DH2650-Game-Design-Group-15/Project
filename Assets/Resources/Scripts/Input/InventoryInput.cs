@@ -117,13 +117,4 @@ public class InventoryInput : MonoBehaviour {
         inputManager.enabled = !active;
         Cursor.visible = active;
     }
-    /*
-    public void ShowCursor()
-    {
-        firstPersonController.enabled = true;
-        inputManager.enabled = true;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-
-    }*/
 }
