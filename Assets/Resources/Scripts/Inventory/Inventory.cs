@@ -34,7 +34,10 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         }
         inventoryCanvas.CreateInventoryCanvas();
         isPlayer = GetComponentInChildren<InventoryInput>() != null;
+
+
     }
+
 
     /// <summary> Creates a matrix which shows that all slots in the inventory aren't used. </summary>
     private void InitFreeSlots(){
