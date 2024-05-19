@@ -101,7 +101,11 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     public bool Remove(string itemName, int amount){
         ItemType item = GetItemType(itemName);
         if (item != null){
-            return item.Remove(amount);
+            bool removed = item.Remove(amount);
+            if (item.Amount == 0){
+                type.Remove(item);
+            }
+            return removed;
         } else {
             return false;
         }
