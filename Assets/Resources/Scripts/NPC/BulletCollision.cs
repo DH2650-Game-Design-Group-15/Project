@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class BulletCollision : MonoBehaviour {
 
+    public int bulletDamage;
+
     private void OnCollisionEnter (Collision collision) {
-        Destroy(gameObject);
+        if (collision.collider.CompareTag("Player")) {
+            collision.collider.GetComponent<PlayerHealth>().PlayerHit(bulletDamage);
+        }
+        Debug.Log("TEST");
+        Destroy(gameObject);  
     }
 
 }
