@@ -167,11 +167,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 169696, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       propertyPath: m_Name
-      value: Enemy Scout Variant
+      value: Enemy Scout
       objectReference: {fileID: 0}
     - target: {fileID: 453578, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 44
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 453578, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -179,7 +179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 453578, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 453578, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       propertyPath: m_LocalRotation.w
@@ -282,7 +282,7 @@ MonoBehaviour:
   huntSpeed: 6
   lookRotationSpeed: 0.75
   reputation: -1
-  basePosition: {x: 44, y: 1, z: 43}
+  basePosition: {x: 0, y: 0, z: 0}
 --- !u!54 &8377587295077559304
 Rigidbody:
   m_ObjectHideFlags: 0

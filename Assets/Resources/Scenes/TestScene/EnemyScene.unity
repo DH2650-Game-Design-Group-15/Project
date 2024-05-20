@@ -505,7 +505,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4668e568744937142a38861f65dcf6c8, type: 3}
---- !u!1001 &2095883158
+--- !u!1001 &1446956748
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -513,21 +513,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3555444600926321919, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
+      propertyPath: basePosition.x
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3555444600926321919, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
+      propertyPath: basePosition.z
+      value: 44
+      objectReference: {fileID: 0}
     - target: {fileID: 8396273210028166360, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
       propertyPath: m_Name
-      value: Enemy Scout Variant
+      value: Enemy Scout (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8396273210028454386, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.36
+      value: 54.757046
       objectReference: {fileID: 0}
     - target: {fileID: 8396273210028454386, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 8396273210028454386, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 43
+      value: 46.595734
       objectReference: {fileID: 0}
     - target: {fileID: 8396273210028454386, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
       propertyPath: m_LocalRotation.w
@@ -570,6 +578,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3555444600926321919, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
+      propertyPath: basePosition.x
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3555444600926321919, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
+      propertyPath: basePosition.z
+      value: 44
+      objectReference: {fileID: 0}
     - target: {fileID: 8396273210028166360, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
       propertyPath: m_Name
       value: Enemy Scout
@@ -628,4 +644,4 @@ SceneRoots:
   - {fileID: 23983636}
   - {fileID: 3963277727444210707}
   - {fileID: 14884380}
-  - {fileID: 2095883158}
+  - {fileID: 1446956748}

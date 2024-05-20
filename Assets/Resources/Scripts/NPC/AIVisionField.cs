@@ -26,9 +26,9 @@ public class AIVisionField : MonoBehaviour {
 
     private void Update () {
         if (playerIsCrouched) {
-            meshRenderer.enabled = false;
-        } else {
             meshRenderer.enabled = true;
+        } else {
+            meshRenderer.enabled = false;
         }
     }
 
