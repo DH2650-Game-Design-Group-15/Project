@@ -120,11 +120,12 @@ public class ItemType{
         for (int i = slots.Count - 1; i >= 0; i--){
             amount = slots[i].Remove(amount);
             if (amount == 0){
-                break;
-            } else if (amount == -1){
                 inventory.InventoryCanvas?.RemoveSlot(slots[i].Position);
                 inventory.FreeSlot[slots[i].Position.x][slots[i].Position.y] = true;
                 slots.RemoveAt(i);
+                break;
+            } else if (amount == -1){
+                inventory.InventoryCanvas?.Amount(slots[i].Position, slots[i].Amount);
                 break;
             } else {
                 inventory.InventoryCanvas?.RemoveSlot(slots[i].Position);
@@ -151,6 +152,8 @@ public class ItemType{
         if (slot.Amount == 0){
             slots.Remove(slot);
             inventory.FreeSlot[slot.Position.x][slot.Position.y] = true;
+        } else {
+            inventory.InventoryCanvas?.Amount(slot.Position, slot.Amount);
         }
         return true;
     }
