@@ -5,7 +5,13 @@ using System.Reflection;
 using System.Text;
 using UnityEngine;
 
+/// <summary> Creates a json string of an object </summary>
 public static class JsonRecursive {
+    /// <summary> Returns all variables in names from the given object in json. Returns also from objects inside the value if the name is in names </summary>
+    /// <param name="obj"> The object which stores the values. </param>
+    /// <param name="names"> The names of the variables </param>
+    /// <param name="maxDepth"> The maximum amount, how many children should be checked. </param>
+    /// <param name="pretty"> If the string should contain new lines and tabulators for better readability. </param>
     public static string ToJson(object obj, List<string> names, int maxDepth, bool pretty){
         string json = JsonObject(obj, names, maxDepth).TrimEnd(',');
         if (pretty){
@@ -15,6 +21,10 @@ public static class JsonRecursive {
         }
     }
 
+    /// <summary> Returns all variables in names from the given object in json. Returns also from objects inside the value if the name is in names </summary>
+    /// <param name="obj"> The object which stores the values. </param>
+    /// <param name="names"> The names of the variables </param>
+    /// <param name="maxDepth"> The maximum amount, how many children should be checked. </param>
     private static string JsonObject(object obj, List<string> names, int maxDepth){
         string json = "{";
         if (maxDepth > 0){
@@ -32,6 +42,10 @@ public static class JsonRecursive {
         return json;
     }
 
+    /// <summary> Returns the values of all items in this list </summary>
+    /// <param name="obj"> The object which stores the values. </param>
+    /// <param name="names"> The names of the variables </param>
+    /// <param name="maxDepth"> The maximum amount, how many children should be checked. </param>
     private static string JsonList(FieldInfo field, object obj, List<string> names, int maxDepth){
         string json = "[";
         if (maxDepth > 0){
@@ -76,6 +90,10 @@ public static class JsonRecursive {
         return json.TrimEnd(',') + "]";
     }
 
+    /// <summary> Returns the values of all items in this array </summary>
+    /// <param name="obj"> The object which stores the values. </param>
+    /// <param name="names"> The names of the variables </param>
+    /// <param name="maxDepth"> The maximum amount, how many children should be checked. </param>
     private static string JsonArray(FieldInfo field, object obj, List<string> names, int maxDepth){
         string json = "[";
         if (maxDepth > 0){
@@ -87,6 +105,10 @@ public static class JsonRecursive {
         return json.TrimEnd(',') + "]";
     }
 
+    /// <summary> Checks the type of a variable and returns the value in json format. </summary>
+    /// <param name="obj"> The object which stores the values. </param>
+    /// <param name="names"> The names of the variables </param>
+    /// <param name="maxDepth"> The maximum amount, how many children should be checked. </param>
     private static string CheckField(FieldInfo field, object value, List<string> names, int maxDepth){
         if (value == null){
             return "{}";
@@ -120,6 +142,9 @@ public static class JsonRecursive {
         }
     }
 
+    /// <summary> Formats a json string with new lines for better readability </summary>
+    /// <param name="json"> The unformatted string </param>
+    /// <returns> The formatted string </returns>
     private static string FormattedJson(string json) {
         if (string.IsNullOrEmpty(json))
             return "";
@@ -180,8 +205,11 @@ public static class JsonRecursive {
         return formattedJson.ToString();
     }
 
+    /// <summary> Returns a given amount of tabs. </summary>
+    /// <param name="indentLevel"> The amount of tabs </param>
+    /// <returns> Tabs </returns>
     private static string Indent(int indentLevel)
     {
-        return new string(' ', indentLevel * 4);
+        return new string('\t', indentLevel);
     }
 }

@@ -6,11 +6,19 @@ using UnityEngine;
 /// </summary>
 public abstract class Item : MonoBehaviour {
     protected Texture imageInventory;
+    public GameObject prefab;
+    protected int maxStackSize;
+    protected double weight;
+    [SerializeField] protected int amount;
 
     public Texture ImageInventory { get => imageInventory; }
-    public abstract int MaxStackSize { get; }
-    public abstract double Weight { get; }
-    public abstract int Amount { get; set; }
+    public int MaxStackSize { get => maxStackSize; }
+    public double Weight { get => weight; }
+    public int Amount { get => amount; set => amount = value; }
+    public GameObject Prefab { get => prefab; }
+
+    /// <summary> Abstract method what happens if the player uses the item in the inventory </summary>
+    public abstract void UseInInventory();
 
     /// <summary>
     /// Returns the difference between the maximal amount and the amount now

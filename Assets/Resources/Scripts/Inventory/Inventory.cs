@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Saves how many items can be stored in an inventory, if a slot is used and which items are stored there. 
+/// Identifier for a storage (a player is also a storge). It stores all items in this inventory.
+/// It stores them first grouped by item type and then for each slot the amount.
 /// </summary>
 public class Inventory : MonoBehaviour{ // Later abstract, change Start for each type of inventory because of inventorySize
     private GameObject uiPrefab; // prefab for the inventories UI
@@ -15,6 +16,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     // Debug
     public bool printInventory;
 
+    /// <summary> Loads prefabs and initialise all variables. </summary>
     void Awake(){
         uiPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
         inventories = Parent.FindChild(GameObject.FindWithTag("Canvas"), "Inventories");
@@ -34,6 +36,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         isPlayer = GetComponentInChildren<InventoryInput>() != null;
     }
 
+    /// <summary> Creates a matrix which shows that all slots in the inventory aren't used. </summary>
     private void InitFreeSlots(){
         freeSlot = new();
         for (int x = 0; x < inventorySize.x; x++){
@@ -44,23 +47,26 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         }
     }
 
+    /// <summary> Creates an empty UI for this inventory and sets its owner to this inventory. </summary>
     private void CreateInventoryUI(){
         inventoryCanvas = Instantiate(uiPrefab, inventories).GetComponentInChildren<InventoryCanvas>();
         inventoryCanvas.name = gameObject.name + "Inventory";
         inventoryCanvas.Inventory = this;
     }
 
-    /// <summary> Creates the inventory, fills it with the items in this inventory and sets it as first sibling. The first sibling is always on the left side of the screen. </summary>
+    /// <summary> Creates and updates the UI of this inventory to the actual state. 
+    /// Sets it as last sibling, the last sibling is always on the right. </summary>
     public void ReloadInventoryCanvas(){
         CreateInventoryUI();
         inventoryCanvas.UpdateInventory();
-        inventoryCanvas.transform.parent.SetAsFirstSibling();
+        inventoryCanvas.transform.parent.SetAsLastSibling();
     }
 
     // Called to perform an action
-    /// <summary> Adds the given item to the inventory. </summary>
+
+    /// <summary> Adds the given item to the inventory. Adds it to the first slot that fits. </summary>
     /// <param name="itemName"> The item to store in the inventory. </param>
-    /// <param name="item"> Contains the allowed stack size and the texture if a new slot is needed. </param>
+    /// <param name="item"> Contains the allowed stack size and the texture if it's the first item of this type in the inventory. </param>
     /// <param name="amount"> The amount to be added to the inventory </param>
     /// <returns> Returns the amount of this item, that can't be stored in this inventory. </returns>
     public int Add(string itemName, Item item, int amount){
@@ -69,16 +75,18 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
 
     /// <summary> Adds the given item to the inventory. Must be stored on given position </summary>
     /// <param name="itemName"> The item to store in the inventory. </param>
-    /// <param name="item"> Contains the allowed stack size and the texture if a new slot is needed. </param>
+    /// <param name="item"> Contains the allowed stack size and the texture it's the first item of this type in the inventory. </param>
     /// <param name="amount"> The amount to be added to the inventory </param>
-    /// <param name="position"> The position, where the item is stored. The position must be empty or already containing some of this type. </param>
-    /// <returns> Returns the amount of this item, that can't be stored on this position. </returns>
+    /// <param name="position"> The position, where the item is stored. 
+    /// The position must be empty or already containing some of this type. 
+    /// Use (-1, -1) if the next fitting slot should be used. </param>
+    /// <returns> Returns the amount of this item, that can't be stored at this position. </returns>
     public int Add(string itemName, Item item, int amount, Vector2Int position){
         ItemType itemType = GetItemType(itemName);
         if (itemType != null){
             return itemType.Add(amount, position);
         } else {
-            type.Add(new ItemType(itemName, item.MaxStackSize, item.ImageInventory, this));
+            type.Add(new ItemType(item, this));
             return type[^1].Add(amount, position);
         }
     }
@@ -90,14 +98,18 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     public bool Remove(string itemName, int amount){
         ItemType item = GetItemType(itemName);
         if (item != null){
-            return item.Remove(amount);
+            bool removed = item.Remove(amount);
+            if (item.Amount == 0){
+                type.Remove(item);
+            }
+            return removed;
         } else {
             return false;
         }
     }
 
     /// <summary> 
-    /// Removes the whole stack from this position. 
+    /// Removes the whole stack from the given position. Throws the item on the ground in front of the player.
     /// </summary>
     /// <param name="position"> The position of the item in the inventory </param>
     /// <returns> True, if an item existed on this position. False, if no item existed before. </returns>
@@ -108,24 +120,22 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     }
 
     /// <summary>
-    /// Moves this item to a new position in the inventory. If this slot was already used by another item it swaps the position. 
+    /// Moves this item to a new position in the same inventory. If this slot was already used by another item it swaps the position. 
     /// If this slot was already used by an item of the same type it fills this stack, if this stack isn't big enough the remaining part stays in the old slot.
     /// <summary>
     /// <param name="oldPostion"> The position, where the item was stored in the inventory. </param>
     /// <param name="newPosition"> The position, where the item is now stored in the inventory. </param>
-    /// <remarks> Right now it doesn't add the same type. Instead both are swapping like different items. </remarks>
     public void Move(Vector2Int oldPosition, Vector2Int newPosition){
         Move(oldPosition, newPosition, this);
     }
 
     /// <summary>
-    /// Moves this item to a new position in the same or another inventory. If this slot was already used by another item it swaps the position. 
+    /// Moves this item to a new position in an inventory. If this slot was already used by another item it swaps the position. 
     /// If this slot was already used by an item of the same type it fills this stack, if this stack isn't big enough the remaining part stays in the old slot.
     /// <summary>
     /// <param name="oldPostion"> The position, where the item was stored in the inventory. </param>
     /// <param name="newPosition"> The position, where the item is now stored in the inventory. </param>
     /// <param name="inventory"> The inventory of the new position. </param>
-    /// <remarks> Right now it doesn't add the same type. Instead both are swapping like different items. </remarks>
     public void Move(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
         ItemType thisType = GetItemType(oldPosition);
         ItemType otherType = inventory.GetItemType(newPosition);
@@ -154,21 +164,11 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         }
     }
 
-    public void Split(Vector2Int oldPosition, Vector2Int newPosition){
-
-    }
-
-    public void Split(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
-
-    }
-    
-    public void ChangeSize(Vector2Int size){
-
-    }
-
     // Getters
-    /// <summary> Returns the ItemType for this object. </summary>
-    /// <param name="itemName"> The name of this item to identify it </param>
+
+    /// <summary> Returns the ItemType for items with this name. </summary>
+    /// <param name="itemName"> The name of this item to identify it. </param>
+    /// <returns> Returns the ItemType with this name. Null if the name doesn't exist. </returns>
     public ItemType GetItemType(string itemName){
         foreach (ItemType itemType in type){
             if (itemType.ItemName == itemName){
@@ -178,9 +178,9 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         return null;
     }
 
-    /// <summary> Returns the ItemType for this object. </summary>
+    /// <summary> Returns the ItemType for an item on this position. </summary>
     /// <param name="position"> The position of this item to identify it. </param>
-    /// <returns> Returns the ItemType of the item, stored on this position. </returns>
+    /// <returns> Returns the ItemType of the item stored on this position. Null if the position was empty. </returns>
     public ItemType GetItemType(Vector2Int position){
         foreach (ItemType itemType in type){
             if (itemType.Contains(position)){
@@ -191,7 +191,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     }
 
     /// <summary> Returns the next free slot in the inventory. It goes first down and then to the right. </summary>
-    /// <returns> Returns the position as Vector2Int </returns>
+    /// <returns> Returns the position as Vector2Int. Returns an Vector2Int with (-1, -1) if all slot are full </returns>
     public Vector2Int NextFreeSlot() {
         for (int x = 0; x < inventorySize.x; x++){
             for (int y = 0; y < inventorySize.y; y++){
@@ -232,7 +232,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <summary> Creates a json of the whole inventory </summary>
     /// <returns> The json inventory as a string </returns>
     public string PrintJsonInventory(){
-        List<string> names = new(){"freeSlot", "type", "inventorySize", "amount", "maxStackSize", "itemName", "slots", "position"};
+        List<string> names = new(){"freeSlot", "type", "inventorySize", "amount", "maxStackSize", "itemName", "slots", "position", "prefab"};
         return JsonRecursive.ToJson(this, names, 5, true);
     }
 

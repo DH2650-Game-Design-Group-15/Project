@@ -14,6 +14,7 @@ public class InventoryCanvas : MonoBehaviour{
         LoadPrefab();
     }
 
+    /// <summary> Loads the prefab of an empty slot </summary>
     private void LoadPrefab(){
         itemPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Item");
     }
@@ -50,6 +51,10 @@ public class InventoryCanvas : MonoBehaviour{
         MoveSlot(oldPosition, newPosition, inventory);
     }
 
+    /// <summary> Swaps the position of two items. The item can also be null. </summary>
+    /// <param name="oldPosition"> The position of the first item. </param>
+    /// <param name="newPosition"> The position of the second item. </param>
+    /// <param name="inventory"> The inventory of the new position. </param>
     public void MoveSlot(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
         Transform oldSlot = transform.Find(SlotName(oldPosition.x, oldPosition.y)).transform;
         Transform newSlot = inventory.inventoryCanvas.transform.Find(SlotName(newPosition.x, newPosition.y)).transform;
@@ -61,6 +66,8 @@ public class InventoryCanvas : MonoBehaviour{
         oldItem.GetComponent<RectTransform>().localPosition = positionInSlot;
     }
 
+    /// <summary> Finds the slot at this position and resets the position of the item inside to this slot </summary>
+    /// <param name="position"> The position to reset </param>
     public void ResetPosition(Vector2Int position){
         transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>().GetComponent<RectTransform>().localPosition = positionInSlot;
     }
@@ -69,7 +76,8 @@ public class InventoryCanvas : MonoBehaviour{
     /// The amount here should always equal the amount in the inventory DB. </summary>
     /// <param name="position"> The position of the item in the inventory. </param>
     /// <param name="amount"> The new amount of the item in the inventory.
-    /// <remarks> If the amount doesn't fit with the amount in the DB, it only shows the player a wrong amount, everything is calculated with the amount in the DB. 
+    /// <remarks> If the amount doesn't fit with the amount in the DB, it only shows the player a wrong amount, 
+    /// everything is calculated with the amount in the DB. 
     public void Amount(Vector2Int position, int amount){
         transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>().Amount = amount;
     }
@@ -114,15 +122,19 @@ public class InventoryCanvas : MonoBehaviour{
             }
         }
         GridLayoutGroup layout = GetComponent<GridLayoutGroup>();
-        GetComponent<RectTransform>().sizeDelta = new Vector2(inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x), inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y));
+        GetComponent<RectTransform>().sizeDelta = new Vector2(inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x), 
+                                                                inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y));
     }
 
+    /// <summary> Sets the inventory UI to the same state as the inventory. 
+    /// Therefore it creates or deletes first slots, clears all slots and last fills it with the actual item. </summary>
     public void UpdateInventory(){
         CreateInventoryCanvas();
         ClearInventory();
         FillInventory();
     }
 
+    /// <summary> Fills the inventory UI with the items stored in the inventory </summary>
     private void FillInventory(){
         foreach (ItemType type in inventory.Type) {
             foreach (ItemSlot item in type.Slots) {
@@ -131,6 +143,7 @@ public class InventoryCanvas : MonoBehaviour{
         }
     }
 
+    /// <summary> Removes all items stored in the UI </summary>
     private void ClearInventory(){
         ItemReference[] references = GetComponentsInChildren<ItemReference>();
         foreach (ItemReference reference in references) {
