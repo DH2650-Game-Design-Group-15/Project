@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class SelfDestruct : MonoBehaviour
 {
-    private GameObject cubePrefab; 
+    public GameObject cubePrefab; 
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(DestroyAndSpawn()); // 开始协程
-        cubePrefab = Resources.Load<GameObject>("Prefabs/Items/Cube");
-        if (cubePrefab == null)
-        {
-            Debug.LogError("Failed to load the cube prefab!");
-        }
-
     }
 
     IEnumerator DestroyAndSpawn()
