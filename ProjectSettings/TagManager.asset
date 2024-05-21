@@ -10,12 +10,11 @@ TagManager:
   - Enemy
   - Canvas
   - Storage
-  - CraftUI
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - NPC
