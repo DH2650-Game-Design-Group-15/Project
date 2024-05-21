@@ -3,15 +3,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Helper functions for the Input maps.
-/// Functions can return all active maps or activate or deactivate a map
+/// Inputs helps to change the active input map, to enable or disable multiple ones and to go back to other input maps.
 /// </summary>
 public class Inputs : MonoBehaviour {
     private PlayerInput playerInput;
     private List<InputActionMap> lastMaps;
 
     /// <summary>
-    /// Finds a playerInput in the parents and all their children, including itself and siblings.
+    /// Finds a PlayerInput in the parent and all its children.
     /// </summary>
     void Start() {
         Transform parent = transform.parent ?? transform;
@@ -72,8 +71,10 @@ public class Inputs : MonoBehaviour {
 
     /// <summary>
     /// Deactivates all active input maps.
-    /// Activates all input maps, that were active before last time ChangeActionMap or ChangeActionMaps was called
+    /// Activates all input maps, that were active before all active action maps where switched.
     /// </summary>
+    /// <seealso cref="ChangeActionMaps(string[])"/>
+    /// <seealso cref="ChangeActionMap(string)"\>
     public void ReturnToActionMap(){
         List<InputActionMap> newLastMaps = new();
         foreach(InputActionMap map in playerInput.actions.actionMaps){

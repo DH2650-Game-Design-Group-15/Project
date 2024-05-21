@@ -36,7 +36,7 @@ public static class Parent{
         while(child.GetComponent(type) == null){
             child = child.transform.parent;
             maxDepth--;
-            if (maxDepth == 0){
+            if (maxDepth == 0 || child == null){
                 return null;
             }
         }
@@ -77,7 +77,7 @@ public static class Parent{
         while(child.name != parentName){
             child = child.transform.parent;
             maxDepth--;
-            if (maxDepth == 0){
+            if (maxDepth == 0 || child == null){
                 return null;
             }
         }
@@ -119,7 +119,7 @@ public static class Parent{
         while(child.transform.Find(objectName) == null){
             child = child.transform.parent;
             maxDepth--;
-            if (maxDepth == 0){
+            if (maxDepth == 0 || child == null){
                 return null;
             }
         }
