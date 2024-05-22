@@ -11,7 +11,7 @@ public class Observe : MonoBehaviour
 
     void Start(){
         objectDetection = GetComponent<ObjectDetection>();
-        fractions = GetComponent<Fractions>();
+        fractions = Parent.FindParent(gameObject, typeof(Fractions), 10)?.GetComponent<Fractions>();
     }
 
     // Update is called once per frame
