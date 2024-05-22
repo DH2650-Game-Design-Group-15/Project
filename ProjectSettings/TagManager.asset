@@ -14,19 +14,19 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - NPC
   - 
   - DestroyItDebris
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Base
+  - Terrain
+  - PlayerPos
+  - TerrainMap
+  - BaseDisplay
+  - MapUI
+  - SceneLight
   - 
   - 
   - 
