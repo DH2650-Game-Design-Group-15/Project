@@ -366,8 +366,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "This seems to vividly demonstrate how the tragedy in the forest happened
-    to people\u2026"
+  m_text: "This seems to vividly demonstrate what happened to people in that forest\u2026"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d38abc05318e3e844a652c066362b86b, type: 2}
   m_sharedMaterial: {fileID: -418204930608371010, guid: d38abc05318e3e844a652c066362b86b, type: 2}

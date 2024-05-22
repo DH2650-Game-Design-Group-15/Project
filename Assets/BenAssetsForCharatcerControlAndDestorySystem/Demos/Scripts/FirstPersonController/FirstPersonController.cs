@@ -27,9 +27,6 @@ namespace DestroyIt
         private float m_StepCycle;
         private float m_NextStep;
         private bool m_Jumping;
-        public int maxHealth = 100;
-        public int health { get { return currentHealth; } }
-        int currentHealth;
 
         // Use this for initialization
         private void Start()
@@ -150,14 +147,6 @@ namespace DestroyIt
             if (body == null || body.isKinematic) return;
 
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
-        }
-
-        public void ChangeHealth(int amount)
-        {
-
-            currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-
-            HealthBar.instance.SetValue(currentHealth / (float)maxHealth);
         }
     }
 }
