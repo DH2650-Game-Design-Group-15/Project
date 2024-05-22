@@ -12,6 +12,11 @@ public class MainMenu : MonoBehaviour
     }
     public void QuitGame()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        // If we are running in a build
         Application.Quit();
+#endif
     }
 }
