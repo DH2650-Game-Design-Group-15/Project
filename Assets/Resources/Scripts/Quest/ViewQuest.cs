@@ -49,9 +49,8 @@ public class ViewQuest : MonoBehaviour
         questTitle.GetComponent<TextMeshProUGUI>().text = q.title;
         questDescription.GetComponent<TextMeshProUGUI>().text = q.description;
         rewardText.GetComponent<TextMeshProUGUI>().text = generateRewardText(q);
-        completionLevel.GetComponent<TextMeshProUGUI>().text = 
-            "Completion: " + q.objective.GetCurrentAmount().ToString() + "/" 
-            + q.objective.objectiveAmount.ToString();
+        completionLevel.GetComponent<TextMeshProUGUI>().text = q.objective.GetCurrentAmount().ToString()
+            + "/" + q.objective.objectiveAmount.ToString();
         if (q.objective.questCompleted()) {
             questNext.SetActive(false);
             questComplete.SetActive(true);
