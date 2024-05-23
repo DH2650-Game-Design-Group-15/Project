@@ -13,6 +13,7 @@ public class ViewQuest : MonoBehaviour
     public GameObject questTitle;
     public GameObject questDescription;
     public GameObject rewardText;
+    public GameObject completionLevel;
 
     private void Start () {
         questUI.SetActive(false);
@@ -23,7 +24,7 @@ public class ViewQuest : MonoBehaviour
         if (context.started) {
             if (!questUI.activeSelf) {
                 if (questArray != null && questArray.Length > 0) {
-                UpdateQuest(questArray[currentQuest]);
+                    UpdateQuest(questArray[currentQuest]);
                 } else {
                     NoQuests();
                 }
@@ -42,6 +43,9 @@ public class ViewQuest : MonoBehaviour
         questTitle.GetComponent<TextMeshProUGUI>().text = q.title;
         questDescription.GetComponent<TextMeshProUGUI>().text = q.description;
         rewardText.GetComponent<TextMeshProUGUI>().text = generateRewardText(q);
+        completionLevel.GetComponent<TextMeshProUGUI>().text = 
+            "Completion: " + q.objective.GetCurrentAmount().ToString() + "/" 
+            + q.objective.objectiveAmount.ToString();
     }
 
     public void NextQuest () {
@@ -57,6 +61,7 @@ public class ViewQuest : MonoBehaviour
     private void NoQuests () {
         questTitle.GetComponent<TextMeshPro>().text = "Quests";
         questDescription.GetComponent<TextMeshPro>().text = "No quests availible";
+        completionLevel.GetComponent<TextMeshPro>().text = "";
         rewardText.GetComponent<TextMeshPro>().text = "";
     }
 
