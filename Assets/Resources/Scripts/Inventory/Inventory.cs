@@ -226,7 +226,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// </summary>
     /// <param name="item"> The name of the item </param>
     /// <returns> The amount of the item in the inventory. If the item doesn't exist or isn't in the inventory it returns 0 </returns>
-    public int Amount(String item){
+    public int Amount(string item){
         ItemType type = GetItemType(item);
         if (type == null){
             return 0;
