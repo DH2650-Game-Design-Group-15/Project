@@ -22,6 +22,7 @@ public class AIScouting : MonoBehaviour {
     private bool dialogue;
     private bool hunting;
     private bool shooting;
+    private bool alive;
     public Vector3 basePosition;
     private Vector3 initPosition;
     private Vector3 prevPosition;
@@ -31,6 +32,7 @@ public class AIScouting : MonoBehaviour {
     private Animator animator;
 
     private void Start () {
+        SetAlive(true);
         SetDialogue(false);
         SetFOVScript(GetComponentInChildren<AIVisionField>());
         human = GetComponent<NavMeshAgent>();
@@ -45,15 +47,33 @@ public class AIScouting : MonoBehaviour {
 
     private void Update () {
         GetAnimator().SetFloat("Speed", human.velocity.magnitude);
-        if (GetDialogue() == true) {
-            human.isStopped = true;
-        } else if (human != null) {
-            if (GetFOVScript().GetIsPlayerVisible() && reputation < 0) {
-                HuntMovement();
-            } else {
-                PatrolMovement();
+        if (GetAlive()) {
+            if (GetDialogue() == true) {
+                human.isStopped = true;
+            } else if (human != null) {
+                if (GetFOVScript().GetIsPlayerVisible() && reputation < 0) {
+                    HuntMovement();
+                } else {
+                    PatrolMovement();
+                }
             }
         }
+    }
+
+    /// <summary>
+    /// Plays the death animation of the npc
+    /// </summary>
+    /// <param name="animtionTime">The time of the death animation</param>
+    /// <returns></returns>
+    public IEnumerator DeathAnimation (float animtionTime) {
+        SetAlive(false);
+        SetShooting(false);
+        human.isStopped = true;
+        human.speed = 0;
+        human.SetDestination(human.transform.position);
+        GetAnimator().SetBool("Dead", true);
+        yield return new WaitForSeconds(animtionTime);
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -219,6 +239,14 @@ public class AIScouting : MonoBehaviour {
 
     public bool GetShooting () {
         return shooting;
+    }
+
+    private void SetAlive (bool status) {
+        alive = status;
+    }
+
+    private bool GetAlive () {
+        return alive;
     }
 
     private void SetInitPosition (Vector3 pos) {

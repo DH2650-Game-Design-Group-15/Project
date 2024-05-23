@@ -20,13 +20,13 @@ TagManager:
   - NPC
   - 
   - DestroyItDebris
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Base
+  - Terrain
+  - PlayerPos
+  - TerrainMap
+  - BaseDisplay
+  - MapUI
+  - SceneLight
   - 
   - 
   - 

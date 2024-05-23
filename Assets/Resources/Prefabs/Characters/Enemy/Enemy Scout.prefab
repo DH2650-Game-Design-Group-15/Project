@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3407308622561849656}
   - component: {fileID: 7808464502437791481}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 5009874869278705508}
   - component: {fileID: 6635103122692542}
   - component: {fileID: 2661123922773818693}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Vision FOV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,9 +165,397 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100072, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100072, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 105096, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 105096, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 108554, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 108554, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 112068, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 112068, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 114022, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114022, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 116120, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 116120, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 117110, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 119312, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 121200, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 121200, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 121836, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 121836, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 122424, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 122424, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 126608, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 126608, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 131376, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 131376, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 134176, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 134176, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 134746, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 134746, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 136604, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 136604, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 136678, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 136678, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 137386, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 137386, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 144144, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 144144, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 144450, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 144450, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 144768, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 144768, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 146586, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 146586, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 147826, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 147826, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 149064, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 149064, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 149582, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 149582, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 157046, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 157046, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 157968, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 157968, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 158434, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 158434, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 160198, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 160198, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 162816, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 162816, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 163454, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 163454, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 164566, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 164566, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 167710, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 167710, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
     - target: {fileID: 169696, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       propertyPath: m_Name
       value: Enemy Scout
+      objectReference: {fileID: 0}
+    - target: {fileID: 169696, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 169696, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 170092, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 170092, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 171666, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 171666, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 174572, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 174572, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 176498, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 176498, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 181158, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 181158, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 181276, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 181276, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 183100, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 183100, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 183198, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 183198, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 184436, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 184436, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 187094, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 187094, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 192664, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 192664, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 195016, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 195614, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 195614, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 197772, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 197772, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 198222, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      propertyPath: m_TagString
+      value: NPC
       objectReference: {fileID: 0}
     - target: {fileID: 453578, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       propertyPath: m_LocalPosition.x
@@ -232,6 +620,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 169696, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8377587295077559304}
+    - targetCorrespondingSourceObject: {fileID: 169696, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3154689246025843551}
   m_SourcePrefab: {fileID: 100100000, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
 --- !u!1 &8396273210028166360 stripped
 GameObject:
@@ -310,6 +701,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3154689246025843551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8396273210028166360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a48ffee7d081eb429bf1e4025500ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHealth: 10
+  scoutScript: {fileID: 3555444600926321919}
 --- !u!4 &8396273210028448550 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442654, guid: e7eed3cc0a94151498ee5b22d0a590db, type: 3}
