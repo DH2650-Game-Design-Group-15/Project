@@ -14,18 +14,24 @@ public class ViewQuest : MonoBehaviour
     public GameObject questDescription;
     public GameObject rewardText;
     public GameObject completionLevel;
+    public GameObject questNext;
+    public GameObject questComplete;
 
     private void Start () {
         questUI.SetActive(false);
         currentQuest = 0;
     }
 
+    private void Update () {
+        if (questArray != null && questArray.Length > 0) {
+            UpdateQuest(questArray[currentQuest]);
+        }
+    }
+
     public void OpenQuestUI (InputAction.CallbackContext context) {
         if (context.started) {
             if (!questUI.activeSelf) {
-                if (questArray != null && questArray.Length > 0) {
-                    UpdateQuest(questArray[currentQuest]);
-                } else {
+                if (questArray == null || questArray.Length <= 0) {
                     NoQuests();
                 }
                 questUI.SetActive(true);
@@ -46,23 +52,55 @@ public class ViewQuest : MonoBehaviour
         completionLevel.GetComponent<TextMeshProUGUI>().text = 
             "Completion: " + q.objective.GetCurrentAmount().ToString() + "/" 
             + q.objective.objectiveAmount.ToString();
+        if (q.objective.questCompleted()) {
+            questNext.SetActive(false);
+            questComplete.SetActive(true);
+        } else {
+            questNext.SetActive(true);
+            questComplete.SetActive(false);
+        }
     }
 
     public void NextQuest () {
         if (questArray != null && questArray.Length > 0){
             currentQuest++;
             currentQuest %= questArray.Length;
-            UpdateQuest(questArray[currentQuest]);
         } else {
             CloseQuestUI();
         }
     }
 
+    public void CompleteQuest () {
+        Quest q = questArray[currentQuest];
+        if (q.objective.questCompleted()) {
+            RemoveQuest(questArray, currentQuest);
+        }
+    }
+
+    private void RemoveQuest (Quest[] original, int index) {
+        
+        Quest[] updatedQuestArray = new Quest[original.Length - 1];
+        for (int i = 0, j = 0; i < original.Length; i++) {
+            if (i == index) {
+                continue;
+            }
+            updatedQuestArray[j++] = original[i];
+        }
+        questArray = updatedQuestArray;
+        if (currentQuest != 0) {
+            currentQuest--;
+        }
+        if (questArray == null || questArray.Length <= 0) {
+            questComplete.SetActive(false);
+            NoQuests();
+        }
+    }
+
     private void NoQuests () {
-        questTitle.GetComponent<TextMeshPro>().text = "Quests";
-        questDescription.GetComponent<TextMeshPro>().text = "No quests availible";
-        completionLevel.GetComponent<TextMeshPro>().text = "";
-        rewardText.GetComponent<TextMeshPro>().text = "";
+        questTitle.GetComponent<TextMeshProUGUI>().text = "Quests";
+        questDescription.GetComponent<TextMeshProUGUI>().text = "No quests availible";
+        completionLevel.GetComponent<TextMeshProUGUI>().text = "";
+        rewardText.GetComponent<TextMeshProUGUI>().text = "";
     }
 
     private string generateRewardText (Quest q) {

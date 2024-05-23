@@ -8,7 +8,7 @@ public class QuestObjective
 
     public ObjectiveType objectiveType;
     public int objectiveAmount;
-    private int currentAmount;
+    public int currentAmount;
 
     public void IncreaseCurrentAmount (int amount) {
         currentAmount += amount;
