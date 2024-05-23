@@ -45,11 +45,11 @@ public class ObjectDetection : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionDistance);
 
         // Draw filled arc for horizontal detection angle
-        Handles.color = new Color(1, 0, 0, 0.5f); // Red with some transparency
+        Handles.color = new Color(1, 0, 0, 0.3f); // Red with some transparency
         Handles.DrawSolidArc(transform.position, Vector3.up, Quaternion.Euler(0, -detectionAngle * 0.5f, 0) * transform.forward, detectionAngle, detectionDistance);
 
         // Draw filled arc for vertical detection angle
-        Handles.color = new Color(0, 1, 0, 0.5f); // Green with some transparency
+        Handles.color = new Color(0, 1, 0, 0.3f); // Green with some transparency
         Handles.DrawSolidArc(transform.position, transform.right, Quaternion.Euler(-verticalDetectionAngle * 0.5f, 0, 0) * transform.forward, verticalDetectionAngle, detectionDistance);
     }
 /*
