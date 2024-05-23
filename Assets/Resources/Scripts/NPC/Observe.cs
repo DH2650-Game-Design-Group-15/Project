@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Observe : MonoBehaviour
 {
-    [SerializeField] private float updateTime = 0.1f;
+    [SerializeField] private float updateTime = 0.01f;
     private float timeSinceUpdate = 0;
     private ObjectDetection objectDetection;
     private Fractions fractions;
@@ -33,7 +33,6 @@ public class Observe : MonoBehaviour
         {
             if (obj.GetComponent<Owner>().Fraction == fractions.OwnFraction){
                 myObjects.Add(obj);
-                Debug.Log("Found " + obj.name);
             }
         }
         objects = myObjects.ToArray();
@@ -53,7 +52,7 @@ public class Observe : MonoBehaviour
                     if (myFraction != otherFraction){
                         Tuple<Fraction, Fraction> frac = new(myFraction, otherFraction);
                         float oldReputation = Fractions.GetReputation(frac);
-                        Fractions.SetRepuation(frac, -15);
+                        Fractions.SetReputation(frac, -15);
                         Debug.Log(transform.parent.name + " detected illegal access at " + obj.name + "\nThe reputation changed from " + oldReputation + " to " + Fractions.GetReputation(frac));
                         obj.GetComponent<Owner>().RemoveInteraction(interaction);
                     }   
