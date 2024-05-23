@@ -8,6 +8,7 @@ using UnityEngine.AI;
 
 public class AIScouting : MonoBehaviour {
     public NavMeshAgent human;
+    public Faction faction;
     public float probAmplifier;
     public float speed;
     public float maxDist;
@@ -61,7 +62,8 @@ public class AIScouting : MonoBehaviour {
     }
 
     /// <summary>
-    /// Plays the death animation of the npc
+    /// Plays the death animation of the npc and increases quest counter if
+    /// the KillRedScouts quest is active
     /// </summary>
     /// <param name="animtionTime">The time of the death animation</param>
     /// <returns></returns>
@@ -72,6 +74,17 @@ public class AIScouting : MonoBehaviour {
         human.speed = 0;
         human.SetDestination(human.transform.position);
         GetAnimator().SetBool("Dead", true);
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null) {
+            ViewQuest quests = player.GetComponent<ViewQuest>();
+            if (quests.questArray.Length > 0) {
+                for (int i = 0; i < quests.questArray.Length; i++) {
+                    if (quests.questArray[i].objective.objectiveType == ObjectiveType.KillRedScouts && faction == Faction.Red) {
+                        quests.questArray[i].objective.IncreaseCurrentAmount(1);
+                    }
+                }
+            }
+        }
         yield return new WaitForSeconds(animtionTime);
         Destroy(gameObject);
     }
@@ -305,4 +318,9 @@ public class AIScouting : MonoBehaviour {
         return animator;
     }
 
+}
+
+public enum Faction {
+    Red,
+    White
 }

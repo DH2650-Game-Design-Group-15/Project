@@ -8,7 +8,7 @@ public class QuestObjective
 
     public ObjectiveType objectiveType;
     public int objectiveAmount;
-    public int currentAmount;
+    private int currentAmount;
 
     public void IncreaseCurrentAmount (int amount) {
         currentAmount += amount;
@@ -25,6 +25,6 @@ public class QuestObjective
 }
 
 public enum ObjectiveType {
-    Kill,
-    Gather
+    KillRedScouts,
+    GatherWood
 }
