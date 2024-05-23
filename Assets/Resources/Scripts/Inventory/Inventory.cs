@@ -209,7 +209,7 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <param name="item"> The type of this item </param>
     /// <returns> The amount of the item in the inventory. If the item doesn't exist or isn't in the inventory it returns 0 </returns>
     public int Amount(Type item){
-        return Amount(item.GetType().ToString());
+        return Amount(item.ToString());
     }
 
     /// <summary> 
