@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CraftableInventory : MonoBehaviour
 {
-    public static CraftableInventory Instance { get; private set; }  // µ¥ÀýÊµÀý
+    public static CraftableInventory Instance { get; private set; }  // ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
 
     private Inventory inventory;
     public bool bonfireCraft;
@@ -22,24 +22,28 @@ public class CraftableInventory : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);  // ±£³ÖÊµÀý²»±»Ïú»Ù
+            DontDestroyOnLoad(gameObject);  // ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
-            Destroy(gameObject);  // Èç¹ûÒÑÓÐÊµÀý£¬ÔòÏú»ÙÐÂ¶ÔÏó
+            Destroy(gameObject);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½
         }
     }
 
     void Start()
     {
-        inventory = FindObjectOfType<Inventory>();
-        inputs = FindObjectOfType<Inputs>();
-        inventoryinput = FindObjectOfType<InventoryInput>();
-
-        craftableInventoryUI = GameObject.FindWithTag("CraftUI");
-        Transform canvasParentTransform = transform.parent;
-        Transform inventoryTransform = canvasParentTransform.Find("Inventory");
-        inventoryUI = inventoryTransform.gameObject;
+        Inventory[] inventories = FindObjectsOfType<Inventory>();
+        foreach (Inventory inventory in inventories)
+        {
+            inputs = inventory.GetComponentInChildren<Inputs>();
+            if (inputs != null){
+                this.inventory = inventory;
+                inventoryinput = inventory.GetComponentInChildren<InventoryInput>();
+                break;
+            }
+        }
+        craftableInventoryUI = gameObject;
+        inventoryUI = Parent.FindChild(GameObject.FindWithTag("Canvas"), "Inventory")?.gameObject;
 
         if (inventoryUI == null)
             Debug.Log("inventoryUI==null");
