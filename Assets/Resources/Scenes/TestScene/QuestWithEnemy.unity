@@ -359,7 +359,6 @@ MonoBehaviour:
     objective:
       objectiveType: 0
       objectiveAmount: 3
-      currentAmount: 0
   - title: Resource Shortage
     description: There is a shortage of wood resources at the base of faction 1.
       Please bring 5 wooden logs to the base.
@@ -370,7 +369,6 @@ MonoBehaviour:
     objective:
       objectiveType: 1
       objectiveAmount: 5
-      currentAmount: 0
   questUI: {fileID: 541608749}
   questTitle: {fileID: 822025623}
   questDescription: {fileID: 429404729}
@@ -489,7 +487,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 65335
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -500,7 +498,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 4453af3e0e1160545be4b4655462bd01, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: fcf9f8877eed2464e967d39dc11f7d22, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &400566317
 GameObject:
@@ -708,6 +706,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 429404729}
   m_CullTransparentMesh: 1
+--- !u!1001 &480931150
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 53.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 67.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+      propertyPath: m_Name
+      value: cabin
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 65702495048144492, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+    - {fileID: -8700617353114198275, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
 --- !u!1 &534183803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,6 +2761,53 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
+--- !u!1 &1510494156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1510494158}
+  - component: {fileID: 1510494157}
+  m_Layer: 0
+  m_Name: ScoutSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1510494157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510494156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04486d65553d4646b87600066eedf42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoutLimit: 3
+  spawnTime: 2
+  scoutObject: {fileID: 8396273210028166360, guid: a7e2f5aa9e7da254b94190b7a33da7ea, type: 3}
+--- !u!4 &1510494158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510494156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44, y: 2.744, z: 44}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1536784322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3906,3 +4022,5 @@ SceneRoots:
   - {fileID: 697049963}
   - {fileID: 541608750}
   - {fileID: 534183805}
+  - {fileID: 1510494158}
+  - {fileID: 480931150}

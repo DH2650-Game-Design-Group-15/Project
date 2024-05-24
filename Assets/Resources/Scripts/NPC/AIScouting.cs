@@ -98,7 +98,6 @@ public class AIScouting : MonoBehaviour {
         if (Vector3.Distance(human.transform.position, GetFOVScript().GetPlayerPosition()) > fireRange) {
             SetShooting(false);
             human.isStopped = false;
-            human.speed = huntSpeed;
         } else if (!GetShooting()) {
             human.isStopped = true;
             SetPrevPosition(human.transform.position);
@@ -109,6 +108,7 @@ public class AIScouting : MonoBehaviour {
             Quaternion lookRotation = Quaternion.LookRotation(GetFOVScript().GetPlayerPosition() - human.transform.position);
             human.transform.rotation = Quaternion.Slerp(human.transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
         }
+        human.speed = huntSpeed;
     }
 
     /// <summary>

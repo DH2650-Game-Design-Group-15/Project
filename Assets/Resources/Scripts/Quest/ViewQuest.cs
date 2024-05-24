@@ -72,11 +72,11 @@ public class ViewQuest : MonoBehaviour
     public void CompleteQuest () {
         Quest q = questArray[currentQuest];
         if (q.objective.questCompleted()) {
-            RemoveQuest(questArray, currentQuest);
+            questArray = RemoveQuest(questArray, currentQuest);
         }
     }
 
-    private void RemoveQuest (Quest[] original, int index) {
+    public Quest[] RemoveQuest (Quest[] original, int index) {
         
         Quest[] updatedQuestArray = new Quest[original.Length - 1];
         for (int i = 0, j = 0; i < original.Length; i++) {
@@ -85,14 +85,23 @@ public class ViewQuest : MonoBehaviour
             }
             updatedQuestArray[j++] = original[i];
         }
-        questArray = updatedQuestArray;
         if (currentQuest != 0) {
             currentQuest--;
         }
-        if (questArray == null || questArray.Length <= 0) {
+        if (updatedQuestArray == null || updatedQuestArray.Length <= 0) {
             questComplete.SetActive(false);
             NoQuests();
         }
+        return updatedQuestArray;
+    }
+
+    public void AddQuest (Quest q) {
+        Quest[] updatedQuestArray = new Quest[questArray.Length + 1];
+        for (int i = 0; i < questArray.Length; i++) {
+            updatedQuestArray[i] = questArray[i];
+        }
+        updatedQuestArray[questArray.Length] = q;
+        questArray = updatedQuestArray;
     }
 
     private void NoQuests () {
