@@ -21,8 +21,7 @@ public class ItemsInput : MonoBehaviour {
     private Vector3 startingPos;
     private static Vector3 positionInSlot = new(1, 0, 0);
     public Inventory moveInventory;
-    private ObjectDetection objectDetection;
-    private float pickUpDistance = 10f;
+    [SerializeField] private ObjectDetection objectDetection;
 
     /// <summary> Finds the players inventory and the Component ObjectDetection to get the next item in front of the player </summary>
     void Start(){
@@ -38,8 +37,8 @@ public class ItemsInput : MonoBehaviour {
         if (context.started){
             GameObject[] objects = objectDetection.DetectObjects();                         // all objects nearby
             objects = ObjectDetection.ObjectsWithComponent(objects, typeof(Item));          // filter by items
-            (GameObject obj, float distance) = objectDetection.ClosestObject(objects);      // filter closest one
-            if (obj != null && distance < pickUpDistance) {
+            (GameObject obj, _) = objectDetection.ClosestObject(objects);      // filter closest one
+            if (obj != null) {
                 Item item = obj.GetComponent<Item>();
                 int left = inventory.Add(item.GetType().ToString(), item, item.Amount);
                 if (left == 0){

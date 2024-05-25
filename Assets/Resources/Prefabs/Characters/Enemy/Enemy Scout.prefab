@@ -247,9 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ad609309f2cd59db669b7f85e33573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionAngle: 130
-  verticalDetectionAngle: 80
-  detectionDistance: 30
+  detectionAngle: 100
+  detectionDistance: 50
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
