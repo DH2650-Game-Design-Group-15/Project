@@ -13,5 +13,6 @@ public class Quest
     public bool isActive;
     public bool isCompleted;
     public QuestObjective objective;
+    public Fraction fraction;
 
 }

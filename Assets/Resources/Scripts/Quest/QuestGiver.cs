@@ -6,12 +6,28 @@ public class QuestGiver : MonoBehaviour
 {
 
     public Quest[] questArray;
-    public ViewQuest viewQuestScript;
     public GameObject player;
+    private ViewQuest viewQuestScript;
+    
+    //testing
+    public bool give;
+
+    private void Start () {
+        viewQuestScript = player.GetComponent<ViewQuest>();
+    }
+
+    private void Update () {
+        if (give) {
+            if (questArray.Length > 0) {
+                GiveQuest(0);
+            }
+            give = false;
+        }
+    }
 
     public void GiveQuest (int index) {
         Quest quest = questArray[index];
-        player.GetComponent<ViewQuest>().AddQuest(quest);
+        viewQuestScript.AddQuest(quest);
         questArray = viewQuestScript.RemoveQuest(questArray, index);
     }
 
