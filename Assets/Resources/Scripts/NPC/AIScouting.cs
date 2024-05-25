@@ -16,7 +16,6 @@ public class AIScouting : MonoBehaviour {
     public float fireRange;
     public float huntSpeed;
     public float lookRotationSpeed;
-    public int reputation;
     private int areaCounter;
     private bool wait;
     private bool dialogue;
@@ -30,6 +29,7 @@ public class AIScouting : MonoBehaviour {
     private Quaternion prevRotation;
     private AIVisionField vision;
     private Animator animator;
+    private Fractions fraction;
 
     private void Start () {
         SetAlive(true);
@@ -43,6 +43,7 @@ public class AIScouting : MonoBehaviour {
             human.speed = speed;
             human.SetDestination(RandomNavMeshLocation());
         }
+        fraction = Parent.FindParent(gameObject, typeof(Fractions)).GetComponent<Fractions>();
     }
 
     private void Update () {
@@ -51,7 +52,7 @@ public class AIScouting : MonoBehaviour {
             if (GetDialogue() == true) {
                 human.isStopped = true;
             } else if (human != null) {
-                if (GetFOVScript().GetIsPlayerVisible() && reputation < 0) {
+                if (GetFOVScript().GetIsPlayerVisible() && fraction.IsEnemy()) {
                     HuntMovement();
                 } else {
                     PatrolMovement();
