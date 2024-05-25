@@ -264,7 +264,7 @@ MonoBehaviour:
   - title: TO WAR!
     description: Take out 3 scouts of the second faction
     reputationChange: 50
-    rewardAmount: 0
+    rewardAmount: 1
     itemReward: Uranium
     questItem: {fileID: 0}
     item: {fileID: 4954975338453076396, guid: 973f68f8e04edba4eba665ed19103839, type: 3}
