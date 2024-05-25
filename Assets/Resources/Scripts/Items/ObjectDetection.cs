@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class ObjectDetection : MonoBehaviour
 {
-    public float detectionAngle = 45f;  // Horizontaler Sichtwinkel
-    public float verticalDetectionAngle = 45f;  // Vertikaler Sichtwinkel
+    public float detectionAngle = 45f;
     public float detectionDistance = 10f;
     public LayerMask obstacleMask;
 
@@ -20,10 +19,8 @@ public class ObjectDetection : MonoBehaviour
             if (obj.gameObject != gameObject)
             {
                 Vector3 directionToObject = obj.transform.position - transform.position;
-                float horizontalAngleToObject = Vector3.Angle(transform.forward, new Vector3(directionToObject.x, 0, directionToObject.z).normalized);
-                float verticalAngleToObject = Vector3.Angle(transform.forward, new Vector3(0, directionToObject.y, directionToObject.z).normalized);
-
-                if (Math.Abs(horizontalAngleToObject) <= detectionAngle * 0.5f && verticalAngleToObject <= Math.Abs(verticalDetectionAngle) * 0.5f)
+                float angle = Vector3.Angle(transform.forward, directionToObject);
+                if (Math.Abs(angle) <= detectionAngle * 0.5f)
                 {
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, directionToObject, out hit, detectionDistance, obstacleMask))
@@ -39,7 +36,7 @@ public class ObjectDetection : MonoBehaviour
         return objects.ToArray();
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionDistance);
@@ -47,28 +44,7 @@ public class ObjectDetection : MonoBehaviour
         // Draw filled arc for horizontal detection angle
         Handles.color = new Color(1, 0, 0, 0.3f); // Red with some transparency
         Handles.DrawSolidArc(transform.position, Vector3.up, Quaternion.Euler(0, -detectionAngle * 0.5f, 0) * transform.forward, detectionAngle, detectionDistance);
-
-        // Draw filled arc for vertical detection angle
-        Handles.color = new Color(0, 1, 0, 0.3f); // Green with some transparency
-        Handles.DrawSolidArc(transform.position, transform.right, Quaternion.Euler(-verticalDetectionAngle * 0.5f, 0, 0) * transform.forward, verticalDetectionAngle, detectionDistance);
     }
-/*
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionDistance);
-
-        Vector3 rightBoundary = Quaternion.Euler(0, detectionAngle * 0.5f, 0) * transform.forward;
-        Vector3 leftBoundary = Quaternion.Euler(0, -detectionAngle * 0.5f, 0) * transform.forward;
-        Vector3 upBoundary = Quaternion.Euler(-verticalDetectionAngle * 0.5f, 0, 0) * transform.forward;
-        Vector3 downBoundary = Quaternion.Euler(verticalDetectionAngle * 0.5f, 0, 0) * transform.forward;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary * detectionDistance);
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary * detectionDistance);
-        Gizmos.DrawLine(transform.position, transform.position + upBoundary * detectionDistance);
-        Gizmos.DrawLine(transform.position, transform.position + downBoundary * detectionDistance);
-    }*/
 
     public (GameObject, float) ClosestObject(GameObject[] objects){
         float distance = float.MaxValue;
