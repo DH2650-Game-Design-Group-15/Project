@@ -16,6 +16,8 @@ public class InventoryInput : MonoBehaviour {
     private FirstPersonController firstPersonController;
     private InputManager inputManager;
     private GameObject craftableInventoryUI;
+    private Owner storageOwner;
+    
     /// <summary> Finds the Component Inputs and the parent GameObject of the UI for inventories. </summary>
     void Start() {
 
@@ -56,6 +58,7 @@ public class InventoryInput : MonoBehaviour {
                 InventoryCanvas[] inventories = inventoryUI.GetComponentsInChildren<InventoryCanvas>(true);
                 for (int i = 0; i < inventories.Length; i++){
                     if (!inventories[i].Inventory.IsPlayer){
+                        storageOwner.RemoveInteraction(Parent.FindParent(objectDetection, typeof(Fractions)).gameObject);
                         Destroy(inventories[i].gameObject);
                     }
                 }
@@ -101,6 +104,8 @@ public class InventoryInput : MonoBehaviour {
                 storage.GetComponent<Inventory>().ReloadInventoryCanvas();
                 storage.GetComponent<Inventory>().InventoryCanvas.transform.parent.SetAsFirstSibling();
                 inventoryUI.GetComponentInChildren<HorizontalLayoutGroup>().spacing = 150;
+                storageOwner = storage.GetComponent<Owner>();
+                storageOwner.AddInteraction(Parent.FindParent(objectDetection, typeof(Fractions)).gameObject);
             }
         }
     }
