@@ -130,7 +130,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3574441257056348813}
   - component: {fileID: 3253572301054750591}
+  - component: {fileID: 2838964194582346938}
   m_Layer: 0
   m_Name: Barrel 1
   m_TagString: Untagged
@@ -181,4 +182,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventories: {fileID: 0}
   inventoryCanvas: {fileID: 0}
+  inventorySize: {x: 3, y: 5}
   printInventory: 0
+--- !u!114 &2838964194582346938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3574441257056348854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee0161ec8b364800ad9b11302791060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  fraction: 0
+  interact: []
