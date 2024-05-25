@@ -475,7 +475,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 648815413}
-  m_Father: {fileID: 1122943397}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1315,6 +1315,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: First Person Controller Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7112039235590581166, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8304210126565695598, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
     m_RemovedGameObjects: []
@@ -2017,3 +2021,4 @@ SceneRoots:
   - {fileID: 1663642465}
   - {fileID: 1983833677}
   - {fileID: 365775021}
+  - {fileID: 593286873}
