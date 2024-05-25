@@ -17,7 +17,9 @@ public class AIScouting : MonoBehaviour {
     public float fireRange;
     public float huntSpeed;
     public float lookRotationSpeed;
-    public float fastLookRotationSpeed;
+    public float angularSpeed;
+    public float fastAngularSpeed;
+    public float angularTime;
     private int areaCounter;
     private bool wait;
     private bool dialogue;
@@ -43,6 +45,7 @@ public class AIScouting : MonoBehaviour {
         SetPrevPosition(human.transform.position);
         if (human != null) {
             human.speed = speed;
+            human.angularSpeed = angularSpeed;
             human.SetDestination(RandomNavMeshLocation());
         }
         fraction = Parent.FindParent(gameObject, typeof(Fractions)).GetComponent<Fractions>();
@@ -92,9 +95,11 @@ public class AIScouting : MonoBehaviour {
     }
 
     /// <summary>
-    /// Makes the npc face the player after being hit
+    /// Makes the npc move towards and face the player after being hit
     /// </summary>
     public void Hit (Vector3 playerPosition) {
+        human.angularSpeed = fastAngularSpeed;
+        StartCoroutine(angularWait(angularTime));
         human.SetDestination(playerPosition);
     }
 
@@ -229,6 +234,16 @@ public class AIScouting : MonoBehaviour {
         SetWait(false);
         human.isStopped = false;
         human.SetDestination(RandomNavMeshLocation());
+    }
+
+    /// <summary>
+    /// Resets the angular speed
+    /// </summary>
+    /// <param name="timeToWait">Time to wait before resetting</param>
+    /// <returns></returns>
+    private IEnumerator angularWait (float timeToWait) {
+        yield return new WaitForSeconds(timeToWait);
+        human.angularSpeed = angularSpeed;
     }
     
     private void SetAreaCounter (int count) {
