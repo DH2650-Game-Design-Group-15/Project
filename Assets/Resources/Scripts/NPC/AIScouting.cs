@@ -82,7 +82,7 @@ public class AIScouting : MonoBehaviour {
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null) {
             ViewQuest quests = player.GetComponent<ViewQuest>();
-            if (quests.questArray.Length > 0) {
+            if (quests.questArray != null && quests.questArray.Length > 0) {
                 for (int i = 0; i < quests.questArray.Length; i++) {
                     if (quests.questArray[i].objective.objectiveType == ObjectiveType.KillRedScouts && faction == Faction.Red) {
                         quests.questArray[i].objective.IncreaseCurrentAmount(1);
@@ -98,9 +98,11 @@ public class AIScouting : MonoBehaviour {
     /// Makes the npc move towards and face the player after being hit
     /// </summary>
     public void Hit (Vector3 playerPosition) {
-        human.angularSpeed = fastAngularSpeed;
-        StartCoroutine(angularWait(angularTime));
-        human.SetDestination(playerPosition);
+        if (GetAlive()) {
+            human.angularSpeed = fastAngularSpeed;
+            StartCoroutine(angularWait(angularTime));
+            human.SetDestination(playerPosition);
+        }
     }
 
     /// <summary>

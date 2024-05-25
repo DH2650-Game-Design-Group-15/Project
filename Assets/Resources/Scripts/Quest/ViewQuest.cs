@@ -72,6 +72,7 @@ public class ViewQuest : MonoBehaviour
     public void CompleteQuest () {
         Quest q = questArray[currentQuest];
         if (q.objective.questCompleted()) {
+            GetComponent<Fractions>().SetReputation(q.fraction, q.reputationChange);
             questArray = RemoveQuest(questArray, currentQuest);
         }
     }
