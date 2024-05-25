@@ -33,6 +33,9 @@ public class InventoryInput : MonoBehaviour {
         }
         inputManager = Parent.FindParent(inventory, typeof(InputManager))?.GetComponent<InputManager>();
         firstPersonController = Parent.FindParent(inventory, typeof(FirstPersonController))?.GetComponent<FirstPersonController>();
+        if (inputManager == null || firstPersonController == null){
+            Debug.LogWarning("Some components are missing");
+        }
     }
 
     /// <summary> Opens the inventory and enables the cursor. It changes also the action map to inventory. </summary>

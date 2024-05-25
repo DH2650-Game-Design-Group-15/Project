@@ -12,6 +12,9 @@ public class Observe : MonoBehaviour
     void Start(){
         objectDetection = GetComponent<ObjectDetection>();
         fractions = Parent.FindParent(gameObject, typeof(Fractions), 10)?.GetComponent<Fractions>();
+        if (fractions == null){
+            fractions = gameObject.AddComponent<Fractions>();
+        }
     }
 
     // Update is called once per frame
@@ -20,8 +23,10 @@ public class Observe : MonoBehaviour
         timeSinceUpdate += Time.deltaTime;
         if (updateTime < timeSinceUpdate){
             timeSinceUpdate = 0;
-            GameObject[] objects = FindObjects();
-            FindThief(objects);
+            if (fractions.OwnFraction != Fraction.None){
+                GameObject[] objects = FindObjects();
+                FindThief(objects);
+            }
         }
     }
 
