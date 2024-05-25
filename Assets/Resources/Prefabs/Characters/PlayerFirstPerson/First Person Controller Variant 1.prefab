@@ -418,6 +418,7 @@ GameObject:
   - component: {fileID: 2736990071448569578}
   - component: {fileID: 8411336338975472552}
   - component: {fileID: 3610703223279344140}
+  - component: {fileID: 5467966060524305231}
   m_Layer: 0
   m_Name: First Person Controller Variant 1
   m_TagString: Player
@@ -637,6 +638,20 @@ MonoBehaviour:
   startingWeapon: 1
   timeSlowSpeed: 0.25
   windZone: {fileID: 0}
+--- !u!114 &5467966060524305231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032517478898867917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa2e08d4c67f3a4b9c16ac27c498abb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  healthBar: {fileID: 0}
 --- !u!1 &2454427745542315293
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,6 +899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionAngle: 20
+  verticalDetectionAngle: 45
   detectionDistance: 10
   obstacleMask:
     serializedVersion: 2
