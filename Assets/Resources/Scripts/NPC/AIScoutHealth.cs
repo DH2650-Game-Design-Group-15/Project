@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIScoutHealth : MonoBehaviour
 {
     
+    public int repLossOnHit;
     public int startHealth;
     public AIScouting scoutScript;
     private int health;
@@ -13,9 +14,11 @@ public class AIScoutHealth : MonoBehaviour
         SetHealth(startHealth);
     }
 
-    public void TakeDamage (int damage) {
+    public void TakeDamage (int damage, Vector3 playerPosition) {
         if (GetHealth() > 0) {
             SetHealth(GetHealth() - damage);
+            GetComponentInParent<Fractions>().SetReputationToPlayer(repLossOnHit);
+            GetComponent<AIScouting>().Hit(playerPosition);
             if (GetHealth() <= 0) {
                 StartCoroutine(scoutScript.DeathAnimation(3.6f));
             }

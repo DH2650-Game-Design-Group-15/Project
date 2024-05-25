@@ -221,6 +221,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3555444600926321919, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: fastLookRotationSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 8396273210027966640, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -716,6 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a48ffee7d081eb429bf1e4025500ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  repLossOnHit: -60
   startHealth: 100
   scoutScript: {fileID: 5677283507287253758}
 --- !u!4 &800291341201218351 stripped

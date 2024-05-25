@@ -29,6 +29,7 @@ public class TestAIDamage : MonoBehaviour {
     private void Fire () {
         Vector3 direction = new Vector3(1, 0, 0);
         GameObject bullet = Instantiate(shellPrefab, transform.position, Quaternion.Euler(90,0,0));
+        bullet.transform.SetParent(transform);
         bullet.GetComponent<Rigidbody>().velocity = direction * shotSpeed;
         StartCoroutine(OnMiss(bulletLife, bullet));
         SetTimeSinceShot(0f);

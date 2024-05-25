@@ -2473,6 +2473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoutLimit: 3
+  initReputation: 10
   spawnTime: 10
   scoutObject: {fileID: 800291341200970457, guid: 031d31bdec4e21581aec4f811da80f95, type: 3}
 --- !u!4 &1510494158
@@ -2519,28 +2520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2652e33625f9e54b8c63bb61c200dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questArray:
-  - title: TO WAR!
-    description: Take out 3 scouts of the second faction
-    reputationChange: 50
-    itemReward: 0
-    isActive: 0
-    isCompleted: 0
-    objective:
-      objectiveType: 0
-      objectiveAmount: 3
-    fraction: 2
-  - title: Resource Shortage
-    description: There is a shortage of wood resources at the base of faction 1.
-      Please bring 5 wooden logs to the base.
-    reputationChange: 10
-    itemReward: 0
-    isActive: 0
-    isCompleted: 0
-    objective:
-      objectiveType: 1
-      objectiveAmount: 5
-    fraction: 2
+  questArray: []
   player: {fileID: 14884376}
   give: 0
 --- !u!1 &1536784322
@@ -3537,7 +3517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2138158104}
   - component: {fileID: 2138158105}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: bullets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3571,8 +3551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dd4e18ee9d78048a11a35bc8188b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotSpeed: 3
-  shotDelay: 0.1
+  shotSpeed: 15
+  shotDelay: 2
   spread: 0
   bulletLife: 3
   shellPrefab: {fileID: 5414059579409414362, guid: 72bdcb8446d00ff4393701086a2e4417, type: 3}

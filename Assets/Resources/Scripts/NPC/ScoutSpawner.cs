@@ -5,11 +5,13 @@ using System.Collections.Generic;
 public class ScoutSpawner : MonoBehaviour {
     
     public int scoutLimit;
+    public int initReputation;
     public float spawnTime;
     public GameObject scoutObject;
     private bool spawnStatus;
 
     private void Start () {
+        GetComponent<Fractions>().SetReputationToPlayer(initReputation);
         SetSpawnStatus(false);
         for (int i = 0; i < scoutLimit; i++) {
             SpawnScout();

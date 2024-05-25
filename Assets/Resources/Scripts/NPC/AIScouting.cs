@@ -17,6 +17,7 @@ public class AIScouting : MonoBehaviour {
     public float fireRange;
     public float huntSpeed;
     public float lookRotationSpeed;
+    public float fastLookRotationSpeed;
     private int areaCounter;
     private bool wait;
     private bool dialogue;
@@ -88,6 +89,13 @@ public class AIScouting : MonoBehaviour {
         }
         yield return new WaitForSeconds(animtionTime);
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Makes the npc face the player after being hit
+    /// </summary>
+    public void Hit (Vector3 playerPosition) {
+        human.SetDestination(playerPosition);
     }
 
     /// <summary>
