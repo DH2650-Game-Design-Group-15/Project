@@ -12,26 +12,25 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     public InventoryCanvas inventoryCanvas; // reference to the UI
     private List<List<bool>> freeSlot;
     private List<ItemType> type;
-    private Vector2Int inventorySize;
+    [SerializeField] private Vector2Int inventorySize = new (3, 5);
     private bool isPlayer;
     // Debug
     public bool printInventory;
 
     /// <summary> Loads prefabs and initialise all variables. </summary>
     void Awake(){
-        uiPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
+        uiPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/InventoryPlayer");
         inventories = Parent.FindChild(GameObject.FindWithTag("Canvas"), "Inventories");
-        inventorySize = new Vector2Int(3, 5);
-        type = new();
-        InitFreeSlots();
         if (inventories == null){
             Debug.LogError("No GameObject inventories to build the UI");
         }
-        Transform transform = inventories.Find(gameObject.name + "Inventory");
+        type = new();
+        InitFreeSlots();
         if (inventoryCanvas == null){
             CreateInventoryUI();
         } else {
-            inventoryCanvas = transform.GetComponentInChildren<InventoryCanvas>();
+            Transform inventory = inventories.Find(gameObject.name + "Inventory");
+            inventoryCanvas = inventory.GetComponentInChildren<InventoryCanvas>();
         }
         inventoryCanvas.CreateInventoryCanvas();
         isPlayer = GetComponentInChildren<InventoryInput>() != null;
