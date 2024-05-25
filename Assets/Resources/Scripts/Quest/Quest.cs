@@ -9,7 +9,10 @@ public class Quest
     public string title;
     public string description;
     public int reputationChange;
-    public int itemReward;
+    public int rewardAmount;
+    public string itemReward;
+    public Item questItem;
+    public Item item;
     public bool isActive;
     public bool isCompleted;
     public QuestObjective objective;

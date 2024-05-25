@@ -90,6 +90,10 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         }
     }
 
+    public bool Remove(Item item, int amount){
+        return Remove(item.GetType().ToString(), amount);
+    }
+
     /// <summary> Removes the given item from the inventory. If there aren't enough items stored before nothing gets removed. </summary>
     /// <param name="itemName"> The item to be removed from the inventory. </param>
     /// <param name="amount"> The amount to be removed from the inventory </param>

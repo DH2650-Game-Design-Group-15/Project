@@ -81,6 +81,10 @@ public class ViewQuest : MonoBehaviour
         Quest q = questArray[currentQuest];
         if (q.objective.questCompleted()) {
             GetComponent<Fractions>().SetReputation(q.fraction, q.reputationChange);
+            if (q.questItem != null) {
+                playerInventory.Remove(q.questItem, q.objective.objectiveAmount);
+            }
+            playerInventory.Add(q.itemReward, q.item, q.rewardAmount);
             questArray = RemoveQuest(questArray, currentQuest);
         }
     }
@@ -122,8 +126,9 @@ public class ViewQuest : MonoBehaviour
 
     private string generateRewardText (Quest q) {
         string rep = q.reputationChange.ToString();
-        string item = q.itemReward.ToString();
-        return "Reputation change: " + rep + "\nItem(s): " + item;
+        string item = q.itemReward;
+        string amt = q.rewardAmount.ToString();
+        return "Reputation change: " + rep + "\nItem(s): " + amt + " " + char.ToUpper(item[0]) + item.Substring(1).ToLower();
     }
 
 }
