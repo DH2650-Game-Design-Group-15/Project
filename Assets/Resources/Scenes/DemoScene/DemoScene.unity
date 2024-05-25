@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1075816185}
-  m_IndirectSpecularColor: {r: 0.35164618, g: 0.39015186, b: 0.44579655, a: 1}
+  m_IndirectSpecularColor: {r: 0.35086563, g: 0.3892843, b: 0.44480568, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -841,6 +841,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2838964194582346938, guid: 03f0fa8f9c151c046ad30e5b776dbeae, type: 3}
+      propertyPath: fraction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3574441257056348813, guid: 03f0fa8f9c151c046ad30e5b776dbeae, type: 3}
       propertyPath: m_LocalPosition.x
       value: 128.68
@@ -5577,9 +5581,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4568687292786356541, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568687292786356541, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568687292786356541, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568687292786356541, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5718634291875835777, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8243001403752266485, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8243001403752266485, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8243001403752266485, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8243001403752266485, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177882790284752369, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177882790284752369, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177882790284752369, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177882790284752369, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6189,6 +6241,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2838964194582346938, guid: 03f0fa8f9c151c046ad30e5b776dbeae, type: 3}
+      propertyPath: fraction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3574441257056348813, guid: 03f0fa8f9c151c046ad30e5b776dbeae, type: 3}
       propertyPath: m_LocalPosition.x
       value: 128.68

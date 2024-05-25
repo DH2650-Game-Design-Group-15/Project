@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
   moveInventory: {fileID: 0}
+  objectDetection: {fileID: 0}
 --- !u!1 &6217847502018678405
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +312,7 @@ GameObject:
   - component: {fileID: 7381653884690346382}
   - component: {fileID: 1417100840447122069}
   - component: {fileID: 8528976786397509745}
+  - component: {fileID: 3822541622024766639}
   m_Layer: 3
   m_Name: First Person Controller Variant
   m_TagString: Player
@@ -621,6 +623,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &3822541622024766639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6217847503521995913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e2398156412751c848046d3a7e6ab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownFraction: 1
+  increase: 0
+  decrease: 0
+  printReputations: 0
+  toFraction: 0
 --- !u!1 &6217847505044714123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,7 +1221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionAngle: 35
-  verticalDetectionAngle: 50
   detectionDistance: 10
   obstacleMask:
     serializedVersion: 2
