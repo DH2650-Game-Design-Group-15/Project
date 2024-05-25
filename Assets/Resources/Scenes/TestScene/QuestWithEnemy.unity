@@ -258,6 +258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a986d961162b043b2fb65b155ca24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInventory: {fileID: 1072048930}
+  inventoryInput: {fileID: 1799401499}
   questArray:
   - title: TO WAR!
     description: Take out 3 scouts of the second faction
@@ -439,6 +441,10 @@ PrefabInstance:
     - target: {fileID: 2360113513198900247, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_Name
       value: Wood (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
+      propertyPath: amount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6513090274799410770, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_LocalScale.y
@@ -787,6 +793,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wood (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
+      propertyPath: amount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6513090274799410770, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.40000004
@@ -845,132 +855,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6513090274799410770, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
   m_PrefabInstance: {fileID: 532579053}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &534183803
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 534183805}
-  - component: {fileID: 534183804}
-  m_Layer: 0
-  m_Name: PlayerInput
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &534183804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534183803}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 9937d949d6c1a6a598bc080ad5c2bc82, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 345082b5-e034-4972-9752-d34cefc9768d
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5e083255-8d07-430f-bacd-4d7644de8c6d
-    m_ActionName: Player/Inventory[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 171b32c7-7823-4103-9999-ddca0ae65fbb
-    m_ActionName: Player/TakeItem[/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 22349dfe-ca1c-4b89-a1fc-c57e92c1f0cb
-    m_ActionName: Inventory/Close[/Keyboard/escape,/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: d8727ddd-80fc-47c4-89f4-c105978ca4f8
-    m_ActionName: Inventory/MoveItem[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c9cd7c16-8152-44cf-aa42-556adbba9c99
-    m_ActionName: Inventory/Remove[/Keyboard/g]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0067150e-3e39-4cc2-ab1c-067e7235c723
-    m_ActionName: Player/Crouch[/Keyboard/leftCtrl]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: caacc3f8-751a-4941-87b8-96258ad7b292
-    m_ActionName: Player/OpenChest[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b6aad406-7baa-44b5-9c16-c9f697da1934
-    m_ActionName: Inventory/SplitItem[/Keyboard/ctrl]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 14884382}
-        m_TargetAssemblyTypeName: ViewQuest, Assembly-CSharp
-        m_MethodName: OpenQuestUI
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 56b47a75-5bcc-441e-875f-0df49fe32334
-    m_ActionName: Player/OpenQuests[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ba2fcef4-c085-445a-88d9-66dd3a48de1a
-    m_ActionName: Player/Zoom[/Mouse/scroll/y]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8496492f-1fe5-4faf-b55f-a5cf38d42f77
-    m_ActionName: Player/MoveMap[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0e8966f8-261a-4c01-bf3c-4ee0b0312605
-    m_ActionName: Player/OpenMap[/Keyboard/m]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!4 &534183805
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534183803}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541608749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,21 +1957,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918037911}
   m_CullTransparentMesh: 1
---- !u!1 &1072048924 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6217847503521995913, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+--- !u!114 &1072048930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4725410612124019171, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
   m_PrefabInstance: {fileID: 1799401498}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1072048936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072048924}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 817d548aefe288f4bacd5753f99bc269, type: 3}
+  m_Script: {fileID: 11500000, guid: 16eb26ebf72a8ee1ab038594abaa97e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1092426367
@@ -2562,6 +2440,10 @@ PrefabInstance:
     - target: {fileID: 2360113513198900247, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_Name
       value: Wood (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
+      propertyPath: amount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6513090274799410770, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_LocalScale.y
@@ -3117,6 +2999,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wood (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
+      propertyPath: amount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6513090274799410770, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.40000004
@@ -3258,6 +3144,74 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionId
+      value: ba2fcef4-c085-445a-88d9-66dd3a48de1a
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionId
+      value: 8496492f-1fe5-4faf-b55f-a5cf38d42f77
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionId
+      value: 0e8966f8-261a-4c01-bf3c-4ee0b0312605
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_ActionId
+      value: 56b47a75-5bcc-441e-875f-0df49fe32334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionName
+      value: Player/Zoom[/Mouse/scroll/y]
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionName
+      value: Player/MoveMap[/Mouse/leftButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionName
+      value: Player/OpenMap[/Keyboard/m]
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_ActionName
+      value: Player/OpenQuests[/Keyboard/j]
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 14884382}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenQuestUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ViewQuest, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992866428545262304, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6217081987473461365, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.7
@@ -3309,11 +3263,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6217847503521995913, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1072048936}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+--- !u!114 &1799401499 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1498982294289967855, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
+  m_PrefabInstance: {fileID: 1799401498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3118510f8cdbb24c5942ce6dc9bc8c54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1802340019
 GameObject:
   m_ObjectHideFlags: 0
@@ -3397,6 +3359,10 @@ PrefabInstance:
     - target: {fileID: 2360113513198900247, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_Name
       value: Wood (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
+      propertyPath: amount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6513090274799410770, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_LocalScale.y
@@ -3601,6 +3567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wood
       objectReference: {fileID: 0}
+    - target: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
+      propertyPath: amount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6513090274799410770, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.40000004
@@ -3718,7 +3688,6 @@ SceneRoots:
   - {fileID: 546956177}
   - {fileID: 697049963}
   - {fileID: 541608750}
-  - {fileID: 534183805}
   - {fileID: 1510494158}
   - {fileID: 480931150}
   - {fileID: 908842072}

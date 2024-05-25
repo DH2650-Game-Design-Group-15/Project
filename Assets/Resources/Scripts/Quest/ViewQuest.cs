@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 public class ViewQuest : MonoBehaviour 
 {
 
-    private int currentQuest;
+    public Inventory playerInventory;
+    public InventoryInput inventoryInput;
     public Quest[] questArray;
     public GameObject questUI;
     public GameObject questTitle;
@@ -16,6 +17,7 @@ public class ViewQuest : MonoBehaviour
     public GameObject completionLevel;
     public GameObject questNext;
     public GameObject questComplete;
+    private int currentQuest;
 
     private void Start () {
         questUI.SetActive(false);
@@ -31,11 +33,13 @@ public class ViewQuest : MonoBehaviour
     public void OpenQuestUI (InputAction.CallbackContext context) {
         if (context.started) {
             if (!questUI.activeSelf) {
+                inventoryInput.SetCursor(true);
                 if (questArray == null || questArray.Length <= 0) {
                     NoQuests();
                 }
                 questUI.SetActive(true);
             } else {
+                inventoryInput.SetCursor(false);
                 CloseQuestUI();
             }
         }
@@ -49,6 +53,10 @@ public class ViewQuest : MonoBehaviour
         questTitle.GetComponent<TextMeshProUGUI>().text = q.title;
         questDescription.GetComponent<TextMeshProUGUI>().text = q.description;
         rewardText.GetComponent<TextMeshProUGUI>().text = generateRewardText(q);
+        if (q.objective.objectiveType == ObjectiveType.GatherWood) {
+            int woodAmount = playerInventory.Amount("Wood");
+            q.objective.IncreaseCurrentAmount(woodAmount - q.objective.GetCurrentAmount());
+        }
         completionLevel.GetComponent<TextMeshProUGUI>().text = q.objective.GetCurrentAmount().ToString()
             + "/" + q.objective.objectiveAmount.ToString();
         if (q.objective.questCompleted()) {
