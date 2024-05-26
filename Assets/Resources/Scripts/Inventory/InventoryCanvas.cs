@@ -85,7 +85,7 @@ public class InventoryCanvas : MonoBehaviour{
 
     public void Amount(ItemReference reference, int amount){
         reference.Amount = amount;
-        TextMeshProUGUI text = reference.transform.parent.GetComponentInChildren<TextMeshProUGUI>(true);
+        TextMeshProUGUI text = reference.transform.GetComponentInChildren<TextMeshProUGUI>(true);
         text.text = amount.ToString();
         if (amount > 0){
             text.gameObject.SetActive(true);
