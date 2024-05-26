@@ -46,11 +46,13 @@ public class QuestNPC : MonoBehaviour
 
     // When the player enters the collider
     private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-            questHint.SetActive(true);
+    {   
+        if (GetComponentInParent<Fractions>().IsNeutral() || GetComponentInParent<Fractions>().IsFriendly()) {
+            if (other.CompareTag("Player"))
+            {
+                playerInRange = true;
+                questHint.SetActive(true);
+            }
         }
     }
 

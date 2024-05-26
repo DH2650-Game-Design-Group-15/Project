@@ -356,12 +356,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7808464502437791481, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: spread
-      value: 0.02
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 7808464502437791481, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: shotSpeed
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 8396273210014327004, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 37a46b1f0fd13754a88d38b533e0455b, type: 2}
+    - target: {fileID: 8396273210014511342, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6c647f2f3fc22124884c94e33905e92e, type: 2}
+    - target: {fileID: 8396273210014527596, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7edb55f16f8f0ca45b1babcbd2960aa4, type: 2}
     - target: {fileID: 8396273210027966640, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -652,7 +664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8396273210028166360, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: m_Name
-      value: Enemy Scout Variant with Reputation
+      value: RedEnemyScout
       objectReference: {fileID: 0}
     - target: {fileID: 8396273210028166360, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: m_Layer
@@ -846,7 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e2398156412751c848046d3a7e6ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownFraction: 2
+  ownFraction: 3
   increase: 0
   decrease: 0
   printReputations: 0
