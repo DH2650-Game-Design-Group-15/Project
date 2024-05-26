@@ -4,13 +4,21 @@ public class QuestMenuController : MonoBehaviour
 {
     public GameObject questMenu;
     public GameObject questHint;
+    private InventoryInput inventoryInput;
     private bool playerInRange = false;
+
+    void Start()
+    {
+        // Find and cache the InventoryInput script
+        inventoryInput = FindObjectOfType<InventoryInput>();
+    }
 
     void Update()
     {
         // Check if the player is in range and the Q key is pressed
         if (playerInRange && Input.GetKeyDown(KeyCode.Q))
         {
+            inventoryInput.SetCursor(true);
             questHint.SetActive(false);
             ToggleQuestMenu();
         }
@@ -43,4 +51,5 @@ public class QuestMenuController : MonoBehaviour
             questHint.SetActive(false);
         }
     }
+
 }
