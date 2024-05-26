@@ -29,6 +29,7 @@ public class QuestMenuController : MonoBehaviour
     {
         bool isActive = questMenu.activeSelf;
         questMenu.SetActive(!isActive);
+        inventoryInput.SetCursor(!isActive);
     }
 
     // When the player enters the collider
@@ -49,6 +50,7 @@ public class QuestMenuController : MonoBehaviour
             playerInRange = false;
             questMenu.SetActive(false);
             questHint.SetActive(false);
+            inventoryInput.SetCursor(false);
         }
     }
 
