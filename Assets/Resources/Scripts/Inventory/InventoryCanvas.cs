@@ -134,8 +134,14 @@ public class InventoryCanvas : MonoBehaviour{
             }
         }
         GridLayoutGroup layout = GetComponent<GridLayoutGroup>();
-        GetComponent<RectTransform>().sizeDelta = new Vector2(inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x), 
-                                                                inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y));
+        float width = inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x);
+        float height = inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+        if (Inventory.IsPlayer){ // Player inventory is always the inventory on the left side
+            GetComponent<RectTransform>().localPosition = new Vector3(-width / 2 - 10, 0, 0);
+        } else {
+            GetComponent<RectTransform>().localPosition = new Vector3(width / 2 + 10, 0, 0);
+        }
     }
 
     /// <summary> Sets the inventory UI to the same state as the inventory. 
