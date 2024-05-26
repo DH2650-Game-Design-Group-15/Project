@@ -118,8 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4cd1d0966ee9444bd3cbb4c50d80f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questMenu: {fileID: 0}
-  questHint: {fileID: 0}
 --- !u!1 &3256026997570758208
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +817,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8396273210028166360, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8194942126840332586}
+    - targetCorrespondingSourceObject: {fileID: 8396273210028166360, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3708384129339183834}
   m_SourcePrefab: {fileID: 100100000, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
 --- !u!1 &800291341200970457 stripped
 GameObject:
@@ -857,6 +858,48 @@ MonoBehaviour:
   repLossOnHit: -60
   startHealth: 100
   scoutScript: {fileID: 5677283507287253758}
+--- !u!114 &3708384129339183834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800291341200970457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2652e33625f9e54b8c63bb61c200dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questArray:
+  - title: TO WAR!
+    description: Take out 3 scouts of the second faction
+    reputationChange: 50
+    rewardAmount: 1
+    itemReward: Uranium
+    questItem: {fileID: 0}
+    item: {fileID: 0}
+    isActive: 0
+    isCompleted: 0
+    objective:
+      objectiveType: 0
+      objectiveAmount: 3
+    fraction: 2
+  - title: Resource Shortage
+    description: There is a shortage of wood resources at the base of faction 1.
+      Please bring 5 wooden logs to the base.
+    reputationChange: 10
+    rewardAmount: 2
+    itemReward: MetalPlate
+    questItem: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
+    item: {fileID: 0}
+    isActive: 0
+    isCompleted: 0
+    objective:
+      objectiveType: 1
+      objectiveAmount: 5
+    fraction: 2
+  player: {fileID: 0}
+  give: 0
 --- !u!4 &800291341201218351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8396273210028442926, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}

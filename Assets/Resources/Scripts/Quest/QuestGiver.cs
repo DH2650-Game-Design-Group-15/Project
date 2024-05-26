@@ -6,29 +6,36 @@ public class QuestGiver : MonoBehaviour
 {
 
     public Quest[] questArray;
-    public GameObject player;
+    private GameObject player;
     private ViewQuest viewQuestScript;
-    
-    //testing
-    public bool give;
 
     private void Start () {
+        player = GameObject.FindWithTag("Player");
         viewQuestScript = player.GetComponent<ViewQuest>();
     }
 
-    private void Update () {
-        if (give) {
-            if (questArray.Length > 0) {
-                GiveQuest(0);
-            }
-            give = false;
+    private void GiveQuest (int index) {
+        if (questArray.Length > 0) {
+            Quest quest = questArray[index];
+            viewQuestScript.AddQuest(quest);
+            //questArray = viewQuestScript.RemoveQuest(questArray, index);
         }
     }
 
-    public void GiveQuest (int index) {
-        Quest quest = questArray[index];
-        viewQuestScript.AddQuest(quest);
-        questArray = viewQuestScript.RemoveQuest(questArray, index);
+    public void GiveKillQuest () {
+        for (int i = 0; i < questArray.Length; i++) {
+            if (questArray[i].title == "TO WAR!") {
+                GiveQuest(i);
+            }
+        }
+    }
+
+    public void GiveGatherQuest () {
+        for (int i = 0; i < questArray.Length; i++) {
+            if (questArray[i].title == "Resource Shortage") {
+                GiveQuest(i);
+            }
+        }
     }
 
 }
