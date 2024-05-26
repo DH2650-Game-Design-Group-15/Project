@@ -8,7 +8,6 @@ using UnityEngine.AI;
 
 public class AIScouting : MonoBehaviour {
     public NavMeshAgent human;
-    public Faction faction;
     public float probAmplifier;
     public float speed;
     public float maxDist;
@@ -84,7 +83,7 @@ public class AIScouting : MonoBehaviour {
             ViewQuest quests = player.GetComponent<ViewQuest>();
             if (quests.questArray != null && quests.questArray.Length > 0) {
                 for (int i = 0; i < quests.questArray.Length; i++) {
-                    if (quests.questArray[i].objective.objectiveType == ObjectiveType.KillRedScouts && faction == Faction.Red) {
+                    if (quests.questArray[i].objective.objectiveType == ObjectiveType.KillRedScouts && fraction.OwnFraction == Fraction.npc1) {
                         quests.questArray[i].objective.IncreaseCurrentAmount(1);
                     }
                 }
@@ -344,9 +343,4 @@ public class AIScouting : MonoBehaviour {
         return animator;
     }
 
-}
-
-public enum Faction {
-    Red,
-    White
 }
