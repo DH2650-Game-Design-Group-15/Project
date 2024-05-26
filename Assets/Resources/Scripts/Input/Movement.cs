@@ -10,7 +10,8 @@ public class Movement : MonoBehaviour
     private float speed = 1f;
     Vector3 velocity;
     Vector2 direction;
-    float rotationSpeed = 0.3f;
+    float rotationSpeed = 0.05f;
+    float rotationSpeedHor = 0.03f;
     public GameObject player;
     public GameObject cam;
 
@@ -67,13 +68,15 @@ public class Movement : MonoBehaviour
     private void RotateVertical(float mouseDeltaY)
     {
         Vector3 currentRotation = cam.transform.rotation.eulerAngles;
-        float newRotationX = currentRotation.x - mouseDeltaY * rotationSpeed;
+        float newRotationX = currentRotation.x - mouseDeltaY * rotationSpeedHor;
         cam.transform.rotation = Quaternion.Euler(newRotationX, currentRotation.y, currentRotation.z);
     }
 
     void Start(){
         animations = GetComponent<Animations>();
         controller = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update(){
