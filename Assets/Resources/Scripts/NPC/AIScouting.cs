@@ -264,7 +264,7 @@ public class AIScouting : MonoBehaviour {
         return wait;
     }
 
-    private void SetDialogue (bool status) {
+    public void SetDialogue (bool status) {
         dialogue = status;
     }
 

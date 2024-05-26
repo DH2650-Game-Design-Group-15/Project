@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class QuestMenuController : MonoBehaviour
+public class QuestNPC : MonoBehaviour
 {
-    public GameObject questMenu;
-    public GameObject questHint;
+    private GameObject questMenu;
+    private GameObject questHint;
     private InventoryInput inventoryInput;
+    private Transform scoutTransform;
     private bool playerInRange = false;
 
     void Start()
     {
         // Find and cache the InventoryInput script
         inventoryInput = FindObjectOfType<InventoryInput>();
+        if (transform.parent != null){
+            scoutTransform = transform.parent;
+            Transform scoutSpawnerObject = scoutTransform.parent;
+            Transform canvas = scoutSpawnerObject.Find("Canvas");
+            questHint = canvas.Find("QuestHint").gameObject;
+            questMenu = canvas.Find("QuestMenu").gameObject;
+        }
     }
 
     void Update()
@@ -30,6 +38,10 @@ public class QuestMenuController : MonoBehaviour
         bool isActive = questMenu.activeSelf;
         questMenu.SetActive(!isActive);
         inventoryInput.SetCursor(!isActive);
+        scoutTransform.GetComponent<AIScouting>().SetDialogue(!isActive);
+        if (isActive) {
+            scoutTransform.GetComponent<AIScouting>().human.isStopped = false;
+        }
     }
 
     // When the player enters the collider
