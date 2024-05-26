@@ -41,10 +41,9 @@ public class Movement : MonoBehaviour
     }
 
     public void OnMove(InputAction.CallbackContext context){
-        if (context.started){
-            animations.isMoving(true);
-            direction = context.ReadValue<Vector2>();
-        } else if (context.canceled){
+        animations.isMoving(true);
+        direction = context.ReadValue<Vector2>();
+        if (context.canceled){
             animations.isMoving(false);
             direction = Vector2.zero;
         }
