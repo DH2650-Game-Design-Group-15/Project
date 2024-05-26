@@ -38,6 +38,8 @@ public class ShipUI : MonoBehaviour {
 
     public void OpenShipUI (InputAction.CallbackContext context) {
         if (context.started) {
+            cannisterUI = false;
+            metalUI = false;
             GameObject[] collisionObjects = objectDetection.DetectObjects();
             foreach (GameObject obj in collisionObjects) {
                 if (obj.name == "Cannisters") {
@@ -47,14 +49,12 @@ public class ShipUI : MonoBehaviour {
                     metalUI = true;
                 }
             }
-            if (cannisterUI || metalUI) {
-                if (!shipUI.activeSelf) {
-                    inventoryInput.SetCursor(true);
-                    shipUI.SetActive(true);
-                } else {
-                    inventoryInput.SetCursor(false);
-                    shipUI.SetActive(false);
-                }
+            if (shipUI.activeSelf) {
+                inventoryInput.SetCursor(false);
+                shipUI.SetActive(false);
+            } else if (cannisterUI || metalUI) {
+                inventoryInput.SetCursor(true);
+                shipUI.SetActive(true);
             }
         }
     }
