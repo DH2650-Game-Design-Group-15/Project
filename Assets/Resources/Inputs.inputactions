@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShipInteraction",
+                    "type": "Button",
+                    "id": "82d1330d-6455-46a7-9f46-90d222426f35",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -305,6 +314,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenQuests",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64b18acb-4a3a-43a8-bee7-0195504a9e6e",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShipInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

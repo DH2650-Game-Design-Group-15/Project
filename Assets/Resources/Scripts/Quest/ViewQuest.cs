@@ -84,7 +84,9 @@ public class ViewQuest : MonoBehaviour
             if (q.questItem != null) {
                 playerInventory.Remove(q.questItem, q.objective.objectiveAmount);
             }
-            playerInventory.Add(q.itemReward, q.item, q.rewardAmount);
+            if (q.itemReward != null) {
+                playerInventory.Add(q.itemReward, q.item, q.rewardAmount);
+            }
             questArray = RemoveQuest(questArray, currentQuest);
         }
     }
