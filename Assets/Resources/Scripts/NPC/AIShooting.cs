@@ -44,6 +44,7 @@ public class AIShooting : MonoBehaviour {
         Vector3 direction = (GetScoutScript().GetFOVScript().GetPlayerPosition() - transform.position).normalized;
         direction += UnityEngine.Random.insideUnitSphere * spread;
         GameObject bullet = Instantiate(shellPrefab, transform.position, Quaternion.Euler(90,0,0));
+        bullet.transform.SetParent(transform);
         bullet.GetComponent<Rigidbody>().velocity = direction * shotSpeed;
         StartCoroutine(OnMiss(bulletLife, bullet));
         SetTimeSinceShot(0f);

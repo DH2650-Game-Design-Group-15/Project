@@ -5,13 +5,18 @@ using System.Collections.Generic;
 public class ScoutSpawner : MonoBehaviour {
     
     public int scoutLimit;
+    public int initReputation;
     public float spawnTime;
     public GameObject scoutObject;
     private bool spawnStatus;
 
     private void Start () {
+        GetComponent<Fractions>().SetReputationToPlayer(initReputation);
         SetSpawnStatus(false);
-        StartCoroutine(SpawnDelay(0.5f));
+        for (int i = 0; i < scoutLimit; i++) {
+            SpawnScout();
+        }
+        SetSpawnStatus(true);
     }
 
     private void Update () {
@@ -28,10 +33,16 @@ public class ScoutSpawner : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator SpawnDelay (float delay) {
         yield return new WaitForSeconds(delay);
+        SpawnScout();
+    }
+
+    /// <summary>
+    /// Spawns a scout in the scene as a child of ScoutSpawner
+    /// </summary>
+    private void SpawnScout () {
         GameObject newScout = Instantiate(scoutObject, transform.position, Quaternion.identity);
         newScout.transform.SetParent(transform);
         newScout.GetComponent<AIScouting>().basePosition = transform.position;
-        SetSpawnStatus(true);
     }
 
     private void SetSpawnStatus (bool status) {
