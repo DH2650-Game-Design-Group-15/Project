@@ -15,6 +15,33 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "f748ee65-860a-4a1c-8c67-2f539b6ae19c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "0067150e-3e39-4cc2-ab1c-067e7235c723",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "c95e2d6b-bab6-4f5b-bf9e-ba4882112fd3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Inventory",
                     "type": "Button",
                     "id": "5e083255-8d07-430f-bacd-4d7644de8c6d",
@@ -27,15 +54,6 @@
                     "name": "TakeItem",
                     "type": "Button",
                     "id": "171b32c7-7823-4103-9999-ddca0ae65fbb",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Crouch",
-                    "type": "Button",
-                    "id": "0067150e-3e39-4cc2-ab1c-067e7235c723",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -78,13 +96,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Run",
-                    "type": "Button",
-                    "id": "f748ee65-860a-4a1c-8c67-2f539b6ae19c",
-                    "expectedControlType": "Button",
+                    "name": "Rotation",
+                    "type": "Value",
+                    "id": "77ec367d-faff-4a0d-b21e-90abb2ad3726",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -244,17 +262,6 @@
                 },
                 {
                     "name": "",
-                    "id": "b1ef1139-ab23-464a-af99-574214ce75aa",
-                    "path": "<Keyboard>/leftCtrl",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Crouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "32a2aeb6-44d9-4538-93b4-f31787c92ef6",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -299,12 +306,45 @@
                 },
                 {
                     "name": "",
+                    "id": "b1ef1139-ab23-464a-af99-574214ce75aa",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "80524016-0f7a-46e0-b6d6-c0b1d00338a0",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "424f3203-9616-418c-9515-ab39cf2e6297",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd7236a0-3979-4882-8281-739ac2d86131",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

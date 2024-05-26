@@ -9,9 +9,9 @@ public class Animations : MonoBehaviour
     }
 
     private Animator animator;
-    private readonly float speedSneak = 1f;
-    private readonly float speedWalk = 2f;
-    private readonly float speedRun = 4f;
+    private readonly float speedSneak = 1.5f;
+    private readonly float speedWalk = 3.14f;
+    private readonly float speedRun = 5f;
 
     public float SpeedSneak => speedSneak;
 
