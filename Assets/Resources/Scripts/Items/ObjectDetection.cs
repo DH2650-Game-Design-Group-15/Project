@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ObjectDetection : MonoBehaviour
@@ -13,12 +14,13 @@ public class ObjectDetection : MonoBehaviour
         Collider[] detectedObjects = Physics.OverlapSphere(transform.position, detectionDistance);
         List<GameObject> objects = new();
 
-        foreach (Collider obj in detectedObjects) {
-            if (obj.gameObject != gameObject) {
+        foreach (Collider obj in detectedObjects)
+        {
+            if (obj.gameObject != gameObject)
+            {
                 Vector3 directionToObject = obj.transform.position - transform.position;
-                float angleToObject = Vector3.Angle(transform.forward, directionToObject);
-
-                if (angleToObject <= detectionAngle * 0.5f)
+                float angle = Vector3.Angle(transform.forward, directionToObject);
+                if (Math.Abs(angle) <= detectionAngle * 0.5f)
                 {
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, directionToObject, out hit, detectionDistance, obstacleMask))
@@ -39,12 +41,9 @@ public class ObjectDetection : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionDistance);
 
-        Vector3 rightBoundary = Quaternion.Euler(0, detectionAngle * 0.5f, 0) * transform.forward;
-        Vector3 leftBoundary = Quaternion.Euler(0, -detectionAngle * 0.5f, 0) * transform.forward;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary * detectionDistance);
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary * detectionDistance);
+        // Draw filled arc for horizontal detection angle
+        Handles.color = new Color(1, 0, 0, 0.3f); // Red with some transparency
+        Handles.DrawSolidArc(transform.position, Vector3.up, Quaternion.Euler(0, -detectionAngle * 0.5f, 0) * transform.forward, detectionAngle, detectionDistance);
     }
 
     public (GameObject, float) ClosestObject(GameObject[] objects){

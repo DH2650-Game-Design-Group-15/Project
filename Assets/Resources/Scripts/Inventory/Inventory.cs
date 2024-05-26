@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,31 +12,29 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     public InventoryCanvas inventoryCanvas; // reference to the UI
     private List<List<bool>> freeSlot;
     private List<ItemType> type;
-    private Vector2Int inventorySize;
+    [SerializeField] private Vector2Int inventorySize = new (3, 5);
     private bool isPlayer;
     // Debug
     public bool printInventory;
 
     /// <summary> Loads prefabs and initialise all variables. </summary>
     void Awake(){
-        uiPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/Inventory");
+        uiPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/InventoryPlayer");
         inventories = Parent.FindChild(GameObject.FindWithTag("Canvas"), "Inventories");
-        inventorySize = new Vector2Int(3, 5);
-        type = new();
-        InitFreeSlots();
         if (inventories == null){
             Debug.LogError("No GameObject inventories to build the UI");
         }
-        Transform transform = inventories.Find(gameObject.name + "Inventory");
+        type = new();
+        InitFreeSlots();
         if (inventoryCanvas == null){
             CreateInventoryUI();
         } else {
-            inventoryCanvas = transform.GetComponentInChildren<InventoryCanvas>();
+            Transform inventory = inventories.Find(gameObject.name + "Inventory");
+            inventoryCanvas = inventory.GetComponentInChildren<InventoryCanvas>();
         }
         inventoryCanvas.CreateInventoryCanvas();
         isPlayer = GetComponentInChildren<InventoryInput>() != null;
     }
-
     /// <summary> Creates a matrix which shows that all slots in the inventory aren't used. </summary>
     private void InitFreeSlots(){
         freeSlot = new();
@@ -201,6 +200,38 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
             }
         }
         return new Vector2Int(-1, -1);
+    }
+
+    /// <summary> 
+    /// Returns the amount of items of this type in the inventory. 
+    /// </summary>
+    /// <param name="item"> The type of this item </param>
+    /// <returns> The amount of the item in the inventory. If the item doesn't exist or isn't in the inventory it returns 0 </returns>
+    public int Amount(Type item){
+        return Amount(item.ToString());
+    }
+
+    /// <summary> 
+    /// Returns the amount of items of this type in the inventory. 
+    /// </summary>
+    /// <param name="item"> An item of the same type as the item in the inventory </param>
+    /// <returns> The amount of the item in the inventory. If the item doesn't exist or isn't in the inventory it returns 0 </returns>
+    public int Amount(Item item){
+        return Amount(item.GetType().ToString());
+    }
+
+    /// <summary> 
+    /// Returns the amount of items of this type in the inventory. 
+    /// </summary>
+    /// <param name="item"> The name of the item </param>
+    /// <returns> The amount of the item in the inventory. If the item doesn't exist or isn't in the inventory it returns 0 </returns>
+    public int Amount(string item){
+        ItemType type = GetItemType(item);
+        if (type == null){
+            return 0;
+        } else {
+            return type.Amount;
+        }
     }
 
     /// <summary> Fills the inventory at the start with all items, that are component of the same GameObject as this inventory. </summary>

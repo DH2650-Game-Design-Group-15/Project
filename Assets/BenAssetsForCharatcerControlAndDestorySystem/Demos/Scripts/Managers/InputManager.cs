@@ -44,18 +44,7 @@ namespace DestroyIt
             firstPersonController = Camera.main.transform.parent.GetComponent<CharacterController>();
             if (firstPersonController == null)
                 Debug.LogError("InputManager: Could not find Character Controller on Main Camera parent.");
-            
-            foreach (Transform trans in Camera.main.transform)
-            {
-                switch (trans.name)
-                {
-                    case "WeaponPosition-Axe":
-                        axeTransform = trans;
-                        break;
-                    default: 
-                        break;
-                }
-            }
+            axeTransform = gameObject.transform.Find("WeaponPosition-Axe");
 
             meleeAttackDelay = 0.6f; // Limit melee attacks to one every 1/2 second.
             lastMeleeTime = 0f;
