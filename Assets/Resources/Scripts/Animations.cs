@@ -3,13 +3,21 @@ using UnityEngine;
 public class Animations : MonoBehaviour
 {
     public enum AnimationParamter{
-        isRunning,
         isWalking, 
-        isCrouching,
+        WalkingSpeed,
         backwards
     }
 
     private Animator animator;
+    private readonly float speedSneak = 1f;
+    private readonly float speedWalk = 2f;
+    private readonly float speedRun = 4f;
+
+    public float SpeedSneak => speedSneak;
+
+    public float SpeedWalk => speedWalk;
+
+    public float SpeedRun => speedRun;
 
     void Start(){
         animator = GetComponent<Animator>();
@@ -17,7 +25,6 @@ public class Animations : MonoBehaviour
 
     public void isMoving(bool value){
         animator.SetBool(AnimationParamter.isWalking.ToString(), value);
-        //Debug.Log("Set moving to " + value);
     }
 
     public void makeIdle(){
@@ -25,17 +32,22 @@ public class Animations : MonoBehaviour
     }
 
     public void isSneaking(bool value){
-        animator.SetBool(AnimationParamter.isCrouching.ToString(), value);
-        //Debug.Log("Set sneaking to " + value);
+        if (value){
+            animator.SetFloat(AnimationParamter.WalkingSpeed.ToString(), SpeedSneak);
+        } else {
+            animator.SetFloat(AnimationParamter.WalkingSpeed.ToString(), SpeedWalk);
+        }
     }
 
     public void isRunning(bool value){
-        animator.SetBool(AnimationParamter.isRunning.ToString(), value);
-        //Debug.Log("Set running to " + value);
+        if (value){
+            animator.SetFloat(AnimationParamter.WalkingSpeed.ToString(), SpeedRun);
+        } else {
+            animator.SetFloat(AnimationParamter.WalkingSpeed.ToString(), SpeedWalk);
+        }
     }
 
     public void isBackwards(bool value){
         animator.SetBool(AnimationParamter.backwards.ToString(), value);
-        //Debug.Log("Set back to " + value);
     }
 }
