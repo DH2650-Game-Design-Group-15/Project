@@ -267,7 +267,7 @@ MonoBehaviour:
     rewardAmount: 1
     itemReward: Uranium
     questItem: {fileID: 0}
-    item: {fileID: 4954975338453076396, guid: 973f68f8e04edba4eba665ed19103839, type: 3}
+    item: {fileID: 1521380024}
     isActive: 0
     isCompleted: 0
     objective:
@@ -281,7 +281,7 @@ MonoBehaviour:
     rewardAmount: 2
     itemReward: MetalPlate
     questItem: {fileID: 5996787674649498086, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
-    item: {fileID: 2017209294357411664, guid: d7a1465c50cbc5f43a3ed5017b5ab152, type: 3}
+    item: {fileID: 640640812}
     isActive: 0
     isCompleted: 0
     objective:
@@ -1394,6 +1394,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 575162223}
+--- !u!114 &640640812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2017209294357411664, guid: d7a1465c50cbc5f43a3ed5017b5ab152, type: 3}
+  m_PrefabInstance: {fileID: 5262306045017684414}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cbbc079050671d4c8de724c94d2457d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &697049960
 GameObject:
   m_ObjectHideFlags: 0
@@ -3441,6 +3452,17 @@ MonoBehaviour:
   questArray: []
   player: {fileID: 14884376}
   give: 0
+--- !u!114 &1521380024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4954975338453076396, guid: 973f68f8e04edba4eba665ed19103839, type: 3}
+  m_PrefabInstance: {fileID: 1450484918}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6068a34d3d1b83145b34a5deb7851476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1536784322
 GameObject:
   m_ObjectHideFlags: 0
@@ -4700,6 +4722,10 @@ PrefabInstance:
     - target: {fileID: 847527229040557001, guid: d7a1465c50cbc5f43a3ed5017b5ab152, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2017209294357411664, guid: d7a1465c50cbc5f43a3ed5017b5ab152, type: 3}
+      propertyPath: amount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2041771486838880527, guid: d7a1465c50cbc5f43a3ed5017b5ab152, type: 3}
       propertyPath: m_Name

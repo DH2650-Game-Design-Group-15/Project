@@ -70,7 +70,6 @@ public class ShipUI : MonoBehaviour {
     private void increaseCannisterAmount () {
         if (cannisterCurrentAmount < cannisterCompletionAmount) {
             int uraniumAmt = playerInventory.Amount("Uranium");
-            Debug.Log(uraniumAmt);
             if (uraniumAmt > 0) {
                 playerInventory.Remove("Uranium", 1);
                 cannisterCurrentAmount++;
