@@ -115,7 +115,8 @@ public class InventoryInput : MonoBehaviour {
 
     /// <summary> Enables or disables the cursor </summary>
     /// <param name="active" true, if the cursor should be enabled, false if the cursor should be disabled. </param>
-    public void SetCursor(bool active){
+    public void SetCursor(bool active)
+    {
         if (active){
             Cursor.lockState = CursorLockMode.Confined;
         } else {
