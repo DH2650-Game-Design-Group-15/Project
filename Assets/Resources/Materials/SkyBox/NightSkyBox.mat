@@ -62,7 +62,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AtmosphereThickness: -0.00034638902
+    - _AtmosphereThickness: -0.0005620039
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1

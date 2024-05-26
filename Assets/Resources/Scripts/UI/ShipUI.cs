@@ -41,6 +41,7 @@ public class ShipUI : MonoBehaviour {
             cannisterUI = false;
             metalUI = false;
             GameObject[] collisionObjects = objectDetection.DetectObjects();
+            Debug.Log(collisionObjects==null);
             foreach (GameObject obj in collisionObjects) {
                 if (obj.name == "Cannisters") {
                     cannisterUI = true;
