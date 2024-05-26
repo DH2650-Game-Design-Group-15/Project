@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +31,7 @@ public class InventoryCanvas : MonoBehaviour{
         slotImage.texture = texture;
         slotImage.enabled = true;
         slotReference.ItemName = itemName;
-        slotReference.Amount = amount;
+        Amount(slotReference, amount);
     }
 
     /// <summary> Removes an existing item from this slot in the inventories UI. </summary>
@@ -41,7 +42,7 @@ public class InventoryCanvas : MonoBehaviour{
         slotImage.texture = null;
         slotImage.enabled = false;
         slotReference.ItemName = null;
-        slotReference.Amount = 0;
+        Amount(slotReference, 0);
     }
 
     /// <summary> Swaps the position of two items. The item can also be null. </summary>
@@ -79,7 +80,18 @@ public class InventoryCanvas : MonoBehaviour{
     /// <remarks> If the amount doesn't fit with the amount in the DB, it only shows the player a wrong amount, 
     /// everything is calculated with the amount in the DB. 
     public void Amount(Vector2Int position, int amount){
-        transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>().Amount = amount;
+        Amount(transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>(), amount);
+    }
+
+    public void Amount(ItemReference reference, int amount){
+        reference.Amount = amount;
+        TextMeshProUGUI text = reference.transform.parent.GetComponentInChildren<TextMeshProUGUI>(true);
+        text.text = amount.ToString();
+        if (amount > 0){
+            text.gameObject.SetActive(true);
+        } else {
+            text.gameObject.SetActive(false);
+        }
     }
 
     /// <summary> Compares the size of the inventory UI with the inventory DB.
@@ -147,7 +159,7 @@ public class InventoryCanvas : MonoBehaviour{
     private void ClearInventory(){
         ItemReference[] references = GetComponentsInChildren<ItemReference>();
         foreach (ItemReference reference in references) {
-            reference.Amount = 0;
+            Amount(reference, 0);
             reference.ItemName = null;
             RawImage image = reference.GetComponent<RawImage>();
             image.enabled = false;
