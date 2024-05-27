@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour {
 
@@ -15,32 +16,23 @@ public class PlayerShooting : MonoBehaviour {
     private bool aiming;
     private float timeSinceShot;
 
-    private void Start () {
-        SetTimeSinceShot(0f);
-    }
-
-    private void Update () {
-        SetTimeSinceShot(GetTimeSinceShot() + Time.deltaTime);
-        if (GetTimeSinceShot() >= shotDelay) {
-            Fire();
-        }
-    }
-
     /// <summary>
     /// Fires a bullet towards the player with a random spread
     /// </summary>
-    private void Fire () {
-        Ray camRay = camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(camRay, out hit, bulletDistanceCheck, playerMask)) {
-            Vector3 direction = hit.point - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(transform.forward);
-            GameObject bullet = Instantiate(shellPrefab, transform.position, Quaternion.Euler(90,90,0));
-            bullet.transform.rotation = rotation * Quaternion.Euler(90,90,0);
-            bullet.transform.SetParent(transform);
-            bullet.GetComponent<Rigidbody>().velocity = direction * shotSpeed;
-            StartCoroutine(OnMiss(bulletLife, bullet));
-            SetTimeSinceShot(0f);
+    public void Fire (InputAction.CallbackContext context) {
+        if (context.started) {
+            Ray camRay = camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(camRay, out hit, bulletDistanceCheck, playerMask)) {
+                Vector3 direction = hit.point - transform.position;
+                Quaternion rotation = Quaternion.LookRotation(transform.forward);
+                GameObject bullet = Instantiate(shellPrefab, transform.position, Quaternion.Euler(90,90,0));
+                bullet.transform.rotation = rotation * Quaternion.Euler(90,90,0);
+                bullet.transform.SetParent(transform);
+                bullet.GetComponent<Rigidbody>().velocity = direction * shotSpeed;
+                StartCoroutine(OnMiss(bulletLife, bullet));
+                SetTimeSinceShot(0f);
+            }
         }
     }
 
