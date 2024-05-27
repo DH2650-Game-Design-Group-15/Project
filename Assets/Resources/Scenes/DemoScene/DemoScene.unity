@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1075816185}
-  m_IndirectSpecularColor: {r: 0.38533983, g: 0.42759922, b: 0.48861396, a: 1}
+  m_IndirectSpecularColor: {r: 0.3513538, g: 0.38982868, b: 0.44542533, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1542,9 +1542,21 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 532943333}
+    - target: {fileID: 3579691479931299627, guid: 023d46944116afb4bb7f1ff9248e916b, type: 3}
+      propertyPath: inventoryInput
+      value: 
+      objectReference: {fileID: 144875748}
     - target: {fileID: 4028512316292854160, guid: 023d46944116afb4bb7f1ff9248e916b, type: 3}
       propertyPath: m_Name
       value: Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541483203717271971, guid: 023d46944116afb4bb7f1ff9248e916b, type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541483203717271971, guid: 023d46944116afb4bb7f1ff9248e916b, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6026,12 +6038,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854494077}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.42, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.8492618, z: 0}
   m_LocalScale: {x: 10, y: 0.1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1498090492}
+  m_Father: {fileID: 1856522193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &854494079
 CapsuleCollider:
@@ -9059,7 +9071,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 964c45b276df3a54dba943fb9b70113a, type: 2}
+  - {fileID: 2100000, guid: bd224f583006b8743b391c4283ff48b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10511,10 +10523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6217081987473461365, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 854494078}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6217847503521995913, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
       insertIndex: -1
@@ -10932,11 +10941,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73d1c6da8a0339f89afc4bdf885705ea, type: 3}
---- !u!4 &1498090492 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6217081987473461365, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
-  m_PrefabInstance: {fileID: 1408925507}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1503883190
 GameObject:
   m_ObjectHideFlags: 0
@@ -15721,6 +15725,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7905899458043664389, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 51071
+      objectReference: {fileID: 0}
     - target: {fileID: 7924886635681797567, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -15875,6 +15883,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 861583438900389083, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 730010526}
+    - targetCorrespondingSourceObject: {fileID: 861583438900389083, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 854494078}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 53802669821935201, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
       insertIndex: -1
