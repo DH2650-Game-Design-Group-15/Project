@@ -34,7 +34,9 @@ public class PlayerShooting : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(camRay, out hit, bulletDistanceCheck, playerMask)) {
             Vector3 direction = hit.point - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(transform.forward);
             GameObject bullet = Instantiate(shellPrefab, transform.position, Quaternion.Euler(90,90,0));
+            bullet.transform.rotation = rotation * Quaternion.Euler(90,90,0);
             bullet.transform.SetParent(transform);
             bullet.GetComponent<Rigidbody>().velocity = direction * shotSpeed;
             StartCoroutine(OnMiss(bulletLife, bullet));
