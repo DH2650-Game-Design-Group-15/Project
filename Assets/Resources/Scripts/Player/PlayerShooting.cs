@@ -5,23 +5,41 @@ using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour {
 
-    public float shotSpeed;
     public float shotDelay;
-    public float spread;
-    public float bulletLife;
-    public float bulletDistanceCheck;
-    public GameObject shellPrefab;
+    public float laserActiveTime;
+    public float laserRange;
     public LayerMask playerMask;
     public new Camera camera;
-    private bool aiming;
+    private Transform origin;
     private float timeSinceShot;
+    private LineRenderer laser;
+
+    private void Awake () {
+        laser = GetComponent<LineRenderer>();
+        laser.enabled = false;
+        SetTimeSinceShot(0);
+    }
+
+    private void Start () {
+        origin = transform.parent.transform;
+    }
+
+    private void Update () {
+        SetTimeSinceShot(GetTimeSinceShot() + Time.deltaTime);
+        if (laser.enabled) {
+            laserHit();
+        }
+    }
 
     /// <summary>
     /// Fires a bullet towards the player with a random spread
     /// </summary>
     public void Fire (InputAction.CallbackContext context) {
-        if (context.started) {
-            Ray camRay = camera.ScreenPointToRay(Input.mousePosition);
+        if (context.started && GetTimeSinceShot() > shotDelay) {
+            laserHit();
+            laser.enabled = true;
+            StartCoroutine(ActivateLaser(laserActiveTime));
+            /* Ray camRay = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(camRay, out hit, bulletDistanceCheck, playerMask)) {
                 Vector3 direction = hit.point - transform.position;
@@ -31,31 +49,31 @@ public class PlayerShooting : MonoBehaviour {
                 bullet.transform.SetParent(transform);
                 bullet.GetComponent<Rigidbody>().velocity = direction * shotSpeed;
                 StartCoroutine(OnMiss(bulletLife, bullet));
-                SetTimeSinceShot(0f);
-            }
+            } */
+            SetTimeSinceShot(0f);
+        }
+        if (context.canceled) {
+            laser.enabled = false;
         }
     }
 
-    /// <summary>
-    /// Destroys the gameobject after a certain time if it hasn't 
-    /// already been destroyed
-    /// </summary>
-    /// <param name="time">Time to wait before destroying</param>
-    /// <param name="bulletObject">GameObject to destroy</param>
-    /// <returns></returns>
-    private IEnumerator OnMiss (float time, GameObject bulletObject) {
+    private RaycastHit laserHit () {
+        laser.SetPosition(0, origin.position);
+        Vector3 ray = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.5f));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, camera.transform.forward, out hit, laserRange, playerMask)) {
+            laser.SetPosition(1, hit.point);
+
+        } else {
+            laser.SetPosition(1, ray + (camera.transform.forward * laserRange));
+        }
+        return hit;
+    }
+
+    private IEnumerator ActivateLaser (float time) {
+        laser.enabled = true;
         yield return new WaitForSeconds(time);
-        if (bulletObject != null) {
-            Destroy(bulletObject);
-        }
-    }
-
-    private void SetAiming (bool aim) {
-        aiming = aim;
-    }
-
-    private bool GetAiming () {
-        return aiming;
+        laser.enabled = false;
     }
 
     private void SetTimeSinceShot (float time) {
