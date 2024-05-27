@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1075816185}
-  m_IndirectSpecularColor: {r: 0.3211377, g: 0.35624826, b: 0.40703896, a: 1}
+  m_IndirectSpecularColor: {r: 0.3960071, g: 0.43944362, b: 0.502154, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1551,6 +1551,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 023d46944116afb4bb7f1ff9248e916b, type: 3}
+--- !u!114 &144875746 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5803484343901928296, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
+  m_PrefabInstance: {fileID: 1949704321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16eb26ebf72a8ee1ab038594abaa97e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &144875748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1467813019319101657, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
+  m_PrefabInstance: {fileID: 1949704321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3118510f8cdbb24c5942ce6dc9bc8c54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &149523527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 552038693598925934, guid: 9d9b22b789a9d88428b2f368e16681e0, type: 3}
@@ -7031,15 +7053,19 @@ PrefabInstance:
     - target: {fileID: 2206096930428660005, guid: 41c069c841073ac4fa149ef87814d01e, type: 3}
       propertyPath: inventoryInput
       value: 
-      objectReference: {fileID: 1408925508}
+      objectReference: {fileID: 144875748}
     - target: {fileID: 2206096930428660005, guid: 41c069c841073ac4fa149ef87814d01e, type: 3}
       propertyPath: objectDetection
       value: 
-      objectReference: {fileID: 1408925510}
+      objectReference: {fileID: 1716916407}
     - target: {fileID: 2206096930428660005, guid: 41c069c841073ac4fa149ef87814d01e, type: 3}
       propertyPath: playerInventory
       value: 
-      objectReference: {fileID: 1408925509}
+      objectReference: {fileID: 144875746}
+    - target: {fileID: 2206096930428660005, guid: 41c069c841073ac4fa149ef87814d01e, type: 3}
+      propertyPath: metalCompletionAmount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2783628246395554108, guid: 41c069c841073ac4fa149ef87814d01e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10493,17 +10519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16eb26ebf72a8ee1ab038594abaa97e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1408925510 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6878613457682974632, guid: 8289c3f89ad41e005a03c176f98d770c, type: 3}
-  m_PrefabInstance: {fileID: 1408925507}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5ad609309f2cd59db669b7f85e33573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1416903241 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8259040116967317827, guid: 9d9b22b789a9d88428b2f368e16681e0, type: 3}
@@ -12371,6 +12386,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2301490558739910885, guid: 3eb68971421c255469da7f8ee4d9fcbc, type: 3}
+--- !u!114 &1716916407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2187845366109032314, guid: d1c9dff9c19fb014d9fb196a5cc71fa3, type: 3}
+  m_PrefabInstance: {fileID: 1949704321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ad609309f2cd59db669b7f85e33573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1718430777
 GameObject:
   m_ObjectHideFlags: 0
