@@ -14,18 +14,19 @@ public class AIVisionField : MonoBehaviour {
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     private bool playerIsVisible;
-    private bool playerIsCrouched = false;
     private Vector3 playerPosition;
     private Mesh viewMesh;
     private MeshRenderer meshRenderer;
+    private ScoutSpawner scoutSpawner;
 
     private void Start () {
+        scoutSpawner = transform.parent.parent.GetComponent<ScoutSpawner>();
         StartCoroutine(FindPlayerDelay(delayTime));
         SetMeshRenderer(GetComponent<MeshRenderer>());
     }
 
     private void Update () {
-        if (playerIsCrouched) {
+        if (scoutSpawner.GetIsPlayerCrouched()) {
             meshRenderer.enabled = true;
         } else {
             meshRenderer.enabled = false;
@@ -195,16 +196,6 @@ public class AIVisionField : MonoBehaviour {
 
     public bool GetIsPlayerVisible () {
         return playerIsVisible;
-    }
-
-    public void SetIsPlayerCrouched (InputAction.CallbackContext context) {
-        if (context.started) {
-            playerIsCrouched = !GetIsPlayerCrouched();
-        }
-    }
-
-    private bool GetIsPlayerCrouched () {
-        return playerIsCrouched;
     }
 
     private void SetMeshRenderer (MeshRenderer renderer) {

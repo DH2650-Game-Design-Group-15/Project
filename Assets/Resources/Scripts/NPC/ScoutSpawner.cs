@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class ScoutSpawner : MonoBehaviour {
     
@@ -9,6 +10,7 @@ public class ScoutSpawner : MonoBehaviour {
     public float spawnTime;
     public GameObject scoutObject;
     private bool spawnStatus;
+    private bool isPlayerCrouched;
 
     private void Start () {
         GetComponent<Fractions>().SetReputationToPlayer(initReputation);
@@ -24,6 +26,19 @@ public class ScoutSpawner : MonoBehaviour {
             SetSpawnStatus(false);
             StartCoroutine(SpawnDelay(spawnTime));
         }
+    }
+
+    public void SetIsPlayerCrouched (InputAction.CallbackContext context) {
+        if (context.started || context.performed) {
+            isPlayerCrouched = true;
+        }
+        if (context.canceled) {
+            isPlayerCrouched = false;
+        }
+    }
+
+    public bool GetIsPlayerCrouched () {
+        return isPlayerCrouched;
     }
 
     /// <summary>
