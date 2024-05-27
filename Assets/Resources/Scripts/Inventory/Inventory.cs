@@ -69,7 +69,13 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     /// <param name="amount"> The amount to be added to the inventory </param>
     /// <returns> Returns the amount of this item, that can't be stored in this inventory. </returns>
     public int Add(string itemName, Item item, int amount){
-        return Add(itemName, item, amount, new Vector2Int(-1, -1));
+        ItemType itemType = GetItemType(itemName);
+        if (itemType != null){
+            return itemType.Add(amount);
+        } else {
+            type.Add(new ItemType(item, this));
+            return type[^1].Add(amount);
+        }
     }
 
     /// <summary> Adds the given item to the inventory. Must be stored on given position </summary>
@@ -88,6 +94,10 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
             type.Add(new ItemType(item, this));
             return type[^1].Add(amount, position);
         }
+    }
+
+    public bool Remove(Item item, int amount){
+        return Remove(item.GetType().ToString(), amount);
     }
 
     /// <summary> Removes the given item from the inventory. If there aren't enough items stored before nothing gets removed. </summary>

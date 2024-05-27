@@ -77,6 +77,7 @@ public class Movement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        speed = animations.SpeedWalk;
     }
 
     void Update(){

@@ -16,6 +16,9 @@ public class AIScouting : MonoBehaviour {
     public float fireRange;
     public float huntSpeed;
     public float lookRotationSpeed;
+    public float angularSpeed;
+    public float fastAngularSpeed;
+    public float angularTime;
     private int areaCounter;
     private bool wait;
     private bool dialogue;
@@ -41,6 +44,7 @@ public class AIScouting : MonoBehaviour {
         SetPrevPosition(human.transform.position);
         if (human != null) {
             human.speed = speed;
+            human.angularSpeed = angularSpeed;
             human.SetDestination(RandomNavMeshLocation());
         }
         fraction = Parent.FindParent(gameObject, typeof(Fractions)).GetComponent<Fractions>();
@@ -62,7 +66,8 @@ public class AIScouting : MonoBehaviour {
     }
 
     /// <summary>
-    /// Plays the death animation of the npc
+    /// Plays the death animation of the npc and increases quest counter if
+    /// the KillRedScouts quest is active
     /// </summary>
     /// <param name="animtionTime">The time of the death animation</param>
     /// <returns></returns>
@@ -73,8 +78,30 @@ public class AIScouting : MonoBehaviour {
         human.speed = 0;
         human.SetDestination(human.transform.position);
         GetAnimator().SetBool("Dead", true);
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null) {
+            ViewQuest quests = player.GetComponent<ViewQuest>();
+            if (quests.questArray != null && quests.questArray.Length > 0) {
+                for (int i = 0; i < quests.questArray.Length; i++) {
+                    if (quests.questArray[i].objective.objectiveType == ObjectiveType.KillRedScouts && fraction.OwnFraction == Fraction.npc1) {
+                        quests.questArray[i].objective.IncreaseCurrentAmount(1);
+                    }
+                }
+            }
+        }
         yield return new WaitForSeconds(animtionTime);
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Makes the npc move towards and face the player after being hit
+    /// </summary>
+    public void Hit (Vector3 playerPosition) {
+        if (GetAlive()) {
+            human.angularSpeed = fastAngularSpeed;
+            StartCoroutine(angularWait(angularTime));
+            human.SetDestination(playerPosition);
+        }
     }
 
     /// <summary>
@@ -86,7 +113,6 @@ public class AIScouting : MonoBehaviour {
         if (Vector3.Distance(human.transform.position, GetFOVScript().GetPlayerPosition()) > fireRange) {
             SetShooting(false);
             human.isStopped = false;
-            human.speed = huntSpeed;
         } else if (!GetShooting()) {
             human.isStopped = true;
             SetPrevPosition(human.transform.position);
@@ -97,6 +123,7 @@ public class AIScouting : MonoBehaviour {
             Quaternion lookRotation = Quaternion.LookRotation(GetFOVScript().GetPlayerPosition() - human.transform.position);
             human.transform.rotation = Quaternion.Slerp(human.transform.rotation, lookRotation, Time.deltaTime * lookRotationSpeed);
         }
+        human.speed = huntSpeed;
     }
 
     /// <summary>
@@ -209,6 +236,16 @@ public class AIScouting : MonoBehaviour {
         human.isStopped = false;
         human.SetDestination(RandomNavMeshLocation());
     }
+
+    /// <summary>
+    /// Resets the angular speed
+    /// </summary>
+    /// <param name="timeToWait">Time to wait before resetting</param>
+    /// <returns></returns>
+    private IEnumerator angularWait (float timeToWait) {
+        yield return new WaitForSeconds(timeToWait);
+        human.angularSpeed = angularSpeed;
+    }
     
     private void SetAreaCounter (int count) {
         areaCounter = count;
@@ -226,7 +263,7 @@ public class AIScouting : MonoBehaviour {
         return wait;
     }
 
-    private void SetDialogue (bool status) {
+    public void SetDialogue (bool status) {
         dialogue = status;
     }
 
