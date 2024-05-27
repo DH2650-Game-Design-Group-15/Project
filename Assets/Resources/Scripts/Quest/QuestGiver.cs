@@ -18,7 +18,6 @@ public class QuestGiver : MonoBehaviour
         if (questArray.Length > 0) {
             Quest quest = questArray[index];
             viewQuestScript.AddQuest(quest);
-            //questArray = viewQuestScript.RemoveQuest(questArray, index);
         }
     }
 
