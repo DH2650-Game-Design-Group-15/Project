@@ -10,6 +10,7 @@ public class PlayerShooting : MonoBehaviour {
     public float laserMaxCharge;
     public float damagePerSecond;
     public LayerMask targetMask;
+    public HealthBar chargeSlider;
     public new Camera camera;
     private Transform origin;
     private float laserCharge;
@@ -18,6 +19,7 @@ public class PlayerShooting : MonoBehaviour {
     private void Awake () {
         laser = GetComponent<LineRenderer>();
         laser.enabled = false;
+        chargeSlider.SetMaxHealth((int)(laserMaxCharge*100));
         SetLaserCharge(laserMaxCharge);
     }
 
@@ -40,7 +42,9 @@ public class PlayerShooting : MonoBehaviour {
             }
         } else {
             laser.enabled = false;
-            SetLaserCharge(GetLaserCharge() + Time.deltaTime);
+            if (GetLaserCharge() < laserMaxCharge) {
+                SetLaserCharge(GetLaserCharge() + Time.deltaTime);
+            }
         }
     }
 
@@ -72,6 +76,8 @@ public class PlayerShooting : MonoBehaviour {
 
     private void SetLaserCharge (float charge) {
         laserCharge = charge;
+        int laserUI = (int)(charge*100);
+        chargeSlider.SetHealth(laserUI);
     }
 
     private float GetLaserCharge () {
