@@ -83,6 +83,9 @@ public class Inputs : MonoBehaviour {
             }
             map.Disable();
         }
+        if (lastMaps.Count == 0){
+            lastMaps.Add(playerInput.actions.FindActionMap("Player"));
+        }
         foreach(InputActionMap map in lastMaps){
             map.Enable();
         }
