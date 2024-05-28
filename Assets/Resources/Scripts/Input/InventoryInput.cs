@@ -97,7 +97,6 @@ public class InventoryInput : MonoBehaviour {
                 inventoryUI.SetActive(true);
                 storage.GetComponent<Inventory>().ReloadInventoryCanvas();
                 storage.GetComponent<Inventory>().InventoryCanvas.transform.parent.SetAsFirstSibling();
-                inventoryUI.GetComponentInChildren<HorizontalLayoutGroup>().spacing = 150;
                 storageOwner = storage.GetComponent<Owner>();
                 storageOwner.AddInteraction(Parent.FindParent(objectDetection, typeof(Fractions)).gameObject);
             }

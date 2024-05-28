@@ -12,7 +12,7 @@ public class Inputs : MonoBehaviour {
     /// <summary>
     /// Finds a PlayerInput in the parent and all its children.
     /// </summary>
-    void Start() {
+    void Awake() {
         Transform parent = transform.parent ?? transform;
         playerInput = parent.GetComponentInChildren<PlayerInput>();
         lastMaps = new();
@@ -82,6 +82,9 @@ public class Inputs : MonoBehaviour {
                 newLastMaps.Add(map);
             }
             map.Disable();
+        }
+        if (lastMaps.Count == 0){
+            lastMaps.Add(playerInput.actions.FindActionMap("Player"));
         }
         foreach(InputActionMap map in lastMaps){
             map.Enable();
