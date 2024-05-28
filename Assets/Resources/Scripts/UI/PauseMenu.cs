@@ -27,10 +27,9 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
-        inputs.ReturnToActionMap();
+        inputs.ChangeActionMap("Pause");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Debug.Log("Pause");
     }
 
     public void ResumeGame()
@@ -38,10 +37,9 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
-        inputs.ChangeActionMap("Pause");
+        inputs.ReturnToActionMap();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Debug.Log("Resume");
     }
 
     public void QuitGame()
