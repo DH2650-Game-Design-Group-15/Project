@@ -15,12 +15,16 @@ public class Movement : MonoBehaviour
     public GameObject player;
     public GameObject cam;
 
+    /// <summary> Called when the player jumps </summary>
+    /// <param name="context"> CallbackContext to exectute it only once when pressing </param>
     public void OnJump(InputAction.CallbackContext context){
         if (context.started){
             velocity = new(0, jumpHeight * -2f * gravity);
         }
     }
 
+    /// <summary> Called when the player runs. </summary>
+    /// <param name="context"> CallbackContext to enable running when pressing and disable it when releasing </param>
     public void OnRun(InputAction.CallbackContext context){
         if (context.started){
             animations.isRunning(true);
@@ -31,6 +35,8 @@ public class Movement : MonoBehaviour
         }
     }
 
+    /// <summary> Called when the player sneaks. </summary>
+    /// <param name="context"> CallbackContext to enable sneaking when pressing and disable it when releasing </param>
     public void OnSneak(InputAction.CallbackContext context){
         if (context.started){
             animations.isSneaking(true);
@@ -41,6 +47,8 @@ public class Movement : MonoBehaviour
         }
     }
 
+    /// <summary> Called when the player moves </summary>
+    /// <param name="context"> CallbackContext to set the movement to zero when releasing </param>
     public void OnMove(InputAction.CallbackContext context){
         animations.isMoving(true);
         direction = context.ReadValue<Vector2>();
@@ -50,13 +58,16 @@ public class Movement : MonoBehaviour
         }
     }
 
+    /// <summary> Called when the player turns </summary>
+    /// <param name="context"> CallbackContext with the delta of the mouse rotation </param>
     public void OnLook(InputAction.CallbackContext context){
         Vector2 mouseDelta = context.ReadValue<Vector2>();
         RotateHorizontal(mouseDelta.x);
         RotateVertical(mouseDelta.y);
     }
 
-    // Method to rotate the horizontal object (yaw)
+    /// <summary> Turns the player horizontal </summary>
+    /// <param name="mouseDeltaX"> horizontal mouse delta </param>
     private void RotateHorizontal(float mouseDeltaX)
     {
         Vector3 currentRotation = player.transform.rotation.eulerAngles;
@@ -64,7 +75,8 @@ public class Movement : MonoBehaviour
         player.transform.rotation = Quaternion.Euler(currentRotation.x, newRotationY, currentRotation.z);
     }
 
-    // Method to rotate the vertical object (pitch)
+    /// <summary> Turns the camera vertical </summary>
+    /// <param name="context"> vertical mouse delta </param>
     private void RotateVertical(float mouseDeltaY)
     {
         Vector3 currentRotation = cam.transform.rotation.eulerAngles;
@@ -80,6 +92,7 @@ public class Movement : MonoBehaviour
         speed = animations.SpeedWalk;
     }
 
+    /// <summary> Moves the player with the given movement and the falling velocity </summary>
     void Update(){
         Vector3 move = - transform.right * direction.y + transform.forward * direction.x;
         controller.Move(move * speed * Time.deltaTime);
