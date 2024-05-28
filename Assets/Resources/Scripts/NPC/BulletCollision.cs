@@ -10,9 +10,6 @@ public class BulletCollision : MonoBehaviour {
         if (collision.collider.CompareTag("Player")) {
             collision.collider.GetComponent<PlayerHealth>().PlayerHit(bulletDamage);
         }
-        if (collision.collider.CompareTag("NPC")) {
-            collision.collider.GetComponentInParent<AIScoutHealth>().TakeDamage(bulletDamage, transform.parent.position);
-        }
         Destroy(gameObject);
     }
 
