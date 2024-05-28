@@ -53,8 +53,8 @@ public class MapManager : MonoBehaviour
     public void SetISMapOpen (InputAction.CallbackContext context) {
         if (context.started) {
             isMapOpen = !GetISMapOpen();
+            inventoryInput.SetCursor(GetISMapOpen());
             if (GetISMapOpen()) {
-                inventoryInput.SetCursor(GetISMapOpen());
                 mapCameraPosition.transform.position = player.transform.position + new Vector3(0, mapHeight, 0);
                 mapCamera.orthographicSize = startZoomLevel;
             }
