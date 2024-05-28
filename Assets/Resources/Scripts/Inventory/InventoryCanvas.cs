@@ -133,9 +133,26 @@ public class InventoryCanvas : MonoBehaviour{
                 }
             }
         }
+        Resize();
+    }
+
+    /// <summary>
+    /// Position and change the size of the inventory UI.
+    /// The position is 10 pixels away from the middle of the screen, for the player to the left, all others to the right.
+    /// Resizes it that it fits with the amount of columns and rows. 
+    /// </summary>
+    private void Resize(){
+        RectTransform rect = GetComponent<RectTransform>();
         GridLayoutGroup layout = GetComponent<GridLayoutGroup>();
-        GetComponent<RectTransform>().sizeDelta = new Vector2(inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x), 
-                                                                inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y));
+        float width = inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x);
+        float height = inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y);
+        rect.sizeDelta = new Vector2(width, height);
+        width = width / 2 + 10;
+        if (inventory.IsPlayer){
+            width = -width;
+        }
+        rect.localPosition = new Vector3(width, 0, 0);
+
     }
 
     /// <summary> Sets the inventory UI to the same state as the inventory. 
