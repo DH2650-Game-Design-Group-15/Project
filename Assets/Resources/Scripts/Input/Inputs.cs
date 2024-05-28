@@ -12,7 +12,7 @@ public class Inputs : MonoBehaviour {
     /// <summary>
     /// Finds a PlayerInput in the parent and all its children.
     /// </summary>
-    void Start() {
+    void Awake() {
         Transform parent = transform.parent ?? transform;
         playerInput = parent.GetComponentInChildren<PlayerInput>();
         lastMaps = new();
