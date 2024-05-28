@@ -13,28 +13,19 @@ public class InventoryInput : MonoBehaviour {
     public GameObject inventoryUI;
     private ObjectDetection objectDetection;
     private float maxStorageDistance = 10f;
-    private FirstPersonController firstPersonController;
-    private InputManager inputManager;
     private GameObject craftableInventoryUI;
     private Owner storageOwner;
     
     /// <summary> Finds the Component Inputs and the parent GameObject of the UI for inventories. </summary>
     void Start() {
-
         Inventory inventory = Parent.FindParent(gameObject, typeof(Inventory)).GetComponent<Inventory>();
         inventoryUI = Parent.FindParent(inventory.InventoryCanvas, "Inventory")?.gameObject;
-
         craftableInventoryUI = GameObject.FindWithTag("CraftUI");
         craftableInventoryUI.SetActive(false);
         inputs = GetComponent<Inputs>();
         objectDetection = Parent.FindChild(inventory, typeof(ObjectDetection))?.GetComponent<ObjectDetection>();
         if (inventoryUI == null || objectDetection == null){
             Debug.LogError("Can't find all components");
-        }
-        inputManager = Parent.FindParent(inventory, typeof(InputManager))?.GetComponent<InputManager>();
-        firstPersonController = Parent.FindParent(inventory, typeof(FirstPersonController))?.GetComponent<FirstPersonController>();
-        if (inputManager == null || firstPersonController == null){
-            Debug.LogWarning("Some components are missing");
         }
     }
 
@@ -122,8 +113,6 @@ public class InventoryInput : MonoBehaviour {
         } else {
             Cursor.lockState = CursorLockMode.Locked;
         }
-        firstPersonController.enabled = !active;
-        inputManager.enabled = !active;
         Cursor.visible = active;
     }
 }

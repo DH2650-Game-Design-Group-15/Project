@@ -5,19 +5,19 @@ using UnityEngine;
 public class AIScoutHealth : MonoBehaviour
 {
     
-    public int repLossOnHit;
+    public int repLossPerSecondOnHit;
     public int startHealth;
     public AIScouting scoutScript;
-    private int health;
+    private float health;
     
     private void Start () {
         SetHealth(startHealth);
     }
 
-    public void TakeDamage (int damage, Vector3 playerPosition) {
+    public void TakeDamage (float damage, Vector3 playerPosition, float time) {
         if (GetHealth() > 0) {
             SetHealth(GetHealth() - damage);
-            GetComponentInParent<Fractions>().SetReputationToPlayer(repLossOnHit);
+            GetComponentInParent<Fractions>().SetReputationToPlayer(-(repLossPerSecondOnHit * time));
             GetComponent<AIScouting>().Hit(playerPosition);
             if (GetHealth() <= 0) {
                 StartCoroutine(scoutScript.DeathAnimation(3.6f));
@@ -25,11 +25,11 @@ public class AIScoutHealth : MonoBehaviour
         }
     }
 
-    private void SetHealth (int hp) {
+    private void SetHealth (float hp) {
         health = hp;
     }
 
-    private int GetHealth () {
+    private float GetHealth () {
         return health;
     }
 

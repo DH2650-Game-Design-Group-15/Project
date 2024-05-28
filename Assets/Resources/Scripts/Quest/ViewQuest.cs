@@ -48,6 +48,7 @@ public class ViewQuest : MonoBehaviour
     }
     
     public void CloseQuestUI () {
+        inventoryInput.SetCursor(false);
         questUI.SetActive(false);
     }
 
@@ -74,8 +75,6 @@ public class ViewQuest : MonoBehaviour
         if (questArray != null && questArray.Length > 0){
             currentQuest++;
             currentQuest %= questArray.Length;
-        } else {
-            CloseQuestUI();
         }
     }
 

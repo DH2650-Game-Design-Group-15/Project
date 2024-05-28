@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3173645299447429047}
   - component: {fileID: 477936781220159993}
   - component: {fileID: 8003553953123684859}
-  m_Layer: 6
+  m_Layer: 16
   m_Name: QuestTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 868136066121779179}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 1.27, z: 0.49}
-  m_LocalScale: {x: 2.814464, y: 1.7670608, z: 3.709563}
+  m_LocalPosition: {x: 0.05, y: 1.7, z: 0.49}
+  m_LocalScale: {x: 4.533538, y: 3.1298077, z: 5.4656053}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 800291341201223667}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 6460958909335833591}
   m_Layer: 6
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -336,7 +336,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 946774749449507323, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661123922773818693, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: angle
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661123922773818693, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3555444600926321919, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: angularTime
@@ -344,11 +352,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3555444600926321919, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: angularSpeed
-      value: 35
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3555444600926321919, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: fastAngularSpeed
-      value: 90
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3555444600926321919, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: lookRotationSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3555444600926321919, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: fastLookRotationSpeed
@@ -840,6 +852,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8396273210028166360, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3708384129339183834}
+    - targetCorrespondingSourceObject: {fileID: 8396273210028166360, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3772947361127434508}
   m_SourcePrefab: {fileID: 100100000, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
 --- !u!1 &800291341200970457 stripped
 GameObject:
@@ -875,7 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a48ffee7d081eb429bf1e4025500ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repLossOnHit: -60
+  repLossPerSecondOnHit: 70
   startHealth: 100
   scoutScript: {fileID: 5677283507287253758}
 --- !u!114 &3708384129339183834
@@ -918,6 +933,29 @@ MonoBehaviour:
       objectiveType: 1
       objectiveAmount: 5
     fraction: 2
+--- !u!136 &3772947361127434508
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800291341200970457}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 2.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &800291341201218351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8396273210028442926, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}

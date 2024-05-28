@@ -14,6 +14,7 @@ public class MapManager : MonoBehaviour
     public GameObject map;
     public GameObject mapCameraPosition;
     public GameObject player;
+    public InventoryInput inventoryInput;
     private bool isMapOpen = false;
     private bool isMovingMap;
     private int zoomLevel;
@@ -53,6 +54,7 @@ public class MapManager : MonoBehaviour
         if (context.started) {
             isMapOpen = !GetISMapOpen();
             if (GetISMapOpen()) {
+                inventoryInput.SetCursor(GetISMapOpen());
                 mapCameraPosition.transform.position = player.transform.position + new Vector3(0, mapHeight, 0);
                 mapCamera.orthographicSize = startZoomLevel;
             }
