@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1075816185}
-  m_IndirectSpecularColor: {r: 0.36128747, g: 0.40086907, b: 0.45805126, a: 1}
+  m_IndirectSpecularColor: {r: 0.39524597, g: 0.43860093, b: 0.5011867, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11780,6 +11780,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3348368685596745515, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3976368137861831838, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -11913,7 +11917,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5515710177501256947, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3976368137861831838, guid: a0ec42475369c41c695b468e2ab644e7, type: 3}
       insertIndex: -1
