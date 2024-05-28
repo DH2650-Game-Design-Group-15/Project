@@ -339,6 +339,10 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2661123922773818693, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: angle
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661123922773818693, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: obstacleMask.m_Bits
       value: 0
       objectReference: {fileID: 0}
