@@ -5,20 +5,22 @@ public class PauseMenu : MonoBehaviour
 {
     public Inputs inputs;
     public GameObject pauseMenu;
-    public bool isPaused;
+    
     // Start is called before the first frame update
     void Start()
     {
         ResumeGame();
     }
 
-    public void OnPressPause(InputAction.CallbackContext context){
+    public void OnPauseGame(InputAction.CallbackContext context){
         if (context.started){
-            if (isPaused){
-                ResumeGame();
-            } else {
-                PauseGame();
-            }
+            PauseGame();
+        }
+    }
+
+    public void OnResumeGame(InputAction.CallbackContext context){
+        if (context.started){
+            ResumeGame();
         }
     }
 
@@ -26,20 +28,18 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        isPaused = true;
         inputs.ChangeActionMap("Pause");
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
-        isPaused = false;
         inputs.ReturnToActionMap();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void QuitGame()
