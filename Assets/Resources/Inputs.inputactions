@@ -532,8 +532,70 @@
         {
             "name": "Map",
             "id": "0dc47540-f018-4188-93a1-a906e7c6e9d7",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "Zoom",
+                    "type": "PassThrough",
+                    "id": "682147a6-0282-455d-b7cf-2e9417ebfcaf",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveMap",
+                    "type": "Button",
+                    "id": "eba4db47-dd35-4e63-9dfd-1614d54d1cf1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenMap",
+                    "type": "Button",
+                    "id": "ca615c77-e0e1-4cdd-a1cd-6432fe5b3118",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7268fc8a-ac0b-4d4a-b9c8-2be9d36c9b93",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7429c54-e85b-418f-ace6-7e5797ca2d63",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveMap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14bbef90-5a7a-446e-9ecd-6c41be216c49",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         },
         {
             "name": "Pause",
@@ -558,6 +620,90 @@
                     "processors": "",
                     "groups": "",
                     "action": "Resume",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Quests",
+            "id": "66876458-e05f-4c7a-a79f-a905024da64e",
+            "actions": [
+                {
+                    "name": "OpenQuests",
+                    "type": "Button",
+                    "id": "747a35bc-600c-4411-9e71-fff5454eac49",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8f8d3c20-e8db-4315-aca9-d3a7f326670a",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenQuests",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "ShipUI",
+            "id": "bc9b4c3b-7e46-410a-97eb-6f01df93f2de",
+            "actions": [
+                {
+                    "name": "ShipInteraction",
+                    "type": "Button",
+                    "id": "97f82a92-06dc-45d5-9caf-62f701423061",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b210ddf6-a3dc-490f-939a-6f059b179c40",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShipInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "GameOver",
+            "id": "c67e673c-241b-4185-874f-ca1a006f853b",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "33c72222-d5d5-4ad2-90ff-2a54920b18f0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3813f995-30d2-494c-8a8e-d18eb246f187",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

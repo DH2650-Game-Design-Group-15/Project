@@ -649,6 +649,8 @@ GameObject:
   - component: {fileID: 2078945560}
   - component: {fileID: 2078945559}
   - component: {fileID: 2078945562}
+  - component: {fileID: 2078945563}
+  - component: {fileID: 2078945564}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -742,6 +744,148 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0e484693c833448bc169a742cc09b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2078945563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078945558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 081274948218f33a3ab203cf1a7b529d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2078945564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078945558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9937d949d6c1a6a598bc080ad5c2bc82, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 345082b5-e034-4972-9752-d34cefc9768d
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f748ee65-860a-4a1c-8c67-2f539b6ae19c
+    m_ActionName: Player/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0067150e-3e39-4cc2-ab1c-067e7235c723
+    m_ActionName: Player/Crouch[/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c95e2d6b-bab6-4f5b-bf9e-ba4882112fd3
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5e083255-8d07-430f-bacd-4d7644de8c6d
+    m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 171b32c7-7823-4103-9999-ddca0ae65fbb
+    m_ActionName: Player/TakeItem[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: caacc3f8-751a-4941-87b8-96258ad7b292
+    m_ActionName: Player/OpenChest[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ba2fcef4-c085-445a-88d9-66dd3a48de1a
+    m_ActionName: Player/Zoom[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8496492f-1fe5-4faf-b55f-a5cf38d42f77
+    m_ActionName: Player/MoveMap[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0e8966f8-261a-4c01-bf3c-4ee0b0312605
+    m_ActionName: Player/OpenMap[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 56b47a75-5bcc-441e-875f-0df49fe32334
+    m_ActionName: Player/OpenQuests[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 82d1330d-6455-46a7-9f46-90d222426f35
+    m_ActionName: Player/ShipInteraction[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 77ec367d-faff-4a0d-b21e-90abb2ad3726
+    m_ActionName: Player/Rotation[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 355fb8f7-51bf-4674-ae97-08366d1f44e7
+    m_ActionName: Player/Shoot[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 01f8c48b-2750-42a0-9e87-26195e352e47
+    m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 22349dfe-ca1c-4b89-a1fc-c57e92c1f0cb
+    m_ActionName: Inventory/Close[/Keyboard/escape,/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d8727ddd-80fc-47c4-89f4-c105978ca4f8
+    m_ActionName: Inventory/MoveItem[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c9cd7c16-8152-44cf-aa42-556adbba9c99
+    m_ActionName: Inventory/Remove[/Keyboard/g]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6aad406-7baa-44b5-9c16-c9f697da1934
+    m_ActionName: Inventory/SplitItem[/Keyboard/ctrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 682147a6-0282-455d-b7cf-2e9417ebfcaf
+    m_ActionName: Map/Zoom[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eba4db47-dd35-4e63-9dfd-1614d54d1cf1
+    m_ActionName: Map/MoveMap[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca615c77-e0e1-4cdd-a1cd-6432fe5b3118
+    m_ActionName: Map/OpenMap[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 29df99ff-004b-48de-bf75-edc1007a8a87
+    m_ActionName: Pause/Resume[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 747a35bc-600c-4411-9e71-fff5454eac49
+    m_ActionName: Quests/OpenQuests[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 97f82a92-06dc-45d5-9caf-62f701423061
+    m_ActionName: ShipUI/ShipInteraction[/Keyboard/e]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2106201365
 GameObject:
   m_ObjectHideFlags: 0

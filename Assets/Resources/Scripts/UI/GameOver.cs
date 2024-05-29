@@ -5,8 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
+
+    private Inputs inputs;
+
+    private void Start () {
+        inputs = FindObjectOfType<Inputs>();
+        inputs.ChangeActionMap("GameOver");
+    }
+
     public void PlayAgain()
     {
-        SceneManager.LoadSceneAsync(1);
+        inputs.ChangeActionMap("Player");
+        SceneManager.LoadScene(2);
     }
 }

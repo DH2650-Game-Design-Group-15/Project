@@ -21,8 +21,10 @@ public class ShipUI : MonoBehaviour {
     private int metalCurrentAmount;
     private bool cannisterUI;
     private bool metalUI;
+    private Inputs inputs;
 
     public void Start () {
+        inputs = FindObjectOfType<Inputs>();
         shipUI.SetActive(false);
     }
 
@@ -52,9 +54,11 @@ public class ShipUI : MonoBehaviour {
             }
             if (shipUI.activeSelf) {
                 inventoryInput.SetCursor(false);
+                inputs.ChangeActionMap("Player");
                 shipUI.SetActive(false);
             } else if (cannisterUI || metalUI) {
                 inventoryInput.SetCursor(true);
+                inputs.ChangeActionMap("ShipUI");
                 shipUI.SetActive(true);
             }
         }

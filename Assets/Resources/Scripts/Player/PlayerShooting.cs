@@ -34,7 +34,6 @@ public class PlayerShooting : MonoBehaviour {
             RaycastHit hit = laserHit();
             RaycastHit fromHead;
             if (hit.transform != null) {
-                Debug.Log(hit.transform.tag);
                 if (hit.transform.CompareTag("NPC")) {
                     float damage = damagePerSecond * time;
                     if (hit.collider.GetComponent<AIScoutHealth>() != null) {

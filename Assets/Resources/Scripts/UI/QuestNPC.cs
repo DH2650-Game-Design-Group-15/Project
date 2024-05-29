@@ -5,6 +5,7 @@ public class QuestNPC : MonoBehaviour
     private GameObject questMenu;
     private GameObject questHint;
     private InventoryInput inventoryInput;
+    private Inputs inputs;
     private Transform scoutTransform;
     private bool playerInRange = false;
 
@@ -12,6 +13,7 @@ public class QuestNPC : MonoBehaviour
     {
         // Find and cache the InventoryInput script
         inventoryInput = FindObjectOfType<InventoryInput>();
+        inputs = FindObjectOfType<Inputs>();
         if (transform.parent != null){
             scoutTransform = transform.parent;
             Transform scoutSpawnerObject = scoutTransform.parent;
@@ -40,7 +42,10 @@ public class QuestNPC : MonoBehaviour
         inventoryInput.SetCursor(!isActive);
         scoutTransform.GetComponent<AIScouting>().SetDialogue(!isActive);
         if (isActive) {
+            inputs.ChangeActionMap("Player");
             scoutTransform.GetComponent<AIScouting>().human.isStopped = false;
+        } else {
+            inputs.ChangeActionMap("Quests");
         }
     }
 
@@ -65,6 +70,7 @@ public class QuestNPC : MonoBehaviour
             questMenu.SetActive(false);
             questHint.SetActive(false);
             inventoryInput.SetCursor(false);
+            inputs.ChangeActionMap("Player");
         }
     }
 
