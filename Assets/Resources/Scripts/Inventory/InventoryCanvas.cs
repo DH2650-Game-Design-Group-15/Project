@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Creates the UI for the inventory and changes the images in each slot.
+/// Creates and manages the UI for the inventory. The players inventory is always on the left side while storage inventories are always on the right side.
 /// </summary>
 public class InventoryCanvas : MonoBehaviour{
     private GameObject itemPrefab;

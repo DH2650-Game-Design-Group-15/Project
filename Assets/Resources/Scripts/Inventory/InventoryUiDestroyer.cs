@@ -1,6 +1,8 @@
 using UnityEngine;
 
-/// <summary> Helper to delete the UI for all inventories except the players inventory. </summary>
+/// <summary> 
+/// A helper to destroy all inventories in the first frame. In start all inventories are created once but not used and have to be deleted after that.
+/// </summary>
 public class InventoryUiDestroyer : MonoBehaviour {
     /// <summary> Deletes the inventory of all storages in the first frame. </summary>
     void Update() {

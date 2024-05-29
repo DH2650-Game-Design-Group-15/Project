@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Identifier for a storage (a player is also a storge). It stores all items in this inventory.
-/// It stores them first grouped by item type and then for each slot the amount.
+/// Inventory component, stores all items of this character or storage. It's used to identify an storage while only the player and storages have inventories.
+/// It stores a list of all free slots and all items first grouped by the type and then by the slot. 
 /// </summary>
 public class Inventory : MonoBehaviour{
     private GameObject uiPrefab;                // prefab for the inventories UI
