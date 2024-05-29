@@ -17,6 +17,7 @@ public class ViewQuest : MonoBehaviour
     public GameObject completionLevel;
     public GameObject questNext;
     public GameObject questComplete;
+    public Inputs inputs;
     private int currentQuest;
 
     private void Start () {
@@ -34,6 +35,7 @@ public class ViewQuest : MonoBehaviour
         if (context.started) {
             if (!questUI.activeSelf) {
                 inventoryInput.SetCursor(true);
+                inputs.ChangeActionMap("Quests");
                 if (questArray == null || questArray.Length <= 0) {
                     NoQuests();
                     questNext.SetActive(false);
@@ -41,7 +43,6 @@ public class ViewQuest : MonoBehaviour
                 }
                 questUI.SetActive(true);
             } else {
-                inventoryInput.SetCursor(false);
                 CloseQuestUI();
             }
         }
@@ -49,6 +50,7 @@ public class ViewQuest : MonoBehaviour
     
     public void CloseQuestUI () {
         inventoryInput.SetCursor(false);
+        inputs.ChangeActionMap("Player");
         questUI.SetActive(false);
     }
 

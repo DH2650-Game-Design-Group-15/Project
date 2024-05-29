@@ -32,11 +32,19 @@ public class PlayerShooting : MonoBehaviour {
             float time = Time.deltaTime;
             SetLaserCharge(GetLaserCharge() - time);
             RaycastHit hit = laserHit();
+            RaycastHit fromHead;
             if (hit.transform != null) {
                 if (hit.transform.CompareTag("NPC")) {
                     float damage = damagePerSecond * time;
                     if (hit.collider.GetComponent<AIScoutHealth>() != null) {
                         hit.collider.GetComponent<AIScoutHealth>().TakeDamage(damage, transform.parent.parent.position, time);
+                    }
+                } else if (Physics.Raycast(origin.position, camera.transform.forward, out fromHead, laserRange, targetMask)) {
+                    if (fromHead.transform.CompareTag("NPC")) {
+                        float damage = damagePerSecond * time;
+                        if (fromHead.collider.GetComponent<AIScoutHealth>() != null) {
+                            fromHead.collider.GetComponent<AIScoutHealth>().TakeDamage(damage, transform.parent.parent.position, time);
+                        }
                     }
                 }
             }

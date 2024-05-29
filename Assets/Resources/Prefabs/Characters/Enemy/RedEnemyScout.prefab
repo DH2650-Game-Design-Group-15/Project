@@ -181,6 +181,56 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &3500580693522760927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 781857405710194198}
+  - component: {fileID: 1198504276114270909}
+  m_Layer: 6
+  m_Name: Barrel
+  m_TagString: NPC
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &781857405710194198
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3500580693522760927}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.72379017, y: 0.063716985, z: 0.022950595, w: -0.68668866}
+  m_LocalPosition: {x: 0.219, y: 1.539, z: 0.769}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 800291341201223667}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1198504276114270909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3500580693522760927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1705d18a6d0cb2d41b0f6f6f3a89f68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotDelay: 1
+  damage: 10
+  range: 50
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &6467229345303374931
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,6 +381,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 552702698865569581, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 552702698865569581, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: m_TagString
       value: NPC
       objectReference: {fileID: 0}
@@ -368,7 +422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7808464502437791481, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: spread
-      value: 0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7808464502437791481, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       propertyPath: shotSpeed
@@ -831,8 +885,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 552702698865569581, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8396273210028454386, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 781857405710194198}
     - targetCorrespondingSourceObject: {fileID: 8396273210028454386, guid: 3e452bacd8e6fbf4fa6fbed9a86fba64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4974917591561707671}

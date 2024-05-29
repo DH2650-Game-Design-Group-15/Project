@@ -21,9 +21,11 @@ public class MapManager : MonoBehaviour
     private Vector2 startPos;
     private Vector3 prevMapPos;
     private Camera mapCamera;
+    private Inputs inputs;
 
     private void Start()
-    {   
+    {
+        inputs = FindObjectOfType<Inputs>();
         SetZoomLevel(startZoomLevel);
         map.SetActive(false);
         mapCamera = mapCameraPosition.GetComponent<Camera>();
@@ -55,8 +57,11 @@ public class MapManager : MonoBehaviour
             isMapOpen = !GetISMapOpen();
             inventoryInput.SetCursor(GetISMapOpen());
             if (GetISMapOpen()) {
+                inputs.ChangeActionMap("Map");
                 mapCameraPosition.transform.position = player.transform.position + new Vector3(0, mapHeight, 0);
                 mapCamera.orthographicSize = startZoomLevel;
+            } else {
+                inputs.ChangeActionMap("Player");
             }
             map.SetActive(GetISMapOpen());
         }
