@@ -60,8 +60,6 @@ public class CraftableInventory : MonoBehaviour
     }
     private void ButtonClicked(string buttonName)
     {
-
-        Debug.Log(buttonName + " was clicked!");
         bool LifePotionButton = false;
         switch (buttonName)
         {
