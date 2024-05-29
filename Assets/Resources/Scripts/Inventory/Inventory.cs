@@ -6,10 +6,10 @@ using UnityEngine;
 /// Identifier for a storage (a player is also a storge). It stores all items in this inventory.
 /// It stores them first grouped by item type and then for each slot the amount.
 /// </summary>
-public class Inventory : MonoBehaviour{ // Later abstract, change Start for each type of inventory because of inventorySize
-    private GameObject uiPrefab; // prefab for the inventories UI
-    public Transform inventories; // parent of all inventories
-    public InventoryCanvas inventoryCanvas; // reference to the UI
+public class Inventory : MonoBehaviour{
+    private GameObject uiPrefab;                // prefab for the inventories UI
+    private Transform inventories;               // parent of all inventories
+    private InventoryCanvas inventoryCanvas;     // reference to the UI
     private List<List<bool>> freeSlot;
     private List<ItemType> type;
     [SerializeField] private Vector2Int inventorySize = new (3, 5);
@@ -26,15 +26,16 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         }
         type = new();
         InitFreeSlots();
-        if (inventoryCanvas == null){
+        if (InventoryCanvas == null){
             CreateInventoryUI();
         } else {
             Transform inventory = inventories.Find(gameObject.name + "Inventory");
-            inventoryCanvas = inventory.GetComponentInChildren<InventoryCanvas>();
+            InventoryCanvas = inventory.GetComponentInChildren<InventoryCanvas>();
         }
-        inventoryCanvas.CreateInventoryCanvas();
+        InventoryCanvas.CreateInventoryCanvas();
         isPlayer = GetComponentInChildren<InventoryInput>() != null;
     }
+
     /// <summary> Creates a matrix which shows that all slots in the inventory aren't used. </summary>
     private void InitFreeSlots(){
         freeSlot = new();
@@ -48,17 +49,17 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
 
     /// <summary> Creates an empty UI for this inventory and sets its owner to this inventory. </summary>
     private void CreateInventoryUI(){
-        inventoryCanvas = Instantiate(uiPrefab, inventories).GetComponentInChildren<InventoryCanvas>();
-        inventoryCanvas.name = gameObject.name + "Inventory";
-        inventoryCanvas.Inventory = this;
+        InventoryCanvas = Instantiate(uiPrefab, inventories).GetComponentInChildren<InventoryCanvas>();
+        InventoryCanvas.name = gameObject.name + "Inventory";
+        InventoryCanvas.Inventory = this;
     }
 
     /// <summary> Creates and updates the UI of this inventory to the actual state. 
     /// Sets it as last sibling, the last sibling is always on the right. </summary>
     public void ReloadInventoryCanvas(){
         CreateInventoryUI();
-        inventoryCanvas.UpdateInventory();
-        inventoryCanvas.transform.parent.SetAsLastSibling();
+        InventoryCanvas.UpdateInventory();
+        InventoryCanvas.transform.parent.SetAsLastSibling();
     }
 
     // Called to perform an action
@@ -96,6 +97,10 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
         }
     }
 
+    /// <summary> Removes the given item from the inventory. If there aren't enough items stored before nothing gets removed. </summary>
+    /// <param name="item"> An item of the same type as the removed one. </param>
+    /// <param name="amount"> The amount to be removed from the inventory </param>
+    /// <returns> Returns true, if the amount has been removed. Returns false, if the inventory hadn't enough items stored. </returns>
     public bool Remove(Item item, int amount){
         return Remove(item.GetType().ToString(), amount);
     }
@@ -159,16 +164,16 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
             if (thisType.Amount == 0){
                 type.Remove(thisType);
             }
-            inventoryCanvas.MoveSlot(oldPosition, newPosition, inventory);
+            InventoryCanvas.MoveSlot(oldPosition, newPosition, inventory);
         } else {
             int amount = thisType.GetItemSlot(oldPosition).Amount;
             int left = otherType.Add(amount, newPosition);
             if (left == 0){
                 thisType.Slots.Remove(thisType.GetItemSlot(oldPosition));
-                inventoryCanvas.RemoveSlot(oldPosition);
+                InventoryCanvas.RemoveSlot(oldPosition);
             } else {
                 thisType.Remove(amount - left, oldPosition);
-                inventoryCanvas.ResetPosition(oldPosition);
+                InventoryCanvas.ResetPosition(oldPosition);
             }
         }
     }
@@ -280,6 +285,6 @@ public class Inventory : MonoBehaviour{ // Later abstract, change Start for each
     public List<List<bool>> FreeSlot { get => freeSlot; }
     public List<ItemType> Type { get => type; set => type = value; }
     public Vector2Int InventorySize { get => inventorySize; set => inventorySize = value; }
-    public InventoryCanvas InventoryCanvas { get => inventoryCanvas; set => inventoryCanvas = value; }
     public bool IsPlayer { get => isPlayer; }
+    public InventoryCanvas InventoryCanvas { get => inventoryCanvas; set => inventoryCanvas = value; }
 }

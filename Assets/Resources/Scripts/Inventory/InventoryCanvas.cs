@@ -6,10 +6,10 @@ using UnityEngine.UI;
 /// Creates the UI for the inventory and changes the images in each slot.
 /// </summary>
 public class InventoryCanvas : MonoBehaviour{
-    public GameObject itemPrefab;
+    private GameObject itemPrefab;
     private Inventory inventory;
     private bool changeSize;
-    private Vector3 positionInSlot = Vector3.right;
+    private readonly Vector3 positionInSlot = Vector3.right;
 
     void Awake(){
         LoadPrefab();
@@ -49,7 +49,7 @@ public class InventoryCanvas : MonoBehaviour{
     /// <param name="oldPosition"> The position of the first item. </param>
     /// <param name="newPosition"> The position of the second item. </param>
     public void MoveSlot(Vector2Int oldPosition, Vector2Int newPosition){
-        MoveSlot(oldPosition, newPosition, inventory);
+        MoveSlot(oldPosition, newPosition, Inventory);
     }
 
     /// <summary> Swaps the position of two items. The item can also be null. </summary>
@@ -58,19 +58,19 @@ public class InventoryCanvas : MonoBehaviour{
     /// <param name="inventory"> The inventory of the new position. </param>
     public void MoveSlot(Vector2Int oldPosition, Vector2Int newPosition, Inventory inventory){
         Transform oldSlot = transform.Find(SlotName(oldPosition.x, oldPosition.y)).transform;
-        Transform newSlot = inventory.inventoryCanvas.transform.Find(SlotName(newPosition.x, newPosition.y)).transform;
+        Transform newSlot = inventory.InventoryCanvas.transform.Find(SlotName(newPosition.x, newPosition.y)).transform;
         Transform oldItem = oldSlot.GetComponentInChildren<ItemReference>().transform;
         Transform newItem = newSlot.GetComponentInChildren<ItemReference>().transform;
         newItem.SetParent(oldSlot);
         oldItem.SetParent(newSlot);
-        newItem.GetComponent<RectTransform>().localPosition = positionInSlot;
-        oldItem.GetComponent<RectTransform>().localPosition = positionInSlot;
+        newItem.GetComponent<RectTransform>().localPosition = PositionInSlot;
+        oldItem.GetComponent<RectTransform>().localPosition = PositionInSlot;
     }
 
     /// <summary> Finds the slot at this position and resets the position of the item inside to this slot </summary>
     /// <param name="position"> The position to reset </param>
     public void ResetPosition(Vector2Int position){
-        transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>().GetComponent<RectTransform>().localPosition = positionInSlot;
+        transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>().GetComponent<RectTransform>().localPosition = PositionInSlot;
     }
 
     /// <summary> Changes the amount of items in this slot. 
@@ -83,6 +83,11 @@ public class InventoryCanvas : MonoBehaviour{
         Amount(transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>(), amount);
     }
 
+    /// <summary> Changes the amount of items in this slot. 
+    /// The amount here should always equal the amount in the inventory DB. </summary>
+    /// <param name="reference"> The reference to an item for the slot. </param>
+    /// <param name="amount"> The new amount of the item in the inventory.
+    /// <remarks> If the amount doesn't fit with the amount in the DB, it only shows the player a wrong amount, 
     public void Amount(ItemReference reference, int amount){
         reference.Amount = amount;
         TextMeshProUGUI text = reference.transform.parent.GetComponentInChildren<TextMeshProUGUI>(true);
@@ -103,7 +108,7 @@ public class InventoryCanvas : MonoBehaviour{
         int x = 0;
         int y = 0;
         while (true){
-            if (x < inventory.InventorySize.x && y < inventory.InventorySize.y){
+            if (x < Inventory.InventorySize.x && y < Inventory.InventorySize.y){
                 if (transform.Find(SlotName(x, y)) == null){
                     if (itemPrefab == null){
                         LoadPrefab();
@@ -114,7 +119,7 @@ public class InventoryCanvas : MonoBehaviour{
                 }
                 x++;
                 sibling++;
-            } else if (x >= inventory.InventorySize.x){
+            } else if (x >= Inventory.InventorySize.x){
                 Transform destroy = transform.Find(SlotName(x, y));
                 if (destroy == null){
                     x = 0;
@@ -123,7 +128,7 @@ public class InventoryCanvas : MonoBehaviour{
                     Destroy(destroy.gameObject);
                     // TODO Move or remove items in removed slots
                 }
-            } else if (y >= inventory.InventorySize.y){
+            } else if (y >= Inventory.InventorySize.y){
                 Transform destroy = transform.Find(SlotName(x, y));
                 if (destroy == null){
                     break;
@@ -144,11 +149,11 @@ public class InventoryCanvas : MonoBehaviour{
     private void Resize(){
         RectTransform rect = GetComponent<RectTransform>();
         GridLayoutGroup layout = GetComponent<GridLayoutGroup>();
-        float width = inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x);
-        float height = inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y);
+        float width = Inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x);
+        float height = Inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y);
         rect.sizeDelta = new Vector2(width, height);
         width = width / 2 + 10;
-        if (inventory.IsPlayer){
+        if (Inventory.IsPlayer){
             width = -width;
         }
         rect.localPosition = new Vector3(width, 0, 0);
@@ -165,7 +170,7 @@ public class InventoryCanvas : MonoBehaviour{
 
     /// <summary> Fills the inventory UI with the items stored in the inventory </summary>
     private void FillInventory(){
-        foreach (ItemType type in inventory.Type) {
+        foreach (ItemType type in Inventory.Type) {
             foreach (ItemSlot item in type.Slots) {
                 AddSlot(item.Position, type.ItemName, item.Amount, type.Texture);
             }
@@ -207,5 +212,7 @@ public class InventoryCanvas : MonoBehaviour{
         }
     }
 
+
+    public Vector3 PositionInSlot => positionInSlot;
     public Inventory Inventory { get => inventory; set { inventory = value; changeSize = true; } }
 }
