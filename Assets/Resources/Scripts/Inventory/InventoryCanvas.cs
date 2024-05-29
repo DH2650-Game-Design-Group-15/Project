@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +31,7 @@ public class InventoryCanvas : MonoBehaviour{
         slotImage.texture = texture;
         slotImage.enabled = true;
         slotReference.ItemName = itemName;
-        slotReference.Amount = amount;
+        Amount(slotReference, amount);
     }
 
     /// <summary> Removes an existing item from this slot in the inventories UI. </summary>
@@ -41,7 +42,7 @@ public class InventoryCanvas : MonoBehaviour{
         slotImage.texture = null;
         slotImage.enabled = false;
         slotReference.ItemName = null;
-        slotReference.Amount = 0;
+        Amount(slotReference, 0);
     }
 
     /// <summary> Swaps the position of two items. The item can also be null. </summary>
@@ -79,7 +80,18 @@ public class InventoryCanvas : MonoBehaviour{
     /// <remarks> If the amount doesn't fit with the amount in the DB, it only shows the player a wrong amount, 
     /// everything is calculated with the amount in the DB. 
     public void Amount(Vector2Int position, int amount){
-        transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>().Amount = amount;
+        Amount(transform.Find(SlotName(position.x, position.y)).GetComponentInChildren<ItemReference>(), amount);
+    }
+
+    public void Amount(ItemReference reference, int amount){
+        reference.Amount = amount;
+        TextMeshProUGUI text = reference.transform.parent.GetComponentInChildren<TextMeshProUGUI>(true);
+        text.text = amount.ToString();
+        if (amount > 0){
+            text.gameObject.SetActive(true);
+        } else {
+            text.gameObject.SetActive(false);
+        }
     }
 
     /// <summary> Compares the size of the inventory UI with the inventory DB.
@@ -121,9 +133,26 @@ public class InventoryCanvas : MonoBehaviour{
                 }
             }
         }
+        Resize();
+    }
+
+    /// <summary>
+    /// Position and change the size of the inventory UI.
+    /// The position is 10 pixels away from the middle of the screen, for the player to the left, all others to the right.
+    /// Resizes it that it fits with the amount of columns and rows. 
+    /// </summary>
+    private void Resize(){
+        RectTransform rect = GetComponent<RectTransform>();
         GridLayoutGroup layout = GetComponent<GridLayoutGroup>();
-        GetComponent<RectTransform>().sizeDelta = new Vector2(inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x), 
-                                                                inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y));
+        float width = inventory.InventorySize.x * (layout.cellSize.x + layout.spacing.x);
+        float height = inventory.InventorySize.y * (layout.cellSize.y + layout.spacing.y);
+        rect.sizeDelta = new Vector2(width, height);
+        width = width / 2 + 10;
+        if (inventory.IsPlayer){
+            width = -width;
+        }
+        rect.localPosition = new Vector3(width, 0, 0);
+
     }
 
     /// <summary> Sets the inventory UI to the same state as the inventory. 
@@ -147,7 +176,7 @@ public class InventoryCanvas : MonoBehaviour{
     private void ClearInventory(){
         ItemReference[] references = GetComponentsInChildren<ItemReference>();
         foreach (ItemReference reference in references) {
-            reference.Amount = 0;
+            Amount(reference, 0);
             reference.ItemName = null;
             RawImage image = reference.GetComponent<RawImage>();
             image.enabled = false;

@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Canvas
   - Storage
+  - CraftUI
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - BaseDisplay
   - MapUI
   - SceneLight
-  - 
+  - NPCHiddenComponents
   - 
   - 
   - 

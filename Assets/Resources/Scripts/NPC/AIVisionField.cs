@@ -14,18 +14,19 @@ public class AIVisionField : MonoBehaviour {
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     private bool playerIsVisible;
-    private bool playerIsCrouched = false;
     private Vector3 playerPosition;
     private Mesh viewMesh;
     private MeshRenderer meshRenderer;
+    private ScoutSpawner scoutSpawner;
 
     private void Start () {
+        scoutSpawner = transform.parent.parent.GetComponent<ScoutSpawner>();
         StartCoroutine(FindPlayerDelay(delayTime));
         SetMeshRenderer(GetComponent<MeshRenderer>());
     }
 
     private void Update () {
-        if (playerIsCrouched) {
+        if (scoutSpawner.GetIsPlayerCrouched()) {
             meshRenderer.enabled = true;
         } else {
             meshRenderer.enabled = false;
@@ -73,14 +74,19 @@ public class AIVisionField : MonoBehaviour {
         shapeColor = new Color(0, 0, 1, 1);
         
         if (targetPlayer.Length > 0) {
-            Vector3 playerPos = targetPlayer[0].transform.position;
-            Vector3 dirToTarget = (playerPos - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < angle/2) {
-                float distToTarget = Vector3.Distance(transform.position, playerPos);
-                if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask)) {
-                    SetPlayerPosition(playerPos);
-                    SetIsPlayerVisible(true);
-                    shapeColor = new Color(0, 1, 0,1);
+            for (int i = 0; i < targetPlayer.Length; i++) {
+                if (targetPlayer[i].CompareTag("Player")) {
+                    Vector3 playerPos = targetPlayer[i].transform.position;
+                    Vector3 dirToTarget = (playerPos - transform.position).normalized;
+                    if (Vector3.Angle(transform.forward, dirToTarget) < angle/2) {
+                        float distToTarget = Vector3.Distance(transform.position, playerPos);
+                        if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask)) {
+                            SetPlayerPosition(playerPos);
+                            SetIsPlayerVisible(true);
+                            shapeColor = new Color(0, 1, 0,1);
+                        }
+                    }
+                    break;
                 }
             }
         }
@@ -195,16 +201,6 @@ public class AIVisionField : MonoBehaviour {
 
     public bool GetIsPlayerVisible () {
         return playerIsVisible;
-    }
-
-    public void SetIsPlayerCrouched (InputAction.CallbackContext context) {
-        if (context.started) {
-            playerIsCrouched = !GetIsPlayerCrouched();
-        }
-    }
-
-    private bool GetIsPlayerCrouched () {
-        return playerIsCrouched;
     }
 
     private void SetMeshRenderer (MeshRenderer renderer) {

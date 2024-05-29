@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class AIShooting : MonoBehaviour {
 
-    public float shotSpeed;
     public float shotDelay;
-    public float spread;
-    public float bulletLife;
-    public GameObject shellPrefab;
+    public int damage;
+    public int range;
+    public LayerMask targetMask;
     private bool aiming;
     private float timeSinceShot;
     private AIScouting scoutScript;
@@ -26,6 +25,7 @@ public class AIShooting : MonoBehaviour {
             if (GetAiming()) {
                 if (GetTimeSinceShot() >= shotDelay) {
                     Fire();
+                    SetTimeSinceShot(0f);
                 }
             } else {
                 GetScoutScript().GetAnimator().SetBool("Aiming", true);
@@ -38,15 +38,17 @@ public class AIShooting : MonoBehaviour {
     }
 
     /// <summary>
-    /// Fires a bullet towards the player with a random spread
+    /// Fires at the player
     /// </summary>
     private void Fire () {
-        Vector3 direction = (GetScoutScript().GetFOVScript().GetPlayerPosition() - transform.position).normalized;
-        direction += UnityEngine.Random.insideUnitSphere * spread;
-        GameObject bullet = Instantiate(shellPrefab, transform.position, Quaternion.Euler(90,0,0));
-        bullet.GetComponent<Rigidbody>().velocity = direction * shotSpeed;
-        StartCoroutine(OnMiss(bulletLife, bullet));
-        SetTimeSinceShot(0f);
+        Vector3 playerPos = GetScoutScript().GetFOVScript().GetPlayerPosition() + new Vector3(0,0.6f,0);
+        Vector3 direction = (playerPos - transform.position).normalized;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, direction, out hit, range, targetMask)) {
+            if (hit.collider.CompareTag("Player")) {
+                hit.collider.GetComponent<PlayerHealth>().PlayerHit(damage);
+            }
+        }
         GetScoutScript().GetAnimator().SetTrigger("Shoot");
     }
 
