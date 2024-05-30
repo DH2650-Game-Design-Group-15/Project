@@ -7612,6 +7612,10 @@ PrefabInstance:
       value: -34.864
       objectReference: {fileID: 0}
     - target: {fileID: 2206096930428660005, guid: 41c069c841073ac4fa149ef87814d01e, type: 3}
+      propertyPath: cannisterImage
+      value: 
+      objectReference: {fileID: 2800000, guid: ce18099ed01d3844c9ff43e6100f89b9, type: 3}
+    - target: {fileID: 2206096930428660005, guid: 41c069c841073ac4fa149ef87814d01e, type: 3}
       propertyPath: inventoryInput
       value: 
       objectReference: {fileID: 144875748}
