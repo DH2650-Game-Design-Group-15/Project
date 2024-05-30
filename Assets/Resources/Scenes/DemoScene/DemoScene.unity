@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1075816185}
-  m_IndirectSpecularColor: {r: 0.39570126, g: 0.43910745, b: 0.50177175, a: 1}
+  m_IndirectSpecularColor: {r: NaN, g: NaN, b: NaN, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6349,7 +6349,7 @@ GameObject:
   - component: {fileID: 837189067}
   - component: {fileID: 837189071}
   - component: {fileID: 837189072}
-  - component: {fileID: 837189074}
+  - component: {fileID: 837189073}
   m_Layer: 3
   m_Name: Terrain
   m_TagString: Untagged
@@ -6548,7 +6548,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &837189074
+--- !u!114 &837189073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
