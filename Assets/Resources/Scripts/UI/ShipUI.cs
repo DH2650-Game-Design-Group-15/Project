@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShipUI : MonoBehaviour {
@@ -29,6 +30,9 @@ public class ShipUI : MonoBehaviour {
     }
 
     public void Update () {
+        if (cannisterCurrentAmount == cannisterCompletionAmount && metalCurrentAmount == metalCompletionAmount) {
+            SceneManager.LoadScene("CutScene");
+        }
         if (cannisterUI) {
             itemAmount.GetComponent<TextMeshProUGUI>().text = cannisterCurrentAmount.ToString() + "/" + cannisterCompletionAmount.ToString();
             shipUIImage.texture = cannisterImage;
