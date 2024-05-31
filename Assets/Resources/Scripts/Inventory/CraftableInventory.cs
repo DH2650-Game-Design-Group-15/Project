@@ -64,26 +64,12 @@ public class CraftableInventory : MonoBehaviour
         {
 
             case "BonfireButton":
-                foreach (var i in inventory.Type)
-                    if (i.ItemName == "Wood" && i.Amount >= 1) 
-                    {
-                        //Debug.Log("We have " + i.Amount + "woods");
-
-                        //prefabToSpawn = Resources.Load<GameObject>("Prefabs/Items/Ladder");
-                        bonfireCraft = true;
-                        inventoryinput.CloseInventory();
-                        inventory.Remove("Wood", 1);
-                        Cursor.visible = true;
-
-                    }
+                //CraftBonfire();
                 break;
             case "WallButton":
                 foreach (var i in inventory.Type)
                     if (i.ItemName == "Stone" && i.Amount >= 1)  //temporary i.Amount >= 3 because its amount seems to be 3 in the beginning
                     {
-                        //Debug.Log("We have "+i.Amount+"stones");
-
-                        //prefabToSpawn = Resources.Load<GameObject>("Assets/Resources/Prefabs/Items/Wall with Stakes");
                         wallCraft = true;
                         inventoryinput.CloseInventory();
                         inventory.Remove("Stone", 1);
@@ -96,6 +82,20 @@ public class CraftableInventory : MonoBehaviour
                 AddLifePotion();
                 break;
         }
+    }
+
+    private void CraftBonfire(){
+        foreach (var i in inventory.Type)
+            if (i.ItemName == "Wood" && i.Amount >= 1) 
+            {
+                //Debug.Log("We have " + i.Amount + "woods");
+
+                //prefabToSpawn = Resources.Load<GameObject>("Prefabs/Items/Ladder");
+                bonfireCraft = true;
+                inventoryinput.CloseInventory();
+                inventory.Remove("Wood", 1);
+                Cursor.visible = true;
+            }
     }
     
     /// <summary> Adds a life potion to the players inventory. 
