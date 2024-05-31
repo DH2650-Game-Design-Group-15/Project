@@ -60,7 +60,6 @@ public class CraftableInventory : MonoBehaviour
     }
     private void ButtonClicked(string buttonName)
     {
-        bool LifePotionButton = false;
         switch (buttonName)
         {
 
@@ -94,32 +93,24 @@ public class CraftableInventory : MonoBehaviour
                 break;
 
             case "LifePotionButton":
-                foreach (var i in inventory.Type)
-                    if (i.ItemName == "Herb" && i.Amount >= 0)  //temporary i.Amount >= 3 because its amount seems to be 3 in the beginning
-                    {
-                        LifePotionButton = true;
-                    }
+                AddLifePotion();
                 break;
-
-        }
-        if(LifePotionButton)
-        {
-            /*
-            prefabToSpawn = Resources.Load<GameObject>("Prefabs/Items/Ladder");
-            ladderCraft = true;*/
-            GameObject lifeobject = new GameObject("LifePotion");
-            LifePotion lifePotion = lifeobject.AddComponent<LifePotion>();
-            if (lifePotion == null)
-                Debug.LogError("lifepotion==null");
-            inventory.Add(lifePotion.GetType().ToString(), lifePotion, 1);
-            inventory.Remove("Herb", 2);
-            LifePotionButton = false;
         }
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
+    
+    /// <summary> Adds a life potion to the players inventory. 
+    /// Checks first, if the player has the necessary amount of herb in the inventory </summary>
+    private void AddLifePotion(){
+        int neededAmount = 2;
+        if (inventory.Amount("Herb") < neededAmount){
+            return;
+        }
+        GameObject lifeobject = new GameObject("LifePotion");
+        LifePotion lifePotion = lifeobject.AddComponent<LifePotion>();
+        if (lifePotion == null)
+            Debug.LogError("lifepotion==null");
+        inventory.Add(lifePotion.GetType().ToString(), lifePotion, 1);
+        inventory.Remove("Herb", neededAmount);
     }
+
 }
