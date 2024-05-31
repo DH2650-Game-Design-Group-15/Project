@@ -83,7 +83,7 @@ public class AIScouting : MonoBehaviour {
             ViewQuest quests = player.GetComponent<ViewQuest>();
             if (quests.questArray != null && quests.questArray.Length > 0) {
                 for (int i = 0; i < quests.questArray.Length; i++) {
-                    if (quests.questArray[i].objective.objectiveType == ObjectiveType.KillRedScouts && fraction.OwnFraction == Fraction.npc1) {
+                    if (quests.questArray[i].objective.objectiveType == ObjectiveType.KillRedScouts && fraction.OwnFraction == Fraction.npc2) {
                         quests.questArray[i].objective.IncreaseCurrentAmount(1);
                     }
                 }
