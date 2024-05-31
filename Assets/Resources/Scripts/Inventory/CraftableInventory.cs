@@ -60,31 +60,16 @@ public class CraftableInventory : MonoBehaviour
     }
     private void ButtonClicked(string buttonName)
     {
-        bool LifePotionButton = false;
         switch (buttonName)
         {
 
             case "BonfireButton":
-                foreach (var i in inventory.Type)
-                    if (i.ItemName == "Wood" && i.Amount >= 1) 
-                    {
-                        //Debug.Log("We have " + i.Amount + "woods");
-
-                        //prefabToSpawn = Resources.Load<GameObject>("Prefabs/Items/Ladder");
-                        bonfireCraft = true;
-                        inventoryinput.CloseInventory();
-                        inventory.Remove("Wood", 1);
-                        Cursor.visible = true;
-
-                    }
+                //CraftBonfire();
                 break;
             case "WallButton":
                 foreach (var i in inventory.Type)
                     if (i.ItemName == "Stone" && i.Amount >= 1)  //temporary i.Amount >= 3 because its amount seems to be 3 in the beginning
                     {
-                        //Debug.Log("We have "+i.Amount+"stones");
-
-                        //prefabToSpawn = Resources.Load<GameObject>("Assets/Resources/Prefabs/Items/Wall with Stakes");
                         wallCraft = true;
                         inventoryinput.CloseInventory();
                         inventory.Remove("Stone", 1);
@@ -94,32 +79,38 @@ public class CraftableInventory : MonoBehaviour
                 break;
 
             case "LifePotionButton":
-                foreach (var i in inventory.Type)
-                    if (i.ItemName == "Herb" && i.Amount >= 0)  //temporary i.Amount >= 3 because its amount seems to be 3 in the beginning
-                    {
-                        LifePotionButton = true;
-                    }
+                AddLifePotion();
                 break;
-
-        }
-        if(LifePotionButton)
-        {
-            /*
-            prefabToSpawn = Resources.Load<GameObject>("Prefabs/Items/Ladder");
-            ladderCraft = true;*/
-            GameObject lifeobject = new GameObject("LifePotion");
-            LifePotion lifePotion = lifeobject.AddComponent<LifePotion>();
-            if (lifePotion == null)
-                Debug.LogError("lifepotion==null");
-            inventory.Add(lifePotion.GetType().ToString(), lifePotion, 1);
-            inventory.Remove("Herb", 2);
-            LifePotionButton = false;
         }
     }
 
+    private void CraftBonfire(){
+        foreach (var i in inventory.Type)
+            if (i.ItemName == "Wood" && i.Amount >= 1) 
+            {
+                //Debug.Log("We have " + i.Amount + "woods");
 
-    // Update is called once per frame
-    void Update()
-    {
+                //prefabToSpawn = Resources.Load<GameObject>("Prefabs/Items/Ladder");
+                bonfireCraft = true;
+                inventoryinput.CloseInventory();
+                inventory.Remove("Wood", 1);
+                Cursor.visible = true;
+            }
     }
+    
+    /// <summary> Adds a life potion to the players inventory. 
+    /// Checks first, if the player has the necessary amount of herb in the inventory </summary>
+    private void AddLifePotion(){
+        int neededAmount = 2;
+        if (inventory.Amount("Herb") < neededAmount){
+            return;
+        }
+        GameObject lifeobject = new GameObject("LifePotion");
+        LifePotion lifePotion = lifeobject.AddComponent<LifePotion>();
+        if (lifePotion == null)
+            Debug.LogError("lifepotion==null");
+        inventory.Add(lifePotion.GetType().ToString(), lifePotion, 1);
+        inventory.Remove("Herb", neededAmount);
+    }
+
 }

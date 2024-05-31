@@ -152,6 +152,7 @@ public class ItemType{
         if (slot.Amount == 0){
             slots.Remove(slot);
             inventory.FreeSlot[slot.Position.x][slot.Position.y] = true;
+            inventory.InventoryCanvas?.RemoveSlot(slot.Position);
         } else {
             inventory.InventoryCanvas?.Amount(slot.Position, slot.Amount);
         }

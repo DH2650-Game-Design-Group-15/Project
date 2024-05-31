@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class ObjectDetection : MonoBehaviour
@@ -34,16 +33,6 @@ public class ObjectDetection : MonoBehaviour
             }
         }
         return objects.ToArray();
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionDistance);
-
-        // Draw filled arc for horizontal detection angle
-        Handles.color = new Color(1, 0, 0, 0.3f); // Red with some transparency
-        Handles.DrawSolidArc(transform.position, Vector3.up, Quaternion.Euler(0, -detectionAngle * 0.5f, 0) * transform.forward, detectionAngle, detectionDistance);
     }
 
     public (GameObject, float) ClosestObject(GameObject[] objects){

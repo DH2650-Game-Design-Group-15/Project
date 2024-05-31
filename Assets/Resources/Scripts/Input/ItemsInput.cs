@@ -11,7 +11,8 @@ using UnityEngine.UI;
 /// <remarks> Needs Component "Inventory" in a parent (or itself) </remarks>
 /// <remarks> "Inventory" or a child must have the component "ObjectDetection" </remarks>
 public class ItemsInput : MonoBehaviour {
-    public Inventory inventory;
+    private Inventory inventory;
+    private ObjectDetection objectDetection;
     // Only for Move and Split 
     private bool move = false;
     private bool split = false;
@@ -21,12 +22,13 @@ public class ItemsInput : MonoBehaviour {
     private Vector3 startingPos;
     private static Vector3 positionInSlot = new(1, 0, 0);
     public Inventory moveInventory;
-    [SerializeField] private ObjectDetection objectDetection;
+    private Usage usage;
 
     /// <summary> Finds the players inventory and the Component ObjectDetection to get the next item in front of the player </summary>
     void Start(){
         inventory = Parent.FindParent(gameObject, typeof(Inventory))?.GetComponent<Inventory>();
         objectDetection = Parent.FindChild(inventory, typeof(ObjectDetection))?.GetComponent<ObjectDetection>();
+        usage = GetComponent<Usage>();
     }
 
     /// <summary> 
@@ -37,7 +39,7 @@ public class ItemsInput : MonoBehaviour {
         if (context.started){
             GameObject[] objects = objectDetection.DetectObjects();                         // all objects nearby
             objects = ObjectDetection.ObjectsWithComponent(objects, typeof(Item));          // filter by items
-            (GameObject obj, _) = objectDetection.ClosestObject(objects);      // filter closest one
+            (GameObject obj, _) = objectDetection.ClosestObject(objects);                   // filter closest one
             if (obj != null) {
                 Item item = obj.GetComponent<Item>();
                 int left = inventory.Add(item.GetType().ToString(), item, item.Amount);
@@ -185,6 +187,22 @@ public class ItemsInput : MonoBehaviour {
                 Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
                 Vector2Int newPosition = GetPositionFromName(newSlot.name);
                 moveInventory.Move(oldPosition, newPosition, Parent.FindParent(newSlot, typeof(InventoryCanvas))?.GetComponent<InventoryCanvas>().Inventory);
+            }
+        }
+    }
+
+    public void OnUseItem(InputAction.CallbackContext context){
+        if (context.started){
+            if (move){
+                return;
+            }
+            string itemPattern = @"^Item\d{4}";
+            GameObject slot = ItemOnMouse(itemPattern);
+            string itemName = slot?.GetComponentInChildren<ItemReference>().ItemName;
+            if (slot != null && itemName != null){
+                Vector2Int position = GetPositionFromName(slot.name);
+                int amount = usage.UseItem(itemName);
+                inventory.Remove(itemName, amount, position);
             }
         }
     }

@@ -44,43 +44,27 @@ public class InventoryInput : MonoBehaviour {
     /// <param name="context"> CallbackContext, that the function is called only once when the button is pressed first. </param>
     public void CloseInventory(InputAction.CallbackContext context){
         if (context.started){
-            SetCursor(false);
-            inputs.ReturnToActionMap();
-            inventoryUI.SetActive(false);
-            craftableInventoryUI.SetActive(false);
-            if (Parent.FindChild(inventoryUI, "Inventories").transform.childCount > 1) {
-                InventoryCanvas[] inventories = inventoryUI.GetComponentsInChildren<InventoryCanvas>(true);
-                for (int i = 0; i < inventories.Length; i++){
-                    if (!inventories[i].Inventory.IsPlayer){
-                        storageOwner.RemoveInteraction(Parent.FindParent(objectDetection, typeof(Fractions)).gameObject);
-                        Destroy(inventories[i].gameObject);
-                    }
-                }
-            }
+            CloseInventory();
         }
         
     }
+    
+    /// <summary> Closes the inventory and disables the cursor. It restores all action maps before the inventory was opened. </summary>
     public void CloseInventory()
     {
-        if (true)
-        {
-            SetCursor(false);
-            inputs.ReturnToActionMap();
-            inventoryUI.SetActive(false);
-            craftableInventoryUI.SetActive(false);
-            if (Parent.FindChild(inventoryUI, "Inventories").transform.childCount > 1)
-            {
-                InventoryCanvas[] inventories = inventoryUI.GetComponentsInChildren<InventoryCanvas>(true);
-                for (int i = 0; i < inventories.Length; i++)
-                {
-                    if (!inventories[i].Inventory.IsPlayer)
-                    {
-                        Destroy(inventories[i].gameObject);
-                    }
+        SetCursor(false);
+        inputs.ReturnToActionMap();
+        inventoryUI.SetActive(false);
+        craftableInventoryUI.SetActive(false);
+        if (Parent.FindChild(inventoryUI, "Inventories").transform.childCount > 1) {
+            InventoryCanvas[] inventories = inventoryUI.GetComponentsInChildren<InventoryCanvas>(true);
+            for (int i = 0; i < inventories.Length; i++){
+                if (!inventories[i].Inventory.IsPlayer){
+                    storageOwner.RemoveInteraction(Parent.FindParent(objectDetection, typeof(Fractions)).gameObject);
+                    Destroy(inventories[i].gameObject);
                 }
             }
         }
-
     }
 
     /// <summary> Opens the player inventory and the inventory from the storage we are looking at. If no storage is in front of us 

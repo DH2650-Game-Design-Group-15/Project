@@ -1,12 +1,13 @@
 using UnityEngine;
 
+/// <summary> Component for debuging the inventory </summary>
 public class InventoryTest : MonoBehaviour
 {
     public int amount;
     public bool add;
     public bool remove;
 
-    // Update is called once per frame
+    /// <summary> Test method to add or remove wood in runtime
     void Update()
     {
         if (add && amount > 0){
