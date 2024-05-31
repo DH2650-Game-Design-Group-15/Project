@@ -22,11 +22,13 @@ public class ItemsInput : MonoBehaviour {
     private Vector3 startingPos;
     private static Vector3 positionInSlot = new(1, 0, 0);
     public Inventory moveInventory;
+    private Usage usage;
 
     /// <summary> Finds the players inventory and the Component ObjectDetection to get the next item in front of the player </summary>
     void Start(){
         inventory = Parent.FindParent(gameObject, typeof(Inventory))?.GetComponent<Inventory>();
         objectDetection = Parent.FindChild(inventory, typeof(ObjectDetection))?.GetComponent<ObjectDetection>();
+        usage = GetComponent<Usage>();
     }
 
     /// <summary> 
@@ -185,6 +187,21 @@ public class ItemsInput : MonoBehaviour {
                 Vector2Int oldPosition = GetPositionFromName(moveSlot.name);
                 Vector2Int newPosition = GetPositionFromName(newSlot.name);
                 moveInventory.Move(oldPosition, newPosition, Parent.FindParent(newSlot, typeof(InventoryCanvas))?.GetComponent<InventoryCanvas>().Inventory);
+            }
+        }
+    }
+
+    public void OnUseItem(InputAction.CallbackContext context){
+        if (context.started){
+            if (move){
+                return;
+            }
+            string itemPattern = @"^Item\d{4}";
+            GameObject slot = ItemOnMouse(itemPattern);
+            string itemName = slot?.GetComponentInChildren<ItemReference>().ItemName;
+            if (slot != null && itemName != null){
+                int amount = usage.UseItem(itemName);
+                inventory.Remove(itemName, amount);
             }
         }
     }

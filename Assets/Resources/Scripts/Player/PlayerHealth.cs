@@ -5,16 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-
+    private readonly int maxHealth = 100;
     public int startingHealth;
     public HealthBar healthBar;
     private int health;
     private InventoryInput inventoryInput;
 
+    public int MaxHealth => maxHealth;
+
     private void Start () {
         inventoryInput = FindObjectOfType<InventoryInput>();
+        healthBar.SetMaxHealth(MaxHealth);
         SetHealth(startingHealth);
-        healthBar.SetMaxHealth(startingHealth);
     }
 
     private void Update () {
@@ -26,11 +28,14 @@ public class PlayerHealth : MonoBehaviour
 
     public void PlayerHit (int damage) {
         SetHealth(GetHealth() - damage);
-        healthBar.SetHealth(GetHealth());
+        if (GetHealth() > maxHealth){
+            SetHealth(MaxHealth);
+        }
     }
 
     private void SetHealth (int hp) {
         health = hp;
+        healthBar.SetHealth(GetHealth());
     }
 
     private int GetHealth () {
