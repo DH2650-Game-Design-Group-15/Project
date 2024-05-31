@@ -18,7 +18,7 @@ public class Usage : MonoBehaviour
         if (Enum.TryParse(itemName, out UsableItems item)){
             switch (item){
                 case UsableItems.LifePotion:
-                    int usedAmount = 3;
+                    int usedAmount = 1;
                     if (inventory.Amount(itemName) >= usedAmount){
                         UseLifePotion();
                         return usedAmount;
