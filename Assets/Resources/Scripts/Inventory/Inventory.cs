@@ -152,6 +152,7 @@ public class Inventory : MonoBehaviour{
     public bool RemoveStack(Vector2Int position){
         ItemType item = GetItemType(position);
         item?.RemoveStack(position);
+        inventoryCanvas.ResetPosition(position);
         return item != null;
     }
 
