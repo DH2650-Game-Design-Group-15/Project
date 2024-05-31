@@ -41,8 +41,9 @@ public class ItemSlot{
             this.amount = Amount - amount;
             return -1;
         } else {
+            int left = amount - Amount;
             this.amount = 0;
-            return amount - Amount;
+            return left;
         }
     }
 
