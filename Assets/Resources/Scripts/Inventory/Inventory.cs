@@ -122,6 +122,28 @@ public class Inventory : MonoBehaviour{
         }
     }
 
+    public bool Remove(string itemName, int amount, Vector2Int position){
+        ItemType item = GetItemType(itemName);
+        if (item != null){
+            if (item.Amount < amount){
+                return false;
+            }
+            ItemSlot slot = item.GetItemSlot(position);
+            if (slot == null){
+                return false;
+            }
+            if (slot.Amount >= amount){
+                item.Remove(amount, position);
+            } else {
+                int left = amount - slot.Amount;
+                item.Remove(item.GetItemSlot(position).Amount, position);
+                Remove(itemName, left);
+            }
+            return true;
+        }
+        return false;
+    }
+
     /// <summary> 
     /// Removes the whole stack from the given position. Throws the item on the ground in front of the player.
     /// </summary>

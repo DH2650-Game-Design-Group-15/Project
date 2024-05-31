@@ -200,8 +200,9 @@ public class ItemsInput : MonoBehaviour {
             GameObject slot = ItemOnMouse(itemPattern);
             string itemName = slot?.GetComponentInChildren<ItemReference>().ItemName;
             if (slot != null && itemName != null){
+                Vector2Int position = GetPositionFromName(slot.name);
                 int amount = usage.UseItem(itemName);
-                inventory.Remove(itemName, amount);
+                inventory.Remove(itemName, amount, position);
             }
         }
     }
